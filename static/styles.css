@@ -4,10 +4,11 @@ body {
   text-align: center;
   margin: 0.5em auto;
   padding: 0.2em;
+  background-color: #fad4aa;
 }
 
 div {
-  background-color: #ffa;
+  background-color: white;
   border-style: dashed;
   border-width: 0.1em;
   padding: 0.2em;
@@ -66,19 +67,22 @@ input.text_box {
   border-radius: 1em;
 }
 
-div.main {
-  text-align: left;
-}
-
 input.search_button {
   width: 9%;
   height: 2em;
 }
 
+div.main {
+  text-align: left;
+  min-height: 12em;
+}
+
 span.stores {
-  width: 20%;
+  display: inline-block;
+  width: 16%;
 }
 
 span.items {
+  display: inline-block;
   width: 79%;
 }
