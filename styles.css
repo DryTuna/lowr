@@ -1,0 +1,45 @@
+body {
+  width: 80%;
+  text-align: center;
+  margin: 0.5em auto;
+  padding: 0.2em;
+}
+
+div {
+  background-color: #ffe0ff;
+  border-style: dashed;
+  border-width: 0.1em;
+  padding: 0.2em;
+}
+
+div.header {
+  ;
+}
+
+div.header_left {
+  float: left;
+}
+
+div.header_center {
+  display: inline-table;
+}
+
+div.header_right {
+  float: right;
+}
+
+div.search_row {
+  overflow: hidden;
+  position: relative;
+}
+
+div.logo {
+  float: left;
+  font: 4em sans-serif;
+}
+
+div.search {
+  display: inline;
+  position: absolute;
+  
+}
