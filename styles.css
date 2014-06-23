@@ -1,45 +1,84 @@
 body {
   width: 80%;
+  min-width: 720px;
   text-align: center;
   margin: 0.5em auto;
   padding: 0.2em;
 }
 
 div {
-  background-color: #ffe0ff;
+  background-color: #ffa;
   border-style: dashed;
   border-width: 0.1em;
   padding: 0.2em;
+}
+
+div.vertical_spacer {
+  border: none;
+  padding: 0;
+  margin: 0;
+  height: 0.2em;
+  background-color: transparent;
 }
 
 div.header {
   ;
 }
 
-div.header_left {
+span {
+  border-style: dashed;
+  border-width: 0.1em;
+  padding: 0.2em;
+}
+
+span.header_left {
   float: left;
 }
 
-div.header_center {
+span.header_center {
   display: inline-table;
 }
 
-div.header_right {
+span.header_right {
   float: right;
 }
 
 div.search_row {
-  overflow: hidden;
-  position: relative;
+  height: 100%;
+  text-align: left;
 }
 
-div.logo {
-  float: left;
+span.logo {
   font: 4em sans-serif;
+  padding: 0;
+  border: none;
+  width: 20%;
 }
 
-div.search {
-  display: inline;
-  position: absolute;
-  
+span.inputs {
+  border: none;
+  vertical-align: bottom;
+}
+
+input.text_box {
+  width: 70%;
+  height: 2em;
+  border-radius: 1em;
+}
+
+div.main {
+  text-align: left;
+}
+
+input.search_button {
+  width: 9%;
+  height: 2em;
+}
+
+span.stores {
+  width: 20%;
+}
+
+span.items {
+  width: 79%;
 }
