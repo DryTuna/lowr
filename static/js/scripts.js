@@ -22,7 +22,6 @@ $('document').ready(function(){
               success: function(result){
                   var parent = $(this).parent();
                   parent.empty().html(result);
-
               }
           });
     });
