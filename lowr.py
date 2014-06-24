@@ -31,9 +31,9 @@ def book_serve():
     price_range = data.range
 
     file_ = []
-        content, content_encoding = fetch_search_results(keyworkds, rn, page, min_p, price_range)
-        parsed_content = parse_source(content[0], content_encoding).find_all('div', class_='result')
-        extracted_content = extracted_content(parsed_content, min_p, price_range)
+    content, content_encoding = fetch_search_results(keyworkds, rn, page, min_p, price_range)
+    parsed_content = parse_source(content[0], content_encoding).find_all('div', class_='result')
+    extracted_content = extracted_content(parsed_content, min_p, price_range)
 
         for every_item in extracted_content:
             file.write(str(every_item) + "\n")
