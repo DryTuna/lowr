@@ -50,3 +50,7 @@ img.product-thumb {
     width: 64px;
     height: 64px;
 }
+
+.btn-primary {
+    background-color: rgb(247, 147, 30);
+}
