@@ -66,7 +66,7 @@ def item_dictionary(img, link, prime_price, new_price, min_p=None, max_p=None):
     return None if item['prime_price'] == u'n/a' else item
 
 
-def search_result(keywords, category, price, price_range):
+def search_results(keywords, category, price, price_range):
     count = 1
     page = 1
     min_p = None
@@ -75,7 +75,7 @@ def search_result(keywords, category, price, price_range):
         min_p = price - (price * price_range / 100)
         max_p = price + (price * price_range / 100)
     p_queue = P_Queue()
-    while count < 10:
+    while count < 20:
         content = fetch_search_results(keywords,
                                        category,
                                        page,
@@ -98,7 +98,7 @@ def search_result(keywords, category, price, price_range):
 
 
 if __name__ == '__main__':
-    a = search_result("iOS", 'n:283155', 300, 50)
+    a = search_result("To Kill a Mocking Bird", 'n:283155', 10, 100)
     f = open('extract.txt', 'w')
     while True:
         try:
