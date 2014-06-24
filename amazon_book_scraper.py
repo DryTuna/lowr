@@ -97,7 +97,6 @@ def search_result(keywords, category, price, price_range):
     return p_queue
 
 
-
 if __name__ == '__main__':
     a = search_result("iOS", 'n:283155', 300, 50)
     f = open('extract.txt', 'w')

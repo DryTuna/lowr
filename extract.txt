@@ -8,3 +8,4 @@
 429	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/31SuAaW-3SL.jpg', 'link': u'http://www.amazon.com/Ios-Precio-Es-Dolares-VV-AA/dp/B0084JMOPS', 'new_price': u'$429.50', 'title': u'Ios. Precio Es Dolares'}
 434	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/51AFBdeYIML._AA160_.jpg', 'link': u'http://www.amazon.com/Flash-Apps-Cookbook-Christopher-Caleb/dp/B009CPT9L0', 'new_price': u'$434.26', 'title': u'Flash iOS Apps Cookbook'}
 434	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/41Ihvi7voDL._AA160_.jpg', 'link': u'http://www.amazon.com/Unity-Game-Development-Beginners-Guide/dp/B009CPT460', 'new_price': u'$434.26', 'title': u'Unity iOS Game Development Beginners Guide'}
+
