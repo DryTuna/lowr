@@ -18,9 +18,11 @@ from amazon_book_scraper import extract_books, fetch_search_results, parse_sourc
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def home_page():
     return render_template('main.html')
+
 
 @app.route("/books")
 def book_serve():
@@ -42,7 +44,6 @@ def book_serve():
 
 
     return render_template('main.html')
-
 
 
 if __name__ == '__main__':
