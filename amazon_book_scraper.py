@@ -98,7 +98,7 @@ def search_results(keywords, category, price, price_range):
 
 
 if __name__ == '__main__':
-    a = search_result("To Kill a Mocking Bird", 'n:283155', 10, 100)
+    a = search_results("To Kill a Mocking Bird", 'n:283155', 10, 100)
     f = open('extract.txt', 'w')
     while True:
         try:
