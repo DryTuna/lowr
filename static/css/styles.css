@@ -1,0 +1,52 @@
+body {
+  padding-top: 63px
+}
+
+.thumbnail img {
+  width: 100%;
+}
+
+.thumbnail {
+  padding: 0;
+}
+
+.thumbnail .caption-full {
+  padding: 9px;
+  color: #333;
+}
+
+footer {
+  margin: 50px 0;
+}
+
+.navbar-nav > li > a {
+    margin-left: -15px;
+    padding-top:7px !important;
+    padding-bottom:2px !important;
+}
+
+.navbar {
+    min-height:40px !important;
+    background-color: #fafafa;
+}
+
+.icon-bar {
+    background-color: rgb(247, 147, 30) !important;
+}
+
+.navbar-toggle {
+    border-color: rgb(247, 147, 30) !important;
+}
+
+a, a:hover, a:focus {
+color: rgb(247, 147, 30);
+}
+
+a:hover, a:focus {
+text-decoration: underline;
+}
+
+img.product-thumb {
+    width: 64px;
+    height: 64px;
+}
