@@ -1,5 +1,5 @@
 body {
-  padding-top: 90px
+  padding-top: 63px
 }
 
 .thumbnail img {
@@ -27,4 +27,13 @@ footer {
 
 .navbar {
     min-height:40px !important;
+    background-color: #fafafa;
+}
+
+.icon-bar {
+    background-color: black !important;
+}
+
+.navbar-toggle {
+    border-color: black !important;
 }
