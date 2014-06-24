@@ -1,15 +1,9 @@
 body {
-  padding-top: 70px
+  padding-top: 90px
 }
 
 .thumbnail img {
   width: 100%;
-}
-
-.ratings {
-  color: #d17581;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 .thumbnail {
@@ -23,4 +17,14 @@ body {
 
 footer {
   margin: 50px 0;
+}
+
+.navbar-nav > li > a {
+    margin-left: -15px;
+    padding-top:7px !important;
+    padding-bottom:2px !important;
+}
+
+.navbar {
+    min-height:40px !important;
 }
