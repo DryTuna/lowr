@@ -17,5 +17,9 @@ def main():
     return render_template("main.html")
 
 
+@app.route('/')
+def search_function()
+
+
 if __name__ == '__main__':
     app.run(debug=True)
