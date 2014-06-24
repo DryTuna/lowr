@@ -42,6 +42,8 @@ coverage.xml
 .project
 .pydevproject
 .DS_Store
+test.py
+
 # Rope
 .ropeproject
 
