@@ -1,0 +1,54 @@
+<div class="container" id="search_results">
+
+  <div class="row">
+
+    <hr>
+
+    <div class="col-xs-1">
+      <p>&nbsp</p>
+    </div>
+
+    <div class="col-xs-10">
+      <form role="form" action="/add">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                Image
+              </th>
+              <th>
+                Description
+              </th>
+              <th>
+                Price
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for result in results %}
+            <tr id="{{result.link}}" onclick="toggleRowSelect('#{{result.link}}');">
+              <td>
+                <img class="img product-thumb"
+                 src="{{result.image_url}}" alt="Product Image" />
+              </td>
+              <td>
+                {{result.title}}
+              </td>
+              <td>
+                {{result.price}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div class="col-xs-1">
+      <p>&nbsp</p>
+    </div>
+
+  </div>
+
+</div>
+<!-- /.container -->

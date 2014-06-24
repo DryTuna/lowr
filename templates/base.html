@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>lowr</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet">
+
+  <!-- Add custom CSS here -->
+  <link href="../static/css/styles.css" rel="stylesheet">
+
+  <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav pull-right">
+          <li><a href="#log_in">Log In</a>
+          </li>
+          <li><a href="#create_account">Create Account</a>
+          </li>
+          <li><a href="#my_account">
+          <img class="img-rounded" style="position: relative; top: 2px; right: 1px;"
+               src="http://placehold.it/29x29&text=M" alt="M" /></a>
+          </li>
+          <li><a href="#tweet">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-square-o fa-stack-2x"></i>
+            <i class="fa fa-twitter fa-stack-1x"></i>
+          </span></a>
+          </li>
+          <li><a href="#facebook">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-square-o fa-stack-2x"></i>
+            <i class="fa fa-facebook fa-stack-1x"></i>
+          </span></a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  {% block body %}
+  
+  {% endblock %}
+  <div class="container">
+
+    <hr>
+
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; lowrd_gangstazz 2014 - Template by <a href="http://maxoffsky.com/">Maks</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  <!-- /.container -->
+
+  <!-- JavaScript -->
+  <script src="../static/js/jquery-1.10.2.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
+
+  <script src="../static/js/jquery-1.11.1.min.js"></script>
+  <script src="../static/js/scripts.js"></script>
+
+</body>
+
+</html>
