@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="search_results">
 
   <div class="row">
 
@@ -25,30 +25,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr id="product_1" onclick="toggleRowSelect('#product_1');">
+            {% for result in results %}
+            <tr id="{{result.link}}" onclick="toggleRowSelect('#{{result.link}}');">
               <td>
                 <img class="img product-thumb"
-                 src="http://placehold.it/96x96&text=Product" alt="Product" />
+                 src="{{result.image_url}}" alt="Product Image" />
               </td>
               <td>
-                A very cool product that you will like, but is too pricey
+                {{result.title}}
               </td>
               <td>
-                $999.99
+                {{result.price}}
               </td>
             </tr>
-            <tr id="product_2" onclick="toggleRowSelect('#product_2');">
-              <td>
-                <img class="img product-thumb"
-                 src="http://placehold.it/96x96&text=Product" alt="Product" />
-              </td>
-              <td>
-                A very cool product that you will like, but is too pricey
-              </td>
-              <td>
-                $999.99
-              </td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </form>

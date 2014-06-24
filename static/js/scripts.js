@@ -1,12 +1,12 @@
 // maintain a list of the products selected, so we can submit them
-selectedProducts = []
-function toggleRowSelect(row_id) {
-    if($(row_id).hasClass("warning")) {
-        $(row_id).removeClass("warning");
-        selectedProducts.splice(selectedProducts.indexOf(row_id), 1);
+selectedProductURLs = []
+function toggleRowSelect(product_url) {
+    if($(product_url).hasClass("warning")) {
+        $(product_url).removeClass("warning");
+        selectedProductURLs.splice(selectedProductURLs.indexOf(product_url), 1);
     } else {
-        $(row_id).addClass("warning");
-        selectedProducts.push(row_id);
+        $(product_url).addClass("warning");
+        selectedProductURLs.push(product_url);
     }
 }
 
