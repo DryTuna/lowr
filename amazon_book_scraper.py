@@ -7,7 +7,7 @@ def parse_source(html, encoding='utf-8'):
     return parsed
 
 
-def fetch_search_results(keywords="", rh='n:283155', page=None, min_p=None, range=20):
+def fetch_search_results(keywords="", rh='n:283155', page=None, min_p=None, price_range=20):
     base = 'http://www.amazon.com/s/'
     if len(keywords) == 0:
         raise ValueError("Please enter search keys")
@@ -19,8 +19,8 @@ def fetch_search_results(keywords="", rh='n:283155', page=None, min_p=None, rang
     if page is not None:
         params['page'] = page
     if min_p is not None:
-        params['low-price'] = min_p - (min_p * range / 100)
-        params['high-price'] = min_p + (min_p * range / 100)
+        params['low-price'] = min_p - (min_p * price_range / 100)
+        params['high-price'] = min_p + (min_p * price_range / 100)
     resp = requests.get(base, params=params, timeout=5)
     resp.raise_for_status()
     return resp.content, resp.encoding
@@ -57,6 +57,7 @@ def item_dictionary(img, link, prime_price, new_price, min_p, max_p):
             return item
         else:
             return None if item['prime_price'] == u'n/a' else item
+    return None if item['prime_price'] == u'n/a' else item
 
 
 if __name__ == '__main__':
