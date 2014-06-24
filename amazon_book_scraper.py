@@ -7,29 +7,21 @@ def parse_source(html, encoding='utf-8'):
     return parsed
 
 
-def fetch_search_results(title="", dept='&rh=n:283155', min_p=None, range=20):
-    search_params = {
-        key: val for key, val in locals().items() if val is not None
-    }
-    if not search_params:
-        raise ValueError("No valid keywords")
-    base = 'http://www.amazon.com/s/ref=sr_st_relevancerank'
-    if len(title) == 0:
+def fetch_search_results(keywords="", rh='n:283155', page=None, min_p=None, range=20):
+    base = 'http://www.amazon.com/s/'
+    if len(keywords) == 0:
         raise ValueError("Please enter search keys")
-    base += '?keywords='+title
-    base += dept
+    params = {
+        'ref': 'sr_st_relevancerank',
+        'keywords': keywords,
+        'rh': rh
+    }
+    if page is not None:
+        params['page'] = page
     if min_p is not None:
-        base += '&low-price='+str(min_p - (min_p * range / 100))
-        base += '&high-price='+str(min_p + (min_p * range / 100))
-    resp = requests.get(base, timeout=5)
-    resp.raise_for_status()
-    return resp.content, resp.encoding
-
-
-def fetch_next(content):
-    next_link = content.find('a', class_='pagnNext')
-    url = next_link.attrs['href']
-    resp = requests.get(url, timeout=5)
+        params['low-price'] = min_p - (min_p * range / 100)
+        params['high-price'] = min_p + (min_p * range / 100)
+    resp = requests.get(base, params=params, timeout=5)
     resp.raise_for_status()
     return resp.content, resp.encoding
 
@@ -69,10 +61,27 @@ def item_dictionary(img, link, prime_price, new_price, min_p, max_p):
 
 if __name__ == '__main__':
     import pprint
-    a = fetch_search_results("To kill a mocking bird",'&rh=n:283155', 50, 50)
-    b = extract_books(parse_source(a[0], 'utf-8'), 25, 75)
+    count = 0
+    page = 1
     f = open('extract.txt', 'w')
-    for i in b:
-        f.write(str(i) + "\n")
-        pprint.pprint(i)
+    while count < 10:
+        a = fetch_search_results("To Kill The Mocking Bird", 'n:283155', page, 50, 50)
+        check = parse_source(a[0], 'utf-8').find_all('div', class_='result')
+        if len(check) == 0:
+            break
+        b = extract_books(parse_source(a[0], 'utf-8'), 25, 75)
+        for i in b:
+            f.write(str(i) + "\n")
+            count += 1
+        page += 1
     f.close()
+    '''
+    a = u'http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=to+kill+a+mocking+bird&rh=n%3A283155%2Ck%3Ato+kill+a+mocking+bird&page=2'
+    resp = requests.get(a, timeout=5)
+    resp.raise_for_status()
+    parsed = parse_source(resp.content, resp.encoding)
+    next_link = parsed.find('a', id ='pagnNextLink')
+    url = next_link.attrs['href']
+    print next_link
+
+    '''
