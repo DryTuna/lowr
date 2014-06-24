@@ -38,7 +38,7 @@
           {% if not session.logged_in %}
           <li class=""><a href="{{url_for('login')}}">Log In</a>
           </li>
-          <li><a href="{{url_for('create_account')}}">Create Account</a>
+          <li><a href="{{url_for('signup')}}">Sign Up</a>
           </li>
           {% else %}
           <li class=""><a href="{{url_for('logout')}}">Log Out</a>

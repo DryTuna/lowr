@@ -10,19 +10,27 @@ function toggleRowSelect(product_url) {
     }
 }
 
-
-$('document').ready(function(){
+$('document').ready(function() {
     $('#search_form').on('submit', function(event) {
           event.preventDefault();
           var search_form =  $(event.target);
-          $.ajax(search_form.action),{
+          $.ajax(search_form.action), {
               type: 'GET',
               data: JSON.stringify(search_form.serializeArray()),
               context: search_form,
-              success: function(result){
+              success: function(result) {
                   var parent = $(this).parent();
                   parent.empty().html(result);
               }
           });
+    });
+
+    // thanks to Rohan Kumar on stackoverflow
+    $('#create_form').on('submit',function() {
+        if($('#signup_password').val() != $('#signup_password_confirm').val()) {
+            alert('Password does not match confirmation');
+            return false;
+        }
+        return true;
     });
 })
