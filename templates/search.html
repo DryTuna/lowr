@@ -29,13 +29,13 @@
             <tr id="{{result.link}}" onclick="toggleRowSelect('#{{result.link}}');">
               <td>
                 <img class="img product-thumb"
-                 src="{{result.image_url}}" alt="Product Image" />
+                 src="{{ result[image] }}" alt="Product Image" />
               </td>
               <td>
-                {{result.title}}
+                {{ result[title] }}
               </td>
               <td>
-                {{result.price}}
+                {{ result[prime_price] }}
               </td>
             </tr>
             {% endfor %}

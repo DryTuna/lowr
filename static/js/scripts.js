@@ -22,7 +22,7 @@ $('document').ready(function() {
                   var parent = $(this).parent();
                   parent.empty().html(result);
               }
-          });
+          }
     });
 
     // thanks to Rohan Kumar on stackoverflow
