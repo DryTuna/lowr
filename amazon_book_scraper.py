@@ -26,7 +26,7 @@ def fetch_search_results(keywords="",
     if min_p is not None:
         params['low-price'] = min_p - (min_p * price_range / 100)
         params['high-price'] = min_p + (min_p * price_range / 100)
-    resp = requests.get(base, params=params, timeout=5)
+    resp = requests.get(base, params=params, timeout=3)
     resp.raise_for_status()
     return resp.content, resp.encoding
 
@@ -67,6 +67,10 @@ def item_dictionary(img, link, prime_price, new_price, min_p=None, max_p=None):
 
 
 def search_result(keywords, category, price, price_range):
+    price = int(price)
+    price_range = int(price_range)
+    # price = 100
+    # price_range = 100
     count = 1
     page = 1
     min_p = None
