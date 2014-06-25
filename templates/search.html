@@ -9,7 +9,6 @@
     </div>
 
     <div class="col-xs-10">
-      <form role="form" action="/add">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -29,19 +28,18 @@
             <tr id="{{result.link}}" onclick="toggleRowSelect('#{{result.link}}');">
               <td>
                 <img class="img product-thumb"
-                 src="{{ result[image] }}" alt="Product Image" />
+                 src="{{ result['image'] }}" alt="Product Image" />
               </td>
               <td>
-                {{ result[title] }}
+                {{ result['title'] }}
               </td>
               <td>
-                {{ result[prime_price] }}
+                {{ result['prime_price'] }}
               </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
-      </form>
     </div>
 
     <div class="col-xs-1">

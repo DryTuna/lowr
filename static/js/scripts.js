@@ -14,15 +14,21 @@ $('document').ready(function() {
     $('#search_form').on('submit', function(event) {
           event.preventDefault();
           var search_form =  $(event.target);
-          $.ajax(search_form.action), {
-              type: 'GET',
-              data: JSON.stringify(search_form.serializeArray()),
+          var formJsonData = JSON.stringify($(this).serializeArray());
+
+          console.log(formJsonData);
+
+          $.ajax(("/search"), {
+              type: 'POST',
+              data: {'data':formJsonData},
               context: search_form,
               success: function(result) {
-                  var parent = $(this).parent();
-                  parent.empty().html(result);
+                  console.log("hi");
+//                  var parent = $(this).parent();
+//                  parent.empty().html(result);
+                   $('#search_results').html(result)
               }
-          }
+          });
     });
 
     // thanks to Rohan Kumar on stackoverflow
