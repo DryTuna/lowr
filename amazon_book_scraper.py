@@ -71,6 +71,8 @@ def search_results(keywords, category, price, price_range):
     page = 1
     min_p = None
     max_p = None
+    price = int(price)
+    price_range = int(price_range)
     if price is not None:
         min_p = price - (price * price_range / 100)
         max_p = price + (price * price_range / 100)
