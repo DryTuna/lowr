@@ -66,7 +66,7 @@ def item_dictionary(img, link, prime_price, new_price, min_p=None, max_p=None):
     return None if item['prime_price'] == u'n/a' else item
 
 
-def search_result(keywords, category, price, price_range):
+def search_result(keywords, category, price, price_range = 0):
     price = int(price)
     price_range = int(price_range)
     # price = 100

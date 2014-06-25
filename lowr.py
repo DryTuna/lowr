@@ -84,7 +84,7 @@ def search():
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-    file_ = search_result(keywords, 'n:283155', price_range, price_range)
+    file_ = search_result(keywords, 'n:283155', price, price_range)
 
     results = []
 
@@ -93,11 +93,6 @@ def search():
             results.append(file_.pop()._data)
         except IndexError:
             break
-
-    print file_
-
-    import pdb; pdb.set_trace()
-    print results
 
     return render_template('search.html', results = results)#{'title':'game of thornes', 'imgage':'adfhasjd', 'price':200    })
 

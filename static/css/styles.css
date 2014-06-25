@@ -15,12 +15,10 @@ body {
   color: #333;
 }
 
-footer {
-  margin: 50px 0;
-}
+
 
 .navbar-nav > li > a {
-    margin-left: -15px;
+    /*margin-left: -15px;*/
     padding-top:7px !important;
     padding-bottom:2px !important;
 }
@@ -53,4 +51,41 @@ img.product-thumb {
 
 .btn-primary {
     background-color: rgb(247, 147, 30);
+}
+
+#nav{
+    background-color: rgb(101, 101, 101);
+    /*min-width: 600px;*/
+}
+
+#footer{
+    position: fixed;
+    height:50px;
+    background-color: rgb(101, 101, 101);
+    bottom:0px;
+    /*left:0px;*/
+    /*right:0px;*/
+    /*margin-bottom:0px;*/
+    /*min-width: 600px;*/
+}
+
+#search_category{
+    width: 230px;
+    background-color : ghostwhite;
+    size: "8";
+
+}
+
+body{
+    text-align: center;
+    background-image: url('/static/img/background2.jpg');
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+html {
+ font-size: 16px;
+height: 845px;
+width: 1302px;
 }

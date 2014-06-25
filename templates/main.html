@@ -4,21 +4,16 @@
 
   <div class="row">
 
+    <div class="cpl-md-3"></div>
 
-    <div class="col-xs-3">
 
-      <img class="img-responsive" src="../static/img/lowr_logo.png"
-           style="position: relative; top: -10px;" alt="lowr logo">
+    <div class="col-md-9">
 
-    </div>
-
-    <div class="col-xs-9">
-
-      <form role="form" id="search_form" name="search_form" action="{{ url_for('search') }}">
+      <form role="form" id="search_form" name="search_form" action="{{ url_for('search') }}"  >
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-btn">
-              <select class="form-control" name="search_category" id="search_category" style="width: 105px !important;">
+              <select class="form-control" name="search_category" id="search_category" >
                   <option >All Departments</option>
                   <option >Electronics</option>
                   <option >Amazon Instant Video</option>
@@ -61,7 +56,7 @@
               </select>
             </span>
             <input name= "search_text" type="search" class="form-control" id="search_text"
-                   placeholder="Product to be searched for">
+                   placeholder="Product to be searched for" required="" >
             <span class="input-group-btn">
               <button type="submit" class="btn btn-primary" id="search_button">
               <span class="glyphicon glyphicon-search"></span></button>
@@ -72,13 +67,13 @@
           <div class="form-group">
             <div class="input-group input-group-sm" style="width: 210px;">
               <span class="input-group-addon">$</span>
-              <input name="search_min_price" type="number" class="form-control" id="search_min_price" placeholder="Lowest price">
+              <input name="search_min_price" type="number" class="form-control" id="search_min_price" placeholder="Lowest price" required="">
               <span class="input-group-addon">.00</span>
             </div>
           </div>
           <div class="form-group">
             <div class="input-group input-group-sm" style="width: 155px;">
-              <input name="search_price_range" type="number" class="form-control" id="search_price_range" placeholder="Price range">
+              <input name="search_price_range" type="number" class="form-control" id="search_price_range" placeholder="Price range" >
               <span class="input-group-addon">%</span>
             </div>
           </div>
