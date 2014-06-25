@@ -158,7 +158,7 @@ def account():
 
 
 app.config['DATABASE'] = os.environ.get(
-    'DATABASE_URL', 'dbname=accounts'
+    'DATABASE_URL', 'dbname=lowr'
 )
 app.config['ADMIN_USERNAME'] = os.environ.get(
     'ADMIN_USERNAME', 'admin@admin.com'
