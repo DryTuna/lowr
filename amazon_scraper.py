@@ -102,9 +102,9 @@ def search_results(keywords, category, price, price_range):
         for i in items:
             pri = 0
             if i['prime_price'] == u'n/a':
-                pri = int(i['new_price'][1:-3])
+                pri = int(i['new_price'][1:-3].replace(',', ''))
             else:
-                pri = int(i['prime_price'][1:-3])
+                pri = int(i['prime_price'][1:-3].replace(',', ''))
             p_queue.insert(i, pri)
             count += 1
         page += 1
