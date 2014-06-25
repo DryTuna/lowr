@@ -188,6 +188,8 @@ def teardown_request(exception):
 
 
 if __name__ == '__main__':
+
+    createdb lowr
     from gevent.wsgi import WSGIServer
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
