@@ -11,6 +11,18 @@ function toggleRowSelect(product_url) {
     }
 }
 
+function submitItems() {
+  $.ajax(("/submititems"), {
+        type: 'POST',
+        data: JSON.stringify(selectedProductURLs),
+        contentType: 'application/json',
+        context: document.body,
+        success: function(result) {
+            location.href = result;
+        }
+    });
+}
+
 $('document').ready(function() {
     $('#search_form').on('submit', function(event) {
           selectedProductURLs = []
@@ -18,14 +30,13 @@ $('document').ready(function() {
           var search_form =  $(event.target);
           var formJsonData = JSON.stringify($(this).serializeArray());
 
-          console.log(formJsonData);
-
           $.ajax(("/search"), {
               type: 'POST',
               data: {'data':formJsonData},
               context: search_form,
               success: function(result) {
-                   $('#search_results').html(result)
+                  document.getElementById('submit_items_wrapper').style.display = 'block'
+                  $('#search_results').html(result)
               }
           });
     });

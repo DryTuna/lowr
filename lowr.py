@@ -22,6 +22,7 @@ from passlib.hash import pbkdf2_sha256
 from lowr_database import *
 
 # CUSTOM
+=======
 from amazon_book_scraper import search_results
 
 
@@ -94,8 +95,7 @@ def search():
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-
-    file_ = search_results(keywords, category, price, price_range)
+    file_ = search_results(keywords, 'n:283155', price, price_range)
 
     results = []
 
@@ -145,6 +145,14 @@ def do_login(username='', passwd=''):
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
+
+
+@app.route("/submititems", methods=['GET', 'POST'])
+def submititems():
+    import json
+    data = request.get_json()
+    print data
+    return '/myaccount'
 
 
 @app.route("/myaccount")

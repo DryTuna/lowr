@@ -18,7 +18,13 @@
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-btn">
+<<<<<<< HEAD
               <select class="form-control" name="search_category" id="search_category" style="width: 105px !important;" required>
+=======
+              <select class="form-control" name="search_category"
+                      id="search_category" style="width: 135px !important;"
+                      >
+>>>>>>> 55b661c3a3f0461501dba3964121c97a0ea91922
                   <option >All Departments</option>
                   <option >Electronics</option>
                   <option >Amazon Instant Video</option>
@@ -86,8 +92,26 @@
           </div>
         </div>
       </form>
+      <div id="submit_items_wrapper" style="display: none;">
+        {% if session.logged_in %}
+        <button class="btn btn-primary"
+                onclick="submitItems()" id="submit_items">
+          Submit Items for Tracking
+        </button>
+        {% else %}
+        <button class="btn btn-primary"
+                onclick="location.href='{{ url_for('login') }}'">
+          Login
+        </button>
+        or
+        <button class="btn btn-primary"
+                onclick="location.href='{{ url_for('signup') }}'">
+          sign up
+        </button>
+        to submit items for tracking
+        {% endif %}
+      </div>
     </div>
-
   </div>
 
 </div>
