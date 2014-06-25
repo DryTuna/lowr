@@ -1,17 +1,19 @@
 // maintain a list of the products selected, so we can submit them
 selectedProductURLs = []
 function toggleRowSelect(product_url) {
-    if($(product_url).hasClass("warning")) {
-        $(product_url).removeClass("warning");
+    product_listing = $(document.getElementById(product_url));
+    if(product_listing.hasClass("warning")) {
+        product_listing.removeClass("warning");
         selectedProductURLs.splice(selectedProductURLs.indexOf(product_url), 1);
     } else {
-        $(product_url).addClass("warning");
+        product_listing.addClass("warning");
         selectedProductURLs.push(product_url);
     }
 }
 
 $('document').ready(function() {
     $('#search_form').on('submit', function(event) {
+          selectedProductURLs = []
           event.preventDefault();
           var search_form =  $(event.target);
           var formJsonData = JSON.stringify($(this).serializeArray());
@@ -23,9 +25,6 @@ $('document').ready(function() {
               data: {'data':formJsonData},
               context: search_form,
               success: function(result) {
-                  console.log("hi");
-//                  var parent = $(this).parent();
-//                  parent.empty().html(result);
                    $('#search_results').html(result)
               }
           });

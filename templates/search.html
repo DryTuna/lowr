@@ -19,13 +19,16 @@
                 Description
               </th>
               <th>
+                Prime
+              </th>
+              <th>
                 Price
               </th>
             </tr>
           </thead>
           <tbody>
             {% for result in results %}
-            <tr id="{{result.link}}" onclick="toggleRowSelect('#{{result.link}}');">
+            <tr id="{{result.link}}" onclick="toggleRowSelect('{{result.link}}');">
               <td>
                 <img class="img product-thumb"
                  src="{{ result['image'] }}" alt="Product Image" />
@@ -35,6 +38,9 @@
               </td>
               <td>
                 {{ result['prime_price'] }}
+              </td>
+              <td>
+                {{ result['new_price'] }}
               </td>
             </tr>
             {% endfor %}
