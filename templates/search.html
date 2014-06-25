@@ -30,17 +30,19 @@
             {% for result in results %}
             <tr id="{{result.link}}" onclick="toggleRowSelect('{{result.link}}');">
               <td>
-                <img class="img product-thumb"
-                 src="{{ result['image'] }}" alt="Product Image" />
+                <a class="black-link" href="{{result.link}}">
+                  <img class="img product-thumb"
+                       src="{{ result['image'] }}" alt="Product Image" />
+                </a>
               </td>
               <td>
-                {{ result['title'] }}
+                <a class="black-link" href="{{result.link}}">{{ result['title'] }}</a>
               </td>
               <td>
-                {{ result['prime_price'] }}
+                <a class="black-link" href="{{result.link}}">{{ result['prime_price'] }}</a>
               </td>
               <td>
-                {{ result['new_price'] }}
+                <a class="black-link" href="{{result.link}}">{{ result['new_price'] }}</a>
               </td>
             </tr>
             {% endfor %}

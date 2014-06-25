@@ -23,6 +23,14 @@ function submitItems() {
     });
 }
 
+// this bit is from Jonathan Sampson on stackoverflow
+$body = $("body");
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+     ajaxStop: function() { $body.removeClass("loading"); }    
+});
+
+
 $('document').ready(function() {
     $('#search_form').on('submit', function(event) {
           selectedProductURLs = []
