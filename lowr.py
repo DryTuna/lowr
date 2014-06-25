@@ -156,7 +156,6 @@ def account():
 
 
 
-
 app.config['DATABASE'] = os.environ.get(
     'DATABASE_URL', 'dbname=lowr'
 )
@@ -183,7 +182,9 @@ def teardown_request(exception):
         db.close()
         g.db = None # get rid of db from the g namespace
 
-
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html',  404)
 
 
 
@@ -193,3 +194,4 @@ if __name__ == '__main__':
     from gevent.wsgi import WSGIServer
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
+
