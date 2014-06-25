@@ -23,6 +23,7 @@ def fetch_search_results(keywords="",
     }
     if page is not None:
         params['page'] = page
+        print "hi"
     if min_p is not None:
         params['low-price'] = min_p - (min_p * price_range / 100)
         params['high-price'] = min_p + (min_p * price_range / 100)
