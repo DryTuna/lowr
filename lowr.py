@@ -22,7 +22,6 @@ from passlib.hash import pbkdf2_sha256
 from lowr_database import *
 
 # CUSTOM
-=======
 from amazon_book_scraper import search_results
 
 
@@ -115,8 +114,8 @@ def login():
     error = None
     if request.method == 'POST':
         try:
-            do_login(request.form['username'].encode('utf-8'),
-                     request.form['password'].encode('utf-8'))
+            do_login(request.form['login_username'].encode('utf-8'),
+                     request.form['login_password'].encode('utf-8'))
         except ValueError:
             error = "Login Failed"
         else:
