@@ -30,6 +30,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+        <a class="navbar-brand" href="{{url_for('home_page')}}">
+          lowr
+        </a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,6 +44,8 @@
           <li><a href="{{url_for('signup')}}">Sign Up</a>
           </li>
           {% else %}
+          <li class=""><a href="{{url_for('account')}}">My Account</a>
+          </li>
           <li class=""><a href="{{url_for('logout')}}">Log Out</a>
           </li>
           {% endif %}
@@ -74,6 +79,7 @@
   <!-- JavaScript -->
   <script src="../static/js/jquery-1.11.1.min.js"></script>
   <script src="../static/js/bootstrap.js"></script>
+
   <script src="../static/js/scripts.js"></script>
 
 </body>

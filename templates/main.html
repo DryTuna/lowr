@@ -13,7 +13,9 @@
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-btn">
-              <select class="form-control" name="search_category" id="search_category" >
+              <select class="form-control" name="search_category"
+                      id="search_category" style="width: 135px !important;"
+                      >
                   <option >All Departments</option>
                   <option >Electronics</option>
                   <option >Amazon Instant Video</option>
@@ -56,7 +58,8 @@
               </select>
             </span>
             <input name= "search_text" type="search" class="form-control" id="search_text"
-                   placeholder="Product to be searched for" required="" >
+                   placeholder="Product to be searched for" required>
+
             <span class="input-group-btn">
               <button type="submit" class="btn btn-primary" id="search_button">
               <span class="glyphicon glyphicon-search"></span></button>
@@ -67,26 +70,87 @@
           <div class="form-group">
             <div class="input-group input-group-sm" style="width: 210px;">
               <span class="input-group-addon">$</span>
-              <input name="search_min_price" type="number" class="form-control" id="search_min_price" placeholder="Lowest price" required="">
+              <input name="search_min_price" type="number" class="form-control" id="search_min_price" placeholder="Desired price" required>
               <span class="input-group-addon">.00</span>
             </div>
           </div>
+          <label for="search_price_range" class="control-label"
+          style="font-weight: normal; margin-left: 12px">Price range:</label>
           <div class="form-group">
-            <div class="input-group input-group-sm" style="width: 155px;">
-              <input name="search_price_range" type="number" class="form-control" id="search_price_range" placeholder="Price range" >
+
+            <div class="input-group input-group-sm" style="width: 90px;">
+              <input name="search_price_range" type="number" class="form-control" id="search_price_range" value="20" required>
               <span class="input-group-addon">%</span>
             </div>
           </div>
         </div>
       </form>
+      <div id="submit_items_wrapper" style="display: none;">
+        {% if session.logged_in %}
+        <button class="btn btn-primary"
+                onclick="submitItems()" id="submit_items">
+          Submit Items for Tracking
+        </button>
+        {% else %}
+        <button class="btn btn-primary"
+                onclick="location.href='{{ url_for('login') }}'">
+          Login
+        </button>
+        or
+        <button class="btn btn-primary"
+                onclick="location.href='{{ url_for('signup') }}'">
+          sign up
+        </button>
+        to submit items for tracking
+        {% endif %}
+      </div>
     </div>
-
   </div>
 
 </div>
 <!-- /.container -->
 
 <div class="container" id="search_results">
+  <hr><br>
+  <div class="jumbotron">
+    <div id="message1">
+      <h3>We believe that no one should have to pay too much for
+          the items they need
+      </h3>
+      <h2 class="text-right">
+        or that anyone should have to waste time watching prices.
+      </h2>
+      <p>
+        That's why we created <em>lowr</em>, our price monitoring tool:
+        to insure that you wont miss out on a deal. Go ahead, make a
+        search, and let us work for you.
+      </p>
+      <script type="text/javascript">
+        function swap_messages() {
+          document.getElementById('message2').style.display = 'block';
+          document.getElementById('message1').style.display = 'none';
+        }
+      </script>
+      <p class="pull-right"><a class="btn btn-primary btn-lg" role="button"
+            href="javascript:swap_messages()">
+            Learn more
+      </a></p>
+      <br>
+    </div>
+    <div id="message2" style="display: none;">
+      <h3>To make a search:</h3>
+      <ol>
+        <li>Select a category to narrow your search</li>
+        <li>Enter the name of the product you are searching for</li>
+        <li>Enter the price that you <em>are willing</em> to pay for it</li>
+        <li>Optionally select a range from your desired price in
+            which to search
+        </li>
+        <li>Submit
+      </ol>
+      <h2 class="text-right">It's that easy!</h2>
+    </div>
+  </div>
 </div>
 <!-- /.container -->
 {% endblock %}
