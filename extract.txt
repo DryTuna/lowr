@@ -1,9 +1,75 @@
-5	{'prime_price': u'$5.99', 'image': u'http://ecx.images-amazon.com/images/I/41kkS-Xa-hL._AA160_.jpg', 'link': u'http://www.amazon.com/Kill-Mocking-Bird-Book-Film-ebook/dp/B00IHI0LTW', 'new_price': u'n/a', 'title': u'To Kill a Mocking Bird Book VS Film: The one who got 100%'}
-5	{'prime_price': u'$5.74', 'image': u'http://ecx.images-amazon.com/images/I/51DICZXsB2L._AA160_.jpg', 'link': u'http://www.amazon.com/Animal-Farm-A-Fairy-Story-ebook/dp/B003K16PUU', 'new_price': u'n/a', 'title': u'Animal Farm: A Fairy Story'}
-5	{'prime_price': u'$5.62', 'image': u'http://ecx.images-amazon.com/images/I/51q50Vw-SOL._AA160_.jpg', 'link': u'http://www.amazon.com/Of-Mice-Men-Penguin-Classics-ebook/dp/B00CS74W6Q', 'new_price': u'n/a', 'title': u'Of Mice and Men (Penguin Classics)'}
-5	{'prime_price': u'$5.64', 'image': u'http://ecx.images-amazon.com/images/I/41mow-6%2BKRL._AA160_.jpg', 'link': u'http://www.amazon.com/Lord-Flies-Perigee-William-Golding-ebook/dp/B000OCXIRG', 'new_price': u'n/a', 'title': u'Lord of the Flies (Perigee)'}
-8	{'prime_price': u'$8.49', 'image': u'http://ecx.images-amazon.com/images/I/51jIYSG%2B3CL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Notes-Edition-ebook/dp/B00EVTDL66', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird: York Notes for GCSE (New Edition)'}
-9	{'prime_price': u'$9.00', 'image': u'http://ecx.images-amazon.com/images/I/51gyTg9LxAL._AA160_.jpg', 'link': u'http://www.amazon.com/Fun-Lesson-Plans-Kill-Mockingbird-ebook/dp/B00BPEXS68', 'new_price': u'n/a', 'title': u'Fun Lesson Plans: To Kill A Mockingbird'}
-9	{'prime_price': u'$9.95', 'image': u'http://ecx.images-amazon.com/images/I/51Thfo8PqkL._AA160_.jpg', 'link': u'http://www.amazon.com/Ultimate-American-Literature-Moby-Dick-Mockingbird-ebook/dp/B007ZUGVWE', 'new_price': u'n/a', 'title': u'The Ultimate American Literature Quicklet Bundle (Moby-Dick, The Sun Also Rises, To Kill a Mockingbird, and More...'}
-9	{'prime_price': u'$9.78', 'image': u'http://ecx.images-amazon.com/images/I/51ZW9ip8dTL._AA160_.jpg', 'link': u'http://www.amazon.com/Scout-Atticus-Boo-Celebration-Mockingbird-ebook/dp/B003MVZ88I', 'new_price': u'n/a', 'title': u'Scout, Atticus, and Boo: A Celebration of Fifty Years of To Kill a Mockingbird'}
-9	{'prime_price': u'$9.99', 'image': u'http://ecx.images-amazon.com/images/I/41nr6tf-U-L._AA160_.jpg', 'link': u'http://www.amazon.com/Mockingbird-Harper-Summary-Study-Guide-ebook/dp/B004MDLND4', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird by Harper Lee | Summary & Study Guide'}
+
+http://ecx.images-amazon.com/images/I/410cpi36MvL._SP160,160,0,T_.jpg
+http://www.amazon.com/SEOH-Lamp-Holder-Simple-Physics/dp/B0088AQUZS
+$1.00
+n/a
+
+http://ecx.images-amazon.com/images/I/31mLgLNRqbL._SP160,160,0,T_.jpg
+http://www.amazon.com/Frey-Scientific-Solid-Physics-Diameter/dp/B00FGDVCAS
+$1.60
+n/a
+
+http://ecx.images-amazon.com/images/I/41vOjIsvXML._AA160_.jpg
+http://www.amazon.com/SEOH-Battery-Holder-Leads-Physics/dp/B0083LW8BC
+$3.95
+$0.90
+
+http://ecx.images-amazon.com/images/I/31AazuAWHXL._AA160_.jpg
+http://www.amazon.com/Neewer-Optical-Triangular-Teaching-Spectrum/dp/B00L27S67Y
+$3.46
+$6.96
+
+http://ecx.images-amazon.com/images/I/41mNkEOY3hL._AA160_.jpg
+http://www.amazon.com/SEOH-Double-Battery-Holder-Physics/dp/B0083LW8NA
+$4.50
+$1.20
+
+http://ecx.images-amazon.com/images/I/31u9nUWYRgL._SP160,160,0,T_.jpg
+http://www.amazon.com/SEOH-Electric-Buzzer-DC-Circuits/dp/B0083LWHDQ
+$6.75
+$3.63
+
+http://ecx.images-amazon.com/images/I/51omiUaDlWL._AA160_.jpg
+http://www.amazon.com/Amlong-Crystal%C2%AE-Triangular-Teaching-Spectrum/dp/B00FHEL74C
+$7.90
+$7.90
+
+http://ecx.images-amazon.com/images/I/31Sj90ooxdL._AA160_.jpg
+http://www.amazon.com/Ajax-Scientific-Plastic-Tubular-Capacity/dp/B00EPQGUAE
+$8.41
+n/a
+
+http://ecx.images-amazon.com/images/I/51Nm5YPrT3L._AA160_.jpg
+http://www.amazon.com/Amlong-Crystal%C2%AE-Triangular-Teaching-Spectrum/dp/B00FHDV7D4
+$10.90
+$10.90
+
+http://ecx.images-amazon.com/images/I/51Nm5YPrT3L._AA160_.jpg
+http://www.amazon.com/Amlong-Crystal%C2%AE-Triangular-Teaching-Spectrum/dp/B00FHFV9AI
+$15.90
+$15.90
+
+http://ecx.images-amazon.com/images/I/41r-ttlfgbL._SP160,160,0,T_.jpg
+http://www.amazon.com/SEOH-Hookes-Springs-Physics-Experiments/dp/B0088AQJ68
+$16.73
+$12.29
+
+http://ecx.images-amazon.com/images/I/31ZnJxOCm6L._AA160_.jpg
+http://www.amazon.com/3B-Scientific-Shrunk-Absolute-Physics/dp/B005LXLW9E
+$17.00
+n/a
+
+http://ecx.images-amazon.com/images/I/61IjMWHTzeL._SP160,160,0,T_.jpg
+http://www.amazon.com/American-Educational-Visual-Electromagnetic-Spectrum/dp/B00657WTO2
+$21.95
+n/a
+
+http://ecx.images-amazon.com/images/I/51l7ErH1epL._SP160,160,0,T_.jpg
+http://www.amazon.com/NewPath-Learning-Physics-Curriculum-Mastery/dp/B00DOG40D0
+$39.95
+$39.95
+
+http://ecx.images-amazon.com/images/I/51YntUGhRNL._AA160_.jpg
+http://www.amazon.com/Discovery-Education-Roller-Coaster-Physics/dp/B008C4P60A
+$59.95
+n/a

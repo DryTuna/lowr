@@ -3,6 +3,11 @@ from bs4 import BeautifulSoup
 from P_Queue import P_Queue
 
 
+'''
+Books, CDs & Vinyl
+'''
+
+
 MIN_P = 1.0
 MAX_P = 5000.0
 
@@ -104,7 +109,7 @@ def search_results(keywords, category, price, price_range):
 
 
 if __name__ == '__main__':
-    a = search_results("To Kill a Mocking Bird", 'n:283155', 10, 50)
+    a = search_results("Disney", 'n:5174', 20, 50)
     f = open('extract.txt', 'w')
     while True:
         try:
