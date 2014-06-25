@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 from P_Queue import P_Queue
 
 
-MIN_P = 0
-MAX_P = 5000
+MIN_P = 0.0
+MAX_P = 5000.0
 
 
 def parse_source(html, encoding='utf-8'):
@@ -13,7 +13,7 @@ def parse_source(html, encoding='utf-8'):
 
 
 def fetch_search_results(keywords="",
-                         rh='i:aps',
+                         rh='n:172282',
                          page=None):
     base = 'http://www.amazon.com/s/'
     if len(keywords) == 0:
@@ -82,7 +82,7 @@ def get_price(price_string):
 def search_results(keywords, category, price, price_range):
     count = 1
     page = 1
-    if price is not None:
+    if len(price) > 0:
         price = float(price)
         price_range = float(price_range)
         global MIN_P
@@ -95,7 +95,6 @@ def search_results(keywords, category, price, price_range):
                                        category,
                                        page)
         parsed = parse_source(content[0], content[1])
-        print "\nSEARCH RESULTS:\t"+str(len(parsed))+"\n"
         if len(parsed.find_all('div', class_='rsltGrid prod celwidget')) == 0:
             break
         items = extract_items(parsed)

@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask
-import os
-from contextlib import closing
-from flask import g
-import datetime
 from flask import render_template
-from flask import abort
 from flask import request
-from flask import url_for
-from flask import redirect
-from flask import session
 
-from amazon_scraper import search_results
+from amazon_scraper import search_results as uni_search
+from amazon_book_scraper import search_results as book_search
 
 app = Flask(__name__)
 
@@ -81,7 +74,10 @@ def search():
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-    file_ = search_results(keywords, category, price, price_range)
+    if category == amazon_categories['Books']:
+        file_ = book_search(keywords, category, price, price_range)
+    else:
+        file_ = uni_search(keywords, category, price, price_range)
 
     results = []
 
