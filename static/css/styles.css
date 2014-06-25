@@ -76,16 +76,3 @@ img.product-thumb {
 
 }
 
-body{
-    text-align: center;
-    background-image: url('/static/img/background2.jpg');
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-
-html {
- font-size: 16px;
-height: 845px;
-width: 1302px;
-}
