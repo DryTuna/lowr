@@ -23,6 +23,14 @@ function submitItems() {
     });
 }
 
+// this bit is from Jonathan Sampson on stackoverflow
+$body = $("body");
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+     ajaxStop: function() { $body.removeClass("loading"); }    
+});
+
+
 $('document').ready(function() {
     $('#search_form').on('submit', function(event) {
           selectedProductURLs = []
@@ -40,13 +48,20 @@ $('document').ready(function() {
               }
           });
     });
-
-    // thanks to Rohan Kumar on stackoverflow
-    $('#create_form').on('submit',function() {
-        if($('#signup_password').val() != $('#signup_password_confirm').val()) {
-            alert('Password does not match confirmation');
-            return false;
-        }
-        return true;
-    });
 })
+
+// from Sandeep Panda:
+// http://www.sitepoint.com/using-the-html5-constraint-api-for-form-validation/
+window.onload = function () {
+    document.getElementById("signup_password").onchange = validatePassword;
+    document.getElementById("signup_password_confirm").onchange = validatePassword;
+}
+function validatePassword(){
+var pass2=document.getElementById("signup_password_confirm").value;
+var pass1=document.getElementById("signup_password").value;
+if(pass1!=pass2)
+    document.getElementById("signup_password_confirm").setCustomValidity("Passwords Don't Match");
+else
+    document.getElementById("signup_password_confirm").setCustomValidity('');  
+//empty string means no validation error
+}
