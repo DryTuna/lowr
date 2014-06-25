@@ -1,60 +1,9 @@
-
-http://ecx.images-amazon.com/images/I/51jkaTcCfAL._AA160_.jpg
-http://www.amazon.com/Apple-MacBook-A1226-Laptop-2-2Ghz/dp/B005F56O0A
-n/a
-$249.00
-
-http://ecx.images-amazon.com/images/I/41J4p4FbS%2BL._AA160_.jpg
-http://www.amazon.com/Apple-MacBook-MC240LL-13-3-Inch-Laptop/dp/B001P05NJC
-n/a
-$255.00
-
-http://ecx.images-amazon.com/images/I/41f3wKuHBrL._AA160_.jpg
-http://www.amazon.com/Apple-MacBook-MB062LL-13-White/dp/B008EP2JN4
-n/a
-$279.00
-
-http://ecx.images-amazon.com/images/I/416YYWdquxL._AA160_.jpg
-http://www.amazon.com/Samsung-Chromebook-11-6-Inch-Jet-Black/dp/B00J49ZH6K
-$319.00
-n/a
-
-http://ecx.images-amazon.com/images/I/415lVaudoGL._AA160_.jpg
-http://www.amazon.com/Apple-MacBook-MB134LL-15-4-inch-VERSION/dp/B0013FLTNS
-n/a
-$324.99
-
-http://ecx.images-amazon.com/images/I/21GpiGYaeIL._AA160_.jpg
-http://www.amazon.com/Apple-Macbook-MB062LL-2-16ghz-Wireless/dp/B0086OE5SA
-n/a
-$326.00
-
-http://ecx.images-amazon.com/images/I/41tErFX7V9L._AA160_.jpg
-http://www.amazon.com/Apple-iPad-MD529LL-Wi-Fi-Black/dp/B00746W5EM
-$329.99
-n/a
-
-http://ecx.images-amazon.com/images/I/41Cx8KoMcpL._AA160_.jpg
-http://www.amazon.com/Apple-MacBook-MC700LL-13-3-Inch-VERSION/dp/B002QQ8H8I
-n/a
-$350.00
-
-http://ecx.images-amazon.com/images/I/417WdPfX1PL._AA160_.jpg
-http://www.amazon.com/Apple-iPad-MD532LL-Wi-Fi-White/dp/B00746WCEA
-$354.99
-n/a
-
-http://ecx.images-amazon.com/images/I/41xjIRGO%2BLL._AA160_.jpg
-http://www.amazon.com/Apple-Retina-Display-Silver-VERSION/dp/B00GQDBS7O
-$357.89
-$340.88
-
-http://ecx.images-amazon.com/images/I/41gVRn1K6ML._AA160_.jpg
-http://www.amazon.com/Apple-iPad-MD533LL-Wi-Fi-White/dp/B00746WEUC
-$359.95
-n/a
-
-http://ecx.images-amazon.com/images/I/211-rFEAasL._AA160_.jpg
-http://www.amazon.com/Apple-Capsule-ME182LL-NEWEST-VERSION/dp/B00DBDM934
-$359.99
-n/a
+5	{'prime_price': u'$5.99', 'image': u'http://ecx.images-amazon.com/images/I/41kkS-Xa-hL._AA160_.jpg', 'link': u'http://www.amazon.com/Kill-Mocking-Bird-Book-Film-ebook/dp/B00IHI0LTW', 'new_price': u'n/a', 'title': u'To Kill a Mocking Bird Book VS Film: The one who got 100%'}
+5	{'prime_price': u'$5.74', 'image': u'http://ecx.images-amazon.com/images/I/51DICZXsB2L._AA160_.jpg', 'link': u'http://www.amazon.com/Animal-Farm-A-Fairy-Story-ebook/dp/B003K16PUU', 'new_price': u'n/a', 'title': u'Animal Farm: A Fairy Story'}
+5	{'prime_price': u'$5.62', 'image': u'http://ecx.images-amazon.com/images/I/51q50Vw-SOL._AA160_.jpg', 'link': u'http://www.amazon.com/Of-Mice-Men-Penguin-Classics-ebook/dp/B00CS74W6Q', 'new_price': u'n/a', 'title': u'Of Mice and Men (Penguin Classics)'}
+5	{'prime_price': u'$5.64', 'image': u'http://ecx.images-amazon.com/images/I/41mow-6%2BKRL._AA160_.jpg', 'link': u'http://www.amazon.com/Lord-Flies-Perigee-William-Golding-ebook/dp/B000OCXIRG', 'new_price': u'n/a', 'title': u'Lord of the Flies (Perigee)'}
+8	{'prime_price': u'$8.49', 'image': u'http://ecx.images-amazon.com/images/I/51jIYSG%2B3CL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Notes-Edition-ebook/dp/B00EVTDL66', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird: York Notes for GCSE (New Edition)'}
+9	{'prime_price': u'$9.00', 'image': u'http://ecx.images-amazon.com/images/I/51gyTg9LxAL._AA160_.jpg', 'link': u'http://www.amazon.com/Fun-Lesson-Plans-Kill-Mockingbird-ebook/dp/B00BPEXS68', 'new_price': u'n/a', 'title': u'Fun Lesson Plans: To Kill A Mockingbird'}
+9	{'prime_price': u'$9.95', 'image': u'http://ecx.images-amazon.com/images/I/51Thfo8PqkL._AA160_.jpg', 'link': u'http://www.amazon.com/Ultimate-American-Literature-Moby-Dick-Mockingbird-ebook/dp/B007ZUGVWE', 'new_price': u'n/a', 'title': u'The Ultimate American Literature Quicklet Bundle (Moby-Dick, The Sun Also Rises, To Kill a Mockingbird, and More...'}
+9	{'prime_price': u'$9.78', 'image': u'http://ecx.images-amazon.com/images/I/51ZW9ip8dTL._AA160_.jpg', 'link': u'http://www.amazon.com/Scout-Atticus-Boo-Celebration-Mockingbird-ebook/dp/B003MVZ88I', 'new_price': u'n/a', 'title': u'Scout, Atticus, and Boo: A Celebration of Fifty Years of To Kill a Mockingbird'}
+9	{'prime_price': u'$9.99', 'image': u'http://ecx.images-amazon.com/images/I/41nr6tf-U-L._AA160_.jpg', 'link': u'http://www.amazon.com/Mockingbird-Harper-Summary-Study-Guide-ebook/dp/B004MDLND4', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird by Harper Lee | Summary & Study Guide'}

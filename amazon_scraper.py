@@ -53,6 +53,16 @@ def extract_items(parsed):
             yield item
 
 
+def get_price(price_string):
+    if price_string is not None:
+        x = price_string.string.strip()
+        if '$' in x:
+            temp = str(x)[1:-3].replace(',', '')
+            if int(temp) >= MIN_P and int(temp) <= MAX_P:
+                return x
+    return None
+
+
 def item_dictionary(img, link, prime_price, new_price):
     item = {}
     item['image'] = img.attrs['src']
@@ -69,16 +79,6 @@ def item_dictionary(img, link, prime_price, new_price):
         else None
 
 
-def get_price(price_string):
-    if price_string is not None:
-        x = price_string.string.strip()
-        if '$' in x:
-            temp = str(x)[1:-3].replace(',', '')
-            if int(temp) >= MIN_P and int(temp) <= MAX_P:
-                return x
-    return None
-
-
 def search_results(keywords, category, price, price_range):
     count = 1
     page = 1
@@ -90,7 +90,7 @@ def search_results(keywords, category, price, price_range):
         global MAX_P
         MAX_P = price + (price * price_range / 100)
     p_queue = P_Queue()
-    while count < 10:
+    while count < 15:
         content = fetch_search_results(keywords,
                                        category,
                                        page)
@@ -107,8 +107,8 @@ def search_results(keywords, category, price, price_range):
             p_queue.insert(i, pri)
             count += 1
         page += 1
-    MIN_P = 0
-    MAX_P = 5000
+    MIN_P = 0.0
+    MAX_P = 5000.0
     return p_queue
 
 
