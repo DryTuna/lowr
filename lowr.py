@@ -103,16 +103,23 @@ def search():
 
 @app.route("/login")
 def login():
-    pass
+    return render_template('login.html')
 
 
 @app.route("/logout")
 def logout():
     pass
 
+
 @app.route("/signup")
 def signup():
-    pass
+    return render_template('signup.html')
+
+
+@app.route("/myaccount")
+def account():
+    user = {'email': 'average@joe.com'}  # TESTING ONLY
+    return render_template('account.html', user=user)
 
 
 if __name__ == '__main__':
