@@ -12,7 +12,7 @@ from flask import url_for
 from flask import redirect
 from flask import session
 
-from amazon_book_scraper import search_result
+from amazon_book_scraper import search_results
 
 
 
@@ -84,7 +84,8 @@ def search():
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-    file_ = search_result(keywords, 'n:283155', price, price_range)
+
+    file_ = search_results(keywords, category, price, price_range)
 
     results = []
 
@@ -94,11 +95,8 @@ def search():
         except IndexError:
             break
 
-    print file_
 
-    print results
-
-    return render_template('search.html', results = results)#{'title':'game of thornes', 'imgage':'adfhasjd', 'price':200    })
+    return render_template('search.html', results = results)
 
 
 @app.route("/login")
