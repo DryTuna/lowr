@@ -9,7 +9,7 @@ def parse_source(html, encoding='utf-8'):
 
 
 def fetch_search_results(keywords="",
-                         rh='n:283155',
+                         rh='i:aps',
                          page=None,
                          min_p=None,
                          price_range=20):
@@ -68,6 +68,7 @@ def item_dictionary(img, link, prime_price, new_price, min_p=None, max_p=None):
 
 
 def search_results(keywords, category, price, price_range):
+    print "\nSEARCH RESULTS:\t"+str(category)+"\n"
     count = 1
     page = 1
     min_p = None
@@ -78,13 +79,14 @@ def search_results(keywords, category, price, price_range):
         min_p = price - (price * price_range / 100)
         max_p = price + (price * price_range / 100)
     p_queue = P_Queue()
-    while count < 20:
+    while count < 5:
         content = fetch_search_results(keywords,
                                        category,
                                        page,
                                        price,
                                        price_range)
         parsed = parse_source(content[0], content[1])
+#        print "\nSEARCH RESULTS:\t"+str(len(parsed))+"\n"
         if len(parsed.find_all('div', class_='result')) == 0:
             break
         items = extract_items(parsed, min_p, max_p)

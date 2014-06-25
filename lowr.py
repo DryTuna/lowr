@@ -22,9 +22,7 @@ from passlib.hash import pbkdf2_sha256
 from lowr_database import *
 
 # CUSTOM
-from amazon_book_scraper import search_results
-
-
+from amazon_scraper import search_results
 
 app = Flask(__name__)
 
@@ -88,13 +86,12 @@ def search():
         if item['name'] == 'search_price_range':
             querey_data['price_range'] = item['value']
 
-
     keywords = querey_data['keywords']
     category = querey_data['category']
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-    file_ = search_results(keywords, 'n:283155', price, price_range)
+    file_ = search_results(keywords, category, price, price_range)
 
     results = []
 
@@ -104,9 +101,7 @@ def search():
         except IndexError:
             break
 
-
     return render_template('search.html', results = results)
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
