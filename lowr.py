@@ -22,7 +22,6 @@ from passlib.hash import pbkdf2_sha256
 from lowr_database import *
 
 # CUSTOM
-=======
 from amazon_book_scraper import search_results
 
 
