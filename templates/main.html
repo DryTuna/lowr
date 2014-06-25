@@ -90,20 +90,18 @@
       </form>
       <div id="submit_items_wrapper" style="display: none;">
         {% if session.logged_in %}
-        <button class="btn btn-primary pull-right"
+        <button class="btn btn-primary"
                 onclick="submitItems()" id="submit_items">
           Submit Items for Tracking
         </button>
         {% else %}
-        <button class="btn btn-primary pull-right"
-                onclick="location.href='{{ url_for('login') }}" id="submit_items"
-                style="display: none;">
+        <button class="btn btn-primary"
+                onclick="location.href='{{ url_for('login') }}'">
           Login
         </button>
         or
-        <button class="btn btn-primary pull-right"
-                onclick="location.href='{{ url_for('signup') }}" id="submit_items"
-                style="display: none;">
+        <button class="btn btn-primary"
+                onclick="location.href='{{ url_for('signup') }}'">
           sign up
         </button>
         to submit items for tracking
