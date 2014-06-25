@@ -26,7 +26,7 @@ def fetch_search_results(keywords="",
     if min_p is not None:
         params['low-price'] = min_p - (min_p * price_range / 100)
         params['high-price'] = min_p + (min_p * price_range / 100)
-    resp = requests.get(base, params=params, timeout=5)
+    resp = requests.get(base, params=params, timeout=3)
     resp.raise_for_status()
     return resp.content, resp.encoding
 
