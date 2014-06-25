@@ -14,8 +14,6 @@ from flask import session
 
 from amazon_scraper import search_results
 
-
-
 app = Flask(__name__)
 
 
@@ -83,7 +81,6 @@ def search():
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-    # print "\n"+str(category)+"\n"
     file_ = search_results(keywords, category, price, price_range)
 
     results = []
@@ -94,25 +91,36 @@ def search():
         except IndexError:
             break
 
-#    print file_
-
-#    print results
-
     return render_template('search.html', results = results)
 
 
 @app.route("/login")
 def login():
-    pass
+    return render_template('login.html')
 
 
 @app.route("/logout")
 def logout():
     pass
 
+
 @app.route("/signup")
 def signup():
-    pass
+    return render_template('signup.html')
+
+
+@app.route("/submititems", methods=['GET', 'POST'])
+def submititems():
+    import json
+    data = request.get_json()
+    print data
+    return '/myaccount'
+
+
+@app.route("/myaccount")
+def account():
+    user = {'email': 'average@joe.com'}  # TESTING ONLY
+    return render_template('account.html', user=user)
 
 
 if __name__ == '__main__':

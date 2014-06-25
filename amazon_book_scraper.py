@@ -63,7 +63,8 @@ def item_dictionary(img, link, prime_price, new_price, min_p=None, max_p=None):
                 return item
         else:
             item['new_price'] = new_price.string.strip()
-    return None if item['prime_price'] == u'n/a' else item
+    return None if item['prime_price'] == u'n/a' and \
+        item['new_price'] == u'n/a' else item
 
 
 def search_results(keywords, category, price, price_range):
