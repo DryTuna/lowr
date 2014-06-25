@@ -28,7 +28,10 @@
                 Description
               </th>
               <th>
-                Last Price
+                Prime
+              </th>
+              <th>
+                Price
               </th>
             </tr>
           </thead>
@@ -36,17 +39,19 @@
             {% for result in results %}
             <tr id="{{result.link}}" onclick="toggleRowSelect('{{result.link}}');">
               <td>
-                <img class="img product-thumb"
-                 src="{{ result['image'] }}" alt="Product Image" />
+                <a class="black-link" href="{{result.link}}">
+                  <img class="img product-thumb"
+                       src="{{ result['image'] }}" alt="Product Image" />
+                </a>
               </td>
               <td>
-                {{ result['title'] }}
+                <a class="black-link" href="{{result.link}}">{{ result['title'] }}</a>
               </td>
               <td>
-                {{ result['prime_price'] }}
+                <a class="black-link" href="{{result.link}}">{{ result['prime_price'] }}</a>
               </td>
               <td>
-                {{ result['new_price'] }}
+                <a class="black-link" href="{{result.link}}">{{ result['new_price'] }}</a>
               </td>
             </tr>
             {% endfor %}
@@ -60,8 +65,11 @@
     </div>
 
     <div class="col-xs-4">
-      <h3>User Profile</h3>
+      <h3>Profile</h3>
       <div class="thumbnail" style="padding: 10px;">
+        <p><b>Username:</b></p>
+        <p>{{ user['username'] }}</p>
+        <br>
         <p><b>email:</b></p>
         <p>{{ user['email'] }}</p>
       </div>

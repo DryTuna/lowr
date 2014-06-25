@@ -119,7 +119,8 @@ def submititems():
 
 @app.route("/myaccount")
 def account():
-    user = {'email': 'average@joe.com'}  # TESTING ONLY
+    user = {'username': "joe_public",
+            'email': 'average@joe.com'}  # TESTING ONLY
     return render_template('account.html', user=user)
 
 
