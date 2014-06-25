@@ -1,19 +1,60 @@
-0	{'prime_price': u'$0.00', 'image': u'http://ecx.images-amazon.com/images/I/41kgTrrnVjL._AA160_.jpg', 'link': u'http://www.amazon.com/Mis%C3%A9rables-English-language-Victor-Hugo-ebook/dp/B004GHNIRK', 'new_price': u'n/a', 'title': u'Les Mis\xe9rables (English language)'}
-0	{'prime_price': u'$0.99', 'image': u'http://ecx.images-amazon.com/images/I/41DsNPDF2uL._AA160_.jpg', 'link': u'http://www.amazon.com/Discussion-Questions-To-Kill-Mockingbird-ebook/dp/B00C1NM41M', 'new_price': u'n/a', 'title': u'Discussion Questions: To Kill a Mockingbird'}
-0	{'prime_price': u'$0.00', 'image': u'http://ecx.images-amazon.com/images/I/51x%2B%2BfUNS5L._AA160_.jpg', 'link': u'http://www.amazon.com/Wuthering-Heights-Emily-Bront%C3%AB-ebook/dp/B004UJAOLM', 'new_price': u'n/a', 'title': u'Wuthering Heights'}
-0	{'prime_price': u'$0.00', 'image': u'http://ecx.images-amazon.com/images/I/51hbC6p0UuL._AA160_.jpg', 'link': u'http://www.amazon.com/The-Scarlet-Letter-Nathaniel-Hawthorne-ebook/dp/B0084BL4NY', 'new_price': u'n/a', 'title': u'The Scarlet Letter'}
-0	{'prime_price': u'$0.00', 'image': u'http://ecx.images-amazon.com/images/I/51NodtoWtHL._AA160_.jpg', 'link': u'http://www.amazon.com/Uncle-Cabin-Harriet-Beecher-Stowe-ebook/dp/B0084B1OUM', 'new_price': u'n/a', 'title': u"Uncle Tom's Cabin"}
-1	{'prime_price': u'$1.95', 'image': u'http://ecx.images-amazon.com/images/I/415jgmHV11L._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Shmoop-Study-ebook/dp/B002JRQLXW', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird: Shmoop Study Guide'}
-2	{'prime_price': u'$2.99', 'image': u'http://ecx.images-amazon.com/images/I/41n%2BsSx3eGL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Summary-Analysis-ebook/dp/B00JWUNWJ0', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird: Summary & Analysis'}
-2	{'prime_price': u'$2.99', 'image': u'http://ecx.images-amazon.com/images/I/41jwOZjXauL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Study-Guide-ebook/dp/B00AQRT23I', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird: Study Guide'}
-2	{'prime_price': u'$2.99', 'image': u'http://ecx.images-amazon.com/images/I/41doUNQaCUL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-BookHacker-Summary-ebook/dp/B009L56HMK', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird (A BookHacker Summary)'}
-3	{'prime_price': u'$3.82', 'image': u'http://ecx.images-amazon.com/images/I/41cNugO4zPL._AA160_.jpg', 'link': u'http://www.amazon.com/Teacher-Lesson-Plans-Kill-Mockingbird-ebook/dp/B008X76BE6', 'new_price': u'n/a', 'title': u'Teacher Lesson Plans: To Kill a Mockingbird'}
-4	{'prime_price': u'$4.99', 'image': u'http://ecx.images-amazon.com/images/I/516KOf1R42L._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Movie-Version-ebook/dp/B00K2IMEM2', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird:  Movie Version'}
-9	{'prime_price': u'$9.99', 'image': u'http://ecx.images-amazon.com/images/I/41nr6tf-U-L._AA160_.jpg', 'link': u'http://www.amazon.com/Mockingbird-Harper-Summary-Study-Guide-ebook/dp/B004MDLND4', 'new_price': u'n/a', 'title': u'To Kill a Mockingbird by Harper Lee | Summary & Study Guide'}
-128	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/51UU8XJaPxL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird/dp/1411405153', 'new_price': u'$4.73', 'title': u'To Kill a Mockingbird'}
-160	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/41tZjHMeU1L._AA160_.jpg', 'link': u'http://www.amazon.com/Kill-Mocking-Bird-Harper-Lee/dp/B005MTHZDO', 'new_price': u'$5.02', 'title': u'To Kill a Mocking Bird'}
-224	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/41r9ZKkcFCL._AA160_.jpg', 'link': u'http://www.amazon.com/Mockingbird-Related-Readings-Literature-Connections/dp/B002WTCBC2', 'new_price': u'$7.64', 'title': u'To Kill a Mockingbird and Related Readings (Literature Connections)'}
-448	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/51B235mcd7L._AA160_.jpg', 'link': u'http://www.amazon.com/Play-Mockingbird-Heinemann-Plays-14-16/dp/0435233114', 'new_price': u'$14.30', 'title': u'The Play of "To Kill a Mockingbird" (Heinemann Plays for 14-16+)'}
-512	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/414FGBBHGEL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Novel-Ties-Teachers/dp/0881220337', 'new_price': u'$16.95', 'title': u'To Kill a Mockingbird: Novel-Ties Teachers Study Guide'}
-608	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/5154e41XmSL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Anniversary-Hardcover/dp/B00BR9VRSW', 'new_price': u'$19.69', 'title': u'To Kill a Mockingbird: 50th Anniversary Edition by Lee, Harper (50 Anv Edition) [Hardcover(2010)]'}
-608	{'prime_price': u'n/a', 'image': u'http://ecx.images-amazon.com/images/I/51OmDwYsvZL._AA160_.jpg', 'link': u'http://www.amazon.com/To-Kill-Mockingbird-Anniversary-published/dp/B00E28LOCO', 'new_price': u'$19.59', 'title': u'To Kill a Mockingbird: 50th Anniversary Edition 50 Anv Edition by Lee, Harper published by Harper (2010)'}
+
+http://ecx.images-amazon.com/images/I/51jkaTcCfAL._AA160_.jpg
+http://www.amazon.com/Apple-MacBook-A1226-Laptop-2-2Ghz/dp/B005F56O0A
+n/a
+$249.00
+
+http://ecx.images-amazon.com/images/I/41J4p4FbS%2BL._AA160_.jpg
+http://www.amazon.com/Apple-MacBook-MC240LL-13-3-Inch-Laptop/dp/B001P05NJC
+n/a
+$255.00
+
+http://ecx.images-amazon.com/images/I/41f3wKuHBrL._AA160_.jpg
+http://www.amazon.com/Apple-MacBook-MB062LL-13-White/dp/B008EP2JN4
+n/a
+$279.00
+
+http://ecx.images-amazon.com/images/I/416YYWdquxL._AA160_.jpg
+http://www.amazon.com/Samsung-Chromebook-11-6-Inch-Jet-Black/dp/B00J49ZH6K
+$319.00
+n/a
+
+http://ecx.images-amazon.com/images/I/415lVaudoGL._AA160_.jpg
+http://www.amazon.com/Apple-MacBook-MB134LL-15-4-inch-VERSION/dp/B0013FLTNS
+n/a
+$324.99
+
+http://ecx.images-amazon.com/images/I/21GpiGYaeIL._AA160_.jpg
+http://www.amazon.com/Apple-Macbook-MB062LL-2-16ghz-Wireless/dp/B0086OE5SA
+n/a
+$326.00
+
+http://ecx.images-amazon.com/images/I/41tErFX7V9L._AA160_.jpg
+http://www.amazon.com/Apple-iPad-MD529LL-Wi-Fi-Black/dp/B00746W5EM
+$329.99
+n/a
+
+http://ecx.images-amazon.com/images/I/41Cx8KoMcpL._AA160_.jpg
+http://www.amazon.com/Apple-MacBook-MC700LL-13-3-Inch-VERSION/dp/B002QQ8H8I
+n/a
+$350.00
+
+http://ecx.images-amazon.com/images/I/417WdPfX1PL._AA160_.jpg
+http://www.amazon.com/Apple-iPad-MD532LL-Wi-Fi-White/dp/B00746WCEA
+$354.99
+n/a
+
+http://ecx.images-amazon.com/images/I/41xjIRGO%2BLL._AA160_.jpg
+http://www.amazon.com/Apple-Retina-Display-Silver-VERSION/dp/B00GQDBS7O
+$357.89
+$340.88
+
+http://ecx.images-amazon.com/images/I/41gVRn1K6ML._AA160_.jpg
+http://www.amazon.com/Apple-iPad-MD533LL-Wi-Fi-White/dp/B00746WEUC
+$359.95
+n/a
+
+http://ecx.images-amazon.com/images/I/211-rFEAasL._AA160_.jpg
+http://www.amazon.com/Apple-Capsule-ME182LL-NEWEST-VERSION/dp/B00DBDM934
+$359.99
+n/a
