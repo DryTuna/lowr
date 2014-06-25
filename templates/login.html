@@ -16,17 +16,17 @@
         <img src="../static/img/lowr_logo.png" alt="lowr logo" style="width: 20em">
       </a>
         <form class="form-horizontal" role="form" id="login_form"
-              action="{{url_for('login')}}" method="POST">
+              action="{{url_for('login')}}" method="POST" >
           <div class="form-group">
             <label for="login_email" class="col-sm-3 control-label">Email</label>
             <div class="col-sm-9">
-              <input type="email" id="login_email" placeholder="you@example.com">
+              <input type="email" id="login_email" placeholder="you@example.com" name='username'>
             </div>
           </div>
           <div class="form-group">
             <label for="login_password" class="col-sm-3 control-label">Password</label>
             <div class="col-sm-9">
-              <input type="password" id="login_password" placeholder="*******">
+              <input type="password" id="login_password" placeholder="*******" name='password'>
             </div>
           </div>
           <div class="form-group">

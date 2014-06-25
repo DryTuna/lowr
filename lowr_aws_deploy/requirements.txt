@@ -10,6 +10,8 @@ gevent==1.0.1
 greenlet==0.4.2
 itsdangerous==0.24
 paramiko==1.14.0
+passlib==1.6.2
+psycopg2==2.5.3
 py==1.4.20
 pycrypto==2.6.1
 pytest==2.5.2

@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask
-import os
-from contextlib import closing
-from flask import g
+
+#  GENERAL PURPOSE
+# import os
 import datetime
+
+# FLASK RELATED
+from flask import Flask
+from flask import g
+
 from flask import render_template
 from flask import abort
 from flask import request
@@ -12,6 +16,12 @@ from flask import url_for
 from flask import redirect
 from flask import session
 
+#  DATABASE RELATED
+import psycopg2
+from passlib.hash import pbkdf2_sha256
+from lowr_database import *
+
+# CUSTOM
 from amazon_book_scraper import search_results
 
 
@@ -99,14 +109,37 @@ def search():
     return render_template('search.html', results = results)
 
 
-@app.route("/login")
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    error = None
+    if request.method == 'POST':
+        try:
+            do_login(request.form['username'].encode('utf-8'),
+                     request.form['password'].encode('utf-8'))
+        except ValueError:
+            error = "Login Failed"
+        else:
+            return redirect(url_for('home_page'))
+    return render_template('login.html', error=error)
 
-
-@app.route("/logout")
+@app.route('/logout')
 def logout():
-    pass
+    session.pop('logged_in', None)
+    return redirect(url_for('home_page'))
+
+
+
+
+def do_login(username='', passwd=''):
+    if username != app.config['ADMIN_USERNAME']:
+        raise ValueError
+    if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
+        raise ValueError
+    session['logged_in'] = True
+
+
+
 
 
 @app.route("/signup")
@@ -118,6 +151,38 @@ def signup():
 def account():
     user = {'email': 'average@joe.com'}  # TESTING ONLY
     return render_template('account.html', user=user)
+
+
+
+
+app.config['DATABASE'] = os.environ.get(
+    'DATABASE_URL', 'dbname=accounts'
+)
+app.config['ADMIN_USERNAME'] = os.environ.get(
+    'ADMIN_USERNAME', 'admin@admin.com'
+)
+
+app.config['ADMIN_PASSWORD'] = os.environ.get(
+    'ADMIN_PASSWORD', pbkdf2_sha256.encrypt('admin')
+)
+
+app.config['SECRET_KEY'] = os.environ.get(
+    'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
+)
+
+@app.teardown_request
+def teardown_request(exception):
+    db = getattr(g, 'db', None)
+    if db is not None:
+        if exception and isinstance(exception, psycopg2.Error):
+            db.rollback()
+        else:
+            db.commit()
+        db.close()
+        g.db = None # get rid of db from the g namespace
+
+
+
 
 
 if __name__ == '__main__':
