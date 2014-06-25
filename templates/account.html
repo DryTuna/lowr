@@ -34,16 +34,19 @@
           </thead>
           <tbody>
             {% for result in results %}
-            <tr id="{{result.link}}" onclick="toggleRowSelect('#{{result.link}}');">
+            <tr id="{{result.link}}" onclick="toggleRowSelect('{{result.link}}');">
               <td>
                 <img class="img product-thumb"
-                 src="{{ result[image] }}" alt="Product Image" />
+                 src="{{ result['image'] }}" alt="Product Image" />
               </td>
               <td>
-                {{ result[title] }}
+                {{ result['title'] }}
               </td>
               <td>
-                {{ result[prime_price] }}
+                {{ result['prime_price'] }}
+              </td>
+              <td>
+                {{ result['new_price'] }}
               </td>
             </tr>
             {% endfor %}
@@ -58,8 +61,9 @@
 
     <div class="col-xs-4">
       <h3>User Profile</h3>
-      <div class="thumbnail" style="padding: 5px;">
-        <br>Some details here<br>&nbsp
+      <div class="thumbnail" style="padding: 10px;">
+        <p><b>email:</b></p>
+        <p>{{ user['email'] }}</p>
       </div>
     </div>
 
