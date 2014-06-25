@@ -12,7 +12,7 @@ from flask import url_for
 from flask import redirect
 from flask import session
 
-from amazon_book_scraper import search_result
+from amazon_book_scraper import search_results
 
 
 
@@ -84,7 +84,7 @@ def search():
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-    file_ = search_result(keywords, 'n:283155', price, price_range)
+    file_ = search_results(keywords, 'n:283155', price, price_range)
 
     results = []
 
@@ -114,6 +114,14 @@ def logout():
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
+
+
+@app.route("/submititems", methods=['GET', 'POST'])
+def submititems():
+    import json
+    data = request.get_json()
+    print data
+    return '/myaccount'
 
 
 @app.route("/myaccount")
