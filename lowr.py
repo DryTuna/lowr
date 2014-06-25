@@ -83,7 +83,7 @@ def search():
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-    print "\n"+str(category)+"\n"
+    # print "\n"+str(category)+"\n"
     file_ = search_results(keywords, category, price, price_range)
 
     results = []

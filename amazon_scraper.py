@@ -14,8 +14,6 @@ def parse_source(html, encoding='utf-8'):
 
 def fetch_search_results(keywords="",
                          rh='i:aps',
-                         min_p=None,
-                         price_range=20,
                          page=None):
     base = 'http://www.amazon.com/s/'
     if len(keywords) == 0:
@@ -27,15 +25,8 @@ def fetch_search_results(keywords="",
     }
     if page is not None:
         params['page'] = page
-    if min_p is not None:
-        # params['low-price'] = min_p - (min_p * price_range / 100.0)
-        # params['high-price'] = min_p + (min_p * price_range / 100.0)
-        params['low-price'] = MIN_P
-        params['high-price'] = MAX_P
-    # print min_p
-    # print price_range
-    # print params['low-price']
-    # print params['high-price']
+    params['low-price'] = MIN_P
+    params['high-price'] = MAX_P
     resp = requests.get(base, params=params, timeout=3)
     resp.raise_for_status()
     return resp.content, resp.encoding
@@ -87,6 +78,7 @@ def get_price(price_string):
                 return x
     return None
 
+
 def search_results(keywords, category, price, price_range):
     count = 1
     page = 1
@@ -101,13 +93,11 @@ def search_results(keywords, category, price, price_range):
     while count < 10:
         content = fetch_search_results(keywords,
                                        category,
-                                       price,
-                                       price_range,
                                        page)
         parsed = parse_source(content[0], content[1])
         print "\nSEARCH RESULTS:\t"+str(len(parsed))+"\n"
-        # if len(parsed.find_all('div', class_='result')) == 0:
-        #      break
+        if len(parsed.find_all('div', class_='rsltGrid prod celwidget')) == 0:
+            break
         items = extract_items(parsed)
         for i in items:
             pri = 0
@@ -124,7 +114,7 @@ def search_results(keywords, category, price, price_range):
 
 
 if __name__ == '__main__':
-    keywords = "HP Pavillion"
+    keywords = "Apple"
     category = "n:541966"
     price = 300.0
     price_range = 20.0
@@ -147,29 +137,3 @@ if __name__ == '__main__':
         except IndexError:
             break
     f.close()
-    """
-    price = 30.0
-    p_range = 20.0
-    a = fetch_search_results("L'Oreal", 'n:3760911', price, p_range)
-    b = parse_source(a[0], a[1])
-    c = extract_items(b, price-price*p_range/100, price+price*p_range/100)
-    d = b.find_all('div', class_='rsltGrid prod celwidget')
-    f = open('extract.txt', 'w')
-    for i in d:
-        img = i.find('div', class_='imageBox').find('img')
-        link = i.find('h3', class_='newaps').find('a')
-        prime_price = i.find('span', class_='bld lrg red')
-        new_price = i.find('span', class_='price bld')
-        item = item_dictionary(img, link, prime_price, new_price, price-price*p_range/100, price+price*p_range/100)
-        if item is not None:
-            f.write("\n")
-            f.write(str(item['image']))
-            f.write("\n")
-            f.write(str(item['link']))
-            f.write("\n")
-            f.write(str(item['prime_price']))
-            f.write("\n")
-            f.write(str(item['new_price']))
-            f.write("\n")
-    f.close()
-    """
