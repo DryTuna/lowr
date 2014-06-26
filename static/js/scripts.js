@@ -32,10 +32,35 @@ function toggleRowSelect(product_url) {
     }
 }
 
+
 function submitItems() {
   $.ajax(("/submititems"), {
         type: 'POST',
         data: JSON.stringify(selectedProducts),
+        contentType: 'application/json',
+        context: document.body,
+        success: function(result) {
+            location.href = result;
+        }
+    });
+}
+
+selectedProductURLs = []
+function toggleRowSelectAccounts(product_url) {
+    product_listing = $(document.getElementById(product_url));
+    if(product_listing.hasClass("warning")) {
+        product_listing.removeClass("warning");
+        selectedProductURLs.splice(selectedProductURLs.indexOf(product_url), 1);
+    } else {
+        product_listing.addClass("warning");
+        selectedProductURLs.push(product_url);
+    }
+}
+
+function deleteItems() {
+  $.ajax(("/deleteitems"), {
+        type: 'POST',
+        data: JSON.stringify(selectedProductURLs),
         contentType: 'application/json',
         context: document.body,
         success: function(result) {

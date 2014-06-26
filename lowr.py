@@ -158,9 +158,21 @@ def submititems():
     cur.execute("SELECT id FROM accounts WHERE username=%s",
                 (session['username'],))
     user_id = cur.fetchone()[0]
-    print [(user_id, url['url'], url['desired_price'], url['last_price']) for url in data]
     cur.executemany("INSERT INTO items (user_id, url, desired_price, last_price) VALUES (%s, %s, %s, %s)",
                     [(user_id, item['url'], item['desired_price'], item['last_price']) for item in data])
+    return '/myaccount'
+
+
+@app.route("/deleteitems", methods=['GET', 'POST'])
+def deleteitems():
+    data = request.get_json()
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM accounts WHERE username=%s",
+                (session['username'],))
+    user_id = cur.fetchone()[0]
+    cur.executemany("DELETE FROM items WHERE user_id=%s AND url=%s",
+                    [(user_id, url) for url in data])
     return '/myaccount'
 
 
@@ -185,10 +197,8 @@ def account():
         cur.execute("SELECT id FROM accounts WHERE username=%s",
                     (session['username'],))
         user_id = cur.fetchone()
-        print user_id
         cur.execute("SELECT url, desired_price, last_price FROM items WHERE user_id=%s", (user_id,))
         items = cur.fetchall()
-        print items
         return render_template('account.html', user=user, items=items)
     else:
         return redirect(url_for('home_page'))
