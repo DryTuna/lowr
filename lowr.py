@@ -149,22 +149,26 @@ def do_login(username='', passwd=''):
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    error = ''
+    error = {'error': ""}
     if request.method == 'POST':
 
         username = request.form['signup_username']
         email = request.form['signup_email']
         password = request.form['signup_password']
+        confirm_password = request.form['signup_password_confirm']
 
-        try:
-            do_signup(username, email, password)
+        if password == confirm_password:
+            try:
+                do_signup(username, email, password)
 
-        except Exception :
-            error = ("Username already taken")
+            except Exception :
+                error = {'error': "Username already taken."}
+            else:
+                session['logged_in'] = True
+                session['username'] = username
+                return redirect(url_for('home_page'))
         else:
-            session['logged_in'] = True
-            session['username'] = username
-            return redirect(url_for('home_page'))
+            error = {error: "Passwords do not match."}
 
     return render_template('signup.html', error=error)
 
