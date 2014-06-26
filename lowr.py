@@ -7,19 +7,24 @@ import datetime
 
 # FLASK RELATED
 from flask import Flask
+from flask import g
 from flask import redirect
 from flask import url_for
 from flask import g
 from flask import session
 from flask import render_template
 from flask import request
+from flask import session
+from flask import redirect
+from flask import url_for
+from flask import abort
 
 #  DATABASE RELATED
 import psycopg2
 from passlib.hash import pbkdf2_sha256
 from lowr_database import get_database_connection
 
-# CUSTOM
+# CUSTOM_SCRAPER
 from amazon_scraper import search_results as uni_search
 from amazon_book_scraper import search_results as book_search
 
@@ -36,6 +41,7 @@ def home_page():
 def search():
     import json
     results = []
+
 
     data = json.loads(request.form['data'])
     querey_data = {}
@@ -67,6 +73,7 @@ def search():
             results.append(file_.pop()._data)
         except IndexError:
             break
+
     return render_template('search.html', results=results)
 
 
@@ -90,6 +97,7 @@ def logout():
     return redirect(url_for('home_page'))
 
 
+
 def do_login(username='', passwd=''):
     if username == '':
         raise ValueError
@@ -106,21 +114,26 @@ def do_login(username='', passwd=''):
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    error = ''
+    error = {'error': ""}
     if request.method == 'POST':
 
         username = request.form['signup_username']
         email = request.form['signup_email']
         password = request.form['signup_password']
+        confirm_password = request.form['signup_password_confirm']
 
-        try:
-            do_signup(username, email, password)
-        except Exception:
-            error = ("Username already taken")
+        if password == confirm_password:
+            try:
+                do_signup(username, email, password)
+
+            except Exception :
+                error = {'error': "Username already taken."}
+            else:
+                session['logged_in'] = True
+                session['username'] = username
+                return redirect(url_for('home_page'))
         else:
-            session['logged_in'] = True
-            session['username'] = username
-            return redirect(url_for('home_page'))
+            error = {'error': "Passwords do not match."}
 
     return render_template('signup.html', error=error)
 
@@ -134,9 +147,8 @@ VALUES (%s, %s, %s, %s)
     cur = conn.cursor()
     now = datetime.datetime.utcnow()
     password = pbkdf2_sha256.encrypt(password)
-    cur.execute(DB_USER_INSERT, [username, email, password, now])  #encrypt password
-    # cur.commit()
 
+    cur.execute(DB_USER_INSERT, [username, email, password, now])  #encrypt password
 
 @app.route("/submititems", methods=['GET', 'POST'])
 def submititems():
@@ -153,6 +165,17 @@ def submititems():
 
 
 @app.route("/myaccount")
+def account(user):
+    if session['logged_in'] == True:
+        return render_template('account.html', user=user)
+    else:
+        return redirect(url_for('home_page'))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 def account():
     if session['logged_in'] is True:
         conn = get_database_connection()
@@ -219,3 +242,4 @@ if __name__ == '__main__':
     app.debug = True
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
+
