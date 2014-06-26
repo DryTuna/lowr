@@ -179,9 +179,10 @@ INSERT INTO accounts (username, email, password, created) VALUES (%s, %s, %s, %s
 
 @app.route("/submititems", methods=['GET', 'POST'])
 def submititems():
-    import json
     data = request.get_json()
-    print data
+    conn = get_database_connection()
+    cur = conn.cursor()
+    #  cur.executemany("")
     return '/myaccount'
 
 
@@ -222,19 +223,6 @@ app.config['SECRET_KEY'] = os.environ.get(
 
 
 
-
-
-
-DB_SCHEMA = """
-DROP TABLE IF EXISTS accounts;
-CREATE TABLE accounts (
-    id serial PRIMARY KEY,
-    username VARCHAR (127) NOT NULL UNIQUE,
-    email VARCHAR (127) NOT NULL,
-    password VARCHAR (127) NOT NULL,
-    created TIMESTAMP NOT NULL
-)
-"""
 
 
 

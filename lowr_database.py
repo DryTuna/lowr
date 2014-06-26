@@ -4,7 +4,7 @@ import psycopg2
 from passlib.hash import pbkdf2_sha256
 from contextlib import closing
 
-DB_SCHEMA = """
+DB_SCHEMA = ["""
 DROP TABLE IF EXISTS accounts;
 CREATE TABLE accounts (
     id serial PRIMARY KEY,
@@ -13,7 +13,14 @@ CREATE TABLE accounts (
     password VARCHAR (127) NOT NULL,
     created TIMESTAMP NOT NULL
 )
+""",
 """
+DROP TABLE IF EXISTS urls;
+CREATE TABLE urls (
+    user_id int REFERENCES accounts(id),
+    url VARCHAR (512) NOT NULL
+)
+"""]
 
 DB_ENTRY_INSERT = """
 INSERT INTO accounts (title, text, created) VALUES (%s, %s, %s)
@@ -32,6 +39,7 @@ DELETE FROM accounts WHERE accounts.id = %s
 """
 
 def connect_db():
+    from lowr import app
     """Return a connection to the configured database"""
     return psycopg2.connect(app.config['DATABASE'])
 
@@ -41,7 +49,8 @@ def init_db():
     WARNING: executing this function will drop existing tables.
     """
     with closing(connect_db()) as db:
-        db.cursor().execute(DB_SCHEMA)
+        for SCHEMA in DB_SCHEMA:
+            db.cursor().execute(SCHEMA)
         db.commit()
 
 
