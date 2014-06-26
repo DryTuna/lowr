@@ -9,7 +9,7 @@ DB_SCHEMA = ["""
 DROP TABLE IF EXISTS accounts;
 CREATE TABLE accounts (
     id serial PRIMARY KEY,
-    username VARCHAR (127) NOT NULL,
+    username VARCHAR (127) NOT NULL UNIQUE,
     email VARCHAR (127) NOT NULL,
     password VARCHAR (127) NOT NULL,
     created TIMESTAMP NOT NULL

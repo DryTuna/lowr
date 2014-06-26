@@ -37,8 +37,6 @@ $('document').ready(function() {
           event.preventDefault();
           var search_form =  $(event.target);
           var formJsonData = JSON.stringify($(this).serializeArray());
-          $('#search_results').html('<img src = "../static/img/gif-load.gif">')
-
 
           $.ajax(("/search"), {
               type: 'POST',
