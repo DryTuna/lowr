@@ -10,7 +10,7 @@ def parse_source(html, encoding='utf-8'):
 
 
 def get_price(item):
-    resp = requests.get(item['url'], timeout=3)
+    resp = requests.get(item[1], timeout=3)
     resp.raise_for_status()
     parsed = parse_source(resp.content, resp.encoding)
     a = parsed.find('table', class_='a-lineitem')
@@ -24,10 +24,11 @@ def get_price(item):
     if '-' in a:
         a = a.split(' - ')[0]
     price = a[1:].replace(',', '')
-    item['last_price'] = float(price)
+    item[3] = float(price)
 
 
 def update_prices(tracking_list):
+    tracking_list = list(tracking_list)
     threads = [gevent.spawn(get_price(i)) for i in tracking_list]
     gevent.joinall(threads)
     return tracking_list
