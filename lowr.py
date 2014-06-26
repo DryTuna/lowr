@@ -8,7 +8,7 @@ import datetime
 # FLASK RELATED
 from flask import Flask
 from flask import g
-from flask import render_template,
+from flask import render_template
 from flask import request
 from flask import session
 from flask import redirect
@@ -133,15 +133,12 @@ def logout():
 
 
 
-
-def do_login(username='', passwd=''):
+def do_login(username='', password=''):
     if username != app.config['ADMIN_USERNAME']:
         raise ValueError
-    if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
+    if not pbkdf2_sha256.verify(password, app.config['ADMIN_PASSWORD']):
         raise ValueError
     session['logged_in'] = True
-
-
 
 
 
@@ -163,7 +160,7 @@ def signup():
         else:
             session['logged_in'] = True
             user = {'email': email, 'username': username}
-            # url_for('account', user=user)
+            url_for('account', user=user)
             return redirect(url_for('home_page'), user=user)
 
     return render_template('signup.html', error=error)
@@ -197,11 +194,11 @@ def account(user):
 # def account():
 #     user = {'username': "joe_public",
 #             'email': 'average@joe.com'}  # TESTING ONLY
-    item_urls = [u'http://www.amazon.com/Marshall-Amplification-MF4400-NA-Fridge/dp/B008K4FTV8',
-                 u'http://www.amazon.com/Avanti-Model-RMS550PS-SIDE-BY-SIDE-Refrigerator/dp/B00GHIJNY8',
-                 u'http://www.amazon.com/Energy-Star-Refrigerator-Top-Mount-Freezer/dp/B00CSBL3AU',
-                 u'http://www.amazon.com/Mid-Size-Frost-Free-Refrigerator-Top-Mount-Freezer/dp/B00DAI2TCQ']
-    return render_template('account.html', user=user, item_urls=item_urls)
+#     item_urls = [u'http://www.amazon.com/Marshall-Amplification-MF4400-NA-Fridge/dp/B008K4FTV8',
+#                  u'http://www.amazon.com/Avanti-Model-RMS550PS-SIDE-BY-SIDE-Refrigerator/dp/B00GHIJNY8',
+#                  u'http://www.amazon.com/Energy-Star-Refrigerator-Top-Mount-Freezer/dp/B00CSBL3AU',
+#                  u'http://www.amazon.com/Mid-Size-Frost-Free-Refrigerator-Top-Mount-Freezer/dp/B00DAI2TCQ']
+#     return render_template('account.html', user=user, item_urls=item_urls)
 
 
 @app.errorhandler(404)
@@ -224,9 +221,6 @@ app.config['ADMIN_PASSWORD'] = os.environ.get(
 app.config['SECRET_KEY'] = os.environ.get(
     'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
 )
-
-
-
 
 
 
@@ -296,8 +290,6 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-
-
     from gevent.wsgi import WSGIServer
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
