@@ -35,7 +35,7 @@ def home_page():
 @app.route("/search", methods=['GET', 'POST'])
 def search():
     import json
-
+    results = []
     amazon_categories = {'All Departments': 'i:aps',
                         'Amazon Instant Video': 'n:2858778011',
                         'Appliances': 'n:2619525011',
@@ -74,32 +74,32 @@ def search():
                         'Watches': 'n:377110011',
                         'Wine': 'n:2983386011'}
 
-    data = json.loads(request.form['data'])
-    querey_data = {}
-    for item in data:
-        if item['name'] == 'search_category':
-            querey_data['category'] = amazon_categories[item['value']]
-        if item['name'] == 'search_text':
-            querey_data['keywords'] = item['value']
-        if item['name'] == 'search_min_price':
-            querey_data['price'] = item['value']
-        if item['name'] == 'search_price_range':
-            querey_data['price_range'] = item['value']
+    if request.method == 'POST':
+        data = json.loads(request.form['data'])
+        querey_data = {}
+        for item in data:
+            if item['name'] == 'search_category':
+                querey_data['category'] = amazon_categories[item['value']]
+            if item['name'] == 'search_text':
+                querey_data['keywords'] = item['value']
+            if item['name'] == 'search_min_price':
+                querey_data['price'] = item['value']
+            if item['name'] == 'search_price_range':
+                querey_data['price_range'] = item['value']
 
-    keywords = querey_data['keywords']
-    category = querey_data['category']
-    price = querey_data['price']
-    price_range = querey_data['price_range']
+        keywords = querey_data['keywords']
+        category = querey_data['category']
+        price = querey_data['price']
+        price_range = querey_data['price_range']
 
-    file_ = search_results(keywords, category, price, price_range)
+        file_ = search_results(keywords, category, price, price_range)
 
-    results = []
 
-    while True:
-        try:
-            results.append(file_.pop()._data)
-        except IndexError:
-            break
+        while True:
+            try:
+                results.append(file_.pop()._data)
+            except IndexError:
+                break
 
     return render_template('search.html', results = results)
 
@@ -136,9 +136,40 @@ def do_login(username='', passwd=''):
 
 
 
-@app.route("/signup")
+@app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    import pdb; pdb.set_trace()
+    error = None
+    if request.method == 'POST':
+
+        username = request.form['signup_username']
+        email = request.form['signup_email']
+        password = request.form['signup_password']
+
+        try:
+            do_signup(username, email, password)
+
+        except ValueError:
+            error = ("Username already taken")
+        else:
+            session['logged_in'] = True
+            user = {'email': email, 'username': username}
+            # url_for('account', user=user)
+            return redirect(url_for('home_page'), user=user)
+
+    return render_template('signup.html', error=error)
+
+
+def do_signup(username='', email='', password=''):
+    DB_USER_INSERT = """
+INSERT INTO accounts (username, email, password, created) VALUES (%s, %s, %s, %s)
+"""
+    conn = get_database_connection()
+    cur = conn.cursor()
+    now = datetime.datetime.utcnow()
+    cur.execute(DB_USER_INSERT, [username, email, password, now]) #encrypt password
+    # cur.commit()
+
 
 
 @app.route("/submititems", methods=['GET', 'POST'])
@@ -150,9 +181,11 @@ def submititems():
 
 
 @app.route("/myaccount")
-def account():
-    user = {'email': 'average@joe.com'}  # TESTING ONLY
-    return render_template('account.html', user=user)
+def account(user):
+    if session['logged_in'] == True:
+        return render_template('account.html', user=user)
+    else:
+        return redirect(url_for('home_page'))
 
 
 
@@ -160,7 +193,7 @@ app.config['DATABASE'] = os.environ.get(
     'DATABASE_URL', 'dbname=lowr'
 )
 app.config['ADMIN_USERNAME'] = os.environ.get(
-    'ADMIN_USERNAME', 'admin@admin.com'
+    'ADMIN_USERNAME', 'admin'
 )
 
 app.config['ADMIN_PASSWORD'] = os.environ.get(
@@ -170,6 +203,63 @@ app.config['ADMIN_PASSWORD'] = os.environ.get(
 app.config['SECRET_KEY'] = os.environ.get(
     'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
 )
+
+
+
+
+
+
+
+DB_SCHEMA = """
+DROP TABLE IF EXISTS accounts;
+CREATE TABLE accounts (
+    id serial PRIMARY KEY,
+    username VARCHAR (127) NOT NULL UNIQUE,
+    email VARCHAR (127) NOT NULL,
+    password VARCHAR (127) NOT NULL,
+    created TIMESTAMP NOT NULL
+)
+"""
+
+
+
+DB_ENTRIES_LIST = """
+SELECT id, username , email, password FROM accounts ORDER BY created DESC
+"""
+
+DB_ENTRY_LIST = """
+SELECT id, username, email, password created FROM accounts WHERE accounts.id = %s
+"""
+
+DB_DELETE_ENTRY_LIST = """
+DELETE FROM accounts WHERE accounts.id = %s
+"""
+
+def connect_db():
+    """Return a connection to the configured database"""
+    return psycopg2.connect(app.config['DATABASE'])
+
+def init_db():
+    """Initialize the database using DB_SCHEMA
+
+    WARNING: executing this function will drop existing tables.
+    """
+    with closing(connect_db()) as db:
+        db.cursor().execute(DB_SCHEMA)
+        db.commit()
+
+
+def get_database_connection():
+    db = getattr(g, 'db', None)
+    if db is None:
+        g.db = db = connect_db()
+    return db
+
+
+
+
+
+
 
 @app.teardown_request
 def teardown_request(exception):
@@ -182,6 +272,7 @@ def teardown_request(exception):
         db.close()
         g.db = None # get rid of db from the g namespace
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html',  404)
@@ -190,7 +281,7 @@ def page_not_found(e):
 
 if __name__ == '__main__':
 
-    createdb lowr
+
     from gevent.wsgi import WSGIServer
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
