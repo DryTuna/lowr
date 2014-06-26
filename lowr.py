@@ -5,7 +5,6 @@ from flask import render_template
 from flask import request
 
 from amazon_scraper import search_results as uni_search
-from amazon_dept_scraper import search_results as dept_search
 from amazon_book_scraper import search_results as book_search
 
 app = Flask(__name__)
