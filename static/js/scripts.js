@@ -52,16 +52,16 @@ $('document').ready(function() {
 
 // from Sandeep Panda:
 // http://www.sitepoint.com/using-the-html5-constraint-api-for-form-validation/
-//window.onload = function () {
-//    document.getElementById("signup_password").onchange = validatePassword;
-//    document.getElementById("signup_password_confirm").onchange = validatePassword;
-//}
-//function validatePassword(){
-//var pass2=document.getElementById("signup_password_confirm").value;
-//var pass1=document.getElementById("signup_password").value;
-//if(pass1!=pass2)
-//    document.getElementById("signup_password_confirm").setCustomValidity("Passwords Don't Match");
-//else
-//    document.getElementById("signup_password_confirm").setCustomValidity('');
-//empty string means no validation error
-//}
+window.onload = function () {
+   document.getElementById("signup_password").onchange = validatePassword;
+   document.getElementById("signup_password_confirm").onchange = validatePassword;
+}
+function validatePassword(){
+var pass2=document.getElementById("signup_password_confirm").value;
+var pass1=document.getElementById("signup_password").value;
+if(pass1!=pass2)
+   document.getElementById("signup_password_confirm").setCustomValidity("Passwords Don't Match");
+else
+   document.getElementById("signup_password_confirm").setCustomValidity('');
+// empty string means no validation error
+}
