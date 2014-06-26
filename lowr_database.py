@@ -3,6 +3,7 @@ import os
 import psycopg2
 from passlib.hash import pbkdf2_sha256
 from contextlib import closing
+from flask import g
 
 DB_SCHEMA = ["""
 DROP TABLE IF EXISTS accounts;
