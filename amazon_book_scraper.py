@@ -67,6 +67,7 @@ def item_dictionary(img, link, prime_price, new_price, min_p=None, max_p=None):
         item['new_price'] == u'n/a' else item
 
 
+
 def search_results(keywords, category, price, price_range):
     print "\nSEARCH RESULTS:\t"+str(category)+"\n"
     count = 1

@@ -44,7 +44,7 @@
           <li><a href="{{url_for('signup')}}">Sign Up</a>
           </li>
           {% else %}
-          <li class=""><a href="{{url_for('account')}}">My Account</a>
+          <li class=""><a href="{{url_for('account')}}">{{ user['username'] }}</a>
           </li>
           <li class=""><a href="{{url_for('logout')}}">Log Out</a>
           </li>
