@@ -184,7 +184,8 @@ def submititems():
     cur = conn.cursor()
     cur.execute("SELECT id FROM accounts WHERE username=%s",
                 (session['username'],))
-    user_id = cur.fetchone()
+    user_id = cur.fetchone()[0]
+    print [(user_id, url) for url in data]
     cur.executemany("INSERT INTO urls (user_id, url) VALUES (%s, %s)",
                     [(user_id, url) for url in data])
     return '/myaccount'
@@ -192,7 +193,7 @@ def submititems():
 
 @app.route("/myaccount")
 def account():
-    if session['logged_in'] == True:
+    if session['logged_in'] is True:
         conn = get_database_connection()
         cur = conn.cursor()
         cur.execute(
@@ -207,8 +208,14 @@ def account():
                     (session['username'],))
         user_id = cur.fetchone()
         cur.execute("SELECT url FROM urls WHERE user_id=%s", (user_id,))
-        urls = cur.fetchall()
-        return render_template('account.html', user=user, item_urls=urls)
+        item_urls = []
+        while True:
+            try:
+                url = cur.fetchone()[0]
+            except (AttributeError, TypeError):
+                break
+            item_urls.append(url)
+        return render_template('account.html', user=user, item_urls=item_urls)
     else:
         return redirect(url_for('home_page'))
 
@@ -287,8 +294,7 @@ def teardown_request(exception):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html',  404)
-
+    return render_template('404.html'),  404
 
 
 if __name__ == '__main__':
