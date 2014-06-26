@@ -126,11 +126,17 @@ def logout():
 
 
 def do_login(username='', passwd=''):
-    if username != app.config['ADMIN_USERNAME']:
+    if username == '':
         raise ValueError
-    if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT password FROM accounts WHERE username = %s", (username,))
+    db_password = cur.fetchone()[0]
+    if not pbkdf2_sha256.verify(passwd, db_password):
         raise ValueError
     session['logged_in'] = True
+    session['username'] = username
 
 
 
@@ -138,7 +144,6 @@ def do_login(username='', passwd=''):
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    import pdb; pdb.set_trace()
     error = None
     if request.method == 'POST':
 
@@ -153,9 +158,8 @@ def signup():
             error = ("Username already taken")
         else:
             session['logged_in'] = True
-            user = {'email': email, 'username': username}
-            # url_for('account', user=user)
-            return redirect(url_for('home_page'), user=user)
+            session['username'] = username
+            return redirect(url_for('home_page'))
 
     return render_template('signup.html', error=error)
 
@@ -167,6 +171,7 @@ INSERT INTO accounts (username, email, password, created) VALUES (%s, %s, %s, %s
     conn = get_database_connection()
     cur = conn.cursor()
     now = datetime.datetime.utcnow()
+    password = pbkdf2_sha256.encrypt(password)
     cur.execute(DB_USER_INSERT, [username, email, password, now]) #encrypt password
     # cur.commit()
 
@@ -181,8 +186,18 @@ def submititems():
 
 
 @app.route("/myaccount")
-def account(user):
+def account():
     if session['logged_in'] == True:
+        conn = get_database_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT username, email FROM accounts WHERE username = %s",
+            (session['username'],))
+        results = cur.fetchone()
+        user = {
+            'username': results[0],
+            'email': results[1]
+        }
         return render_template('account.html', user=user)
     else:
         return redirect(url_for('home_page'))
@@ -280,9 +295,7 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-
-
     from gevent.wsgi import WSGIServer
+    app.debug = True
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
-
