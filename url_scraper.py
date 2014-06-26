@@ -1,4 +1,6 @@
 import requests
+import gevent
+import time
 from bs4 import BeautifulSoup
 
 
@@ -7,8 +9,8 @@ def parse_source(html, encoding='utf-8'):
     return parsed
 
 
-def get_price(url):
-    resp = requests.get(url, timeout=3)
+def get_price(item):
+    resp = requests.get(item['url'], timeout=3)
     resp.raise_for_status()
     parsed = parse_source(resp.content, resp.encoding)
     a = parsed.find('table', class_='a-lineitem')
@@ -22,12 +24,12 @@ def get_price(url):
     if '-' in a:
         a = a.split(' - ')[0]
     price = a[1:].replace(',', '')
-    return float(price)
+    item['last_price'] = float(price)
 
 
 def update_prices(tracking_list):
-    for i in tracking_list:
-        i['current_price'] = get_price(i['url'])
+    threads = [gevent.spawn(get_price(i)) for i in tracking_list]
+    gevent.joinall(threads)
     return tracking_list
 
 if __name__ == '__main__':
@@ -36,8 +38,10 @@ if __name__ == '__main__':
             {'url': 'http://www.amazon.com/Nike-371642-Legend-Dri-Fit-Tee/dp/B0036E2ZXM/ref=sr_1_1?s=sporting-goods&ie=UTF8&qid=1403803921&sr=1-1&keywords=nike'},
             {'url': 'http://www.amazon.com/Samsung-SM-G900H-Factory-Unlocked-International/dp/B00J4TK4B8/ref=sr_1_1?s=wireless&ie=UTF8&qid=1403804783&sr=1-1&keywords=samsung+galaxy+s5'}
     ]
+    start = time.time()
+    tic = lambda: 'at %1.1f seconds' % (time.time() - start)
     a = update_prices(urls)
     for i in a:
-        print str(i['current_price'])
-
+        print str(i['last_price'])
+    print tic()
 
