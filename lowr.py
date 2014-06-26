@@ -1,11 +1,28 @@
 # -*- coding: utf-8 -*-
 
+
+#  GENERAL PURPOSE
+import os
+import datetime
+
+# FLASK RELATED
 from flask import Flask
+from flask import redirect
+from flask import url_for
+from flask import g
+from flask import session
 from flask import render_template
 from flask import request
 
+#  DATABASE RELATED
+import psycopg2
+from passlib.hash import pbkdf2_sha256
+from lowr_database import get_database_connection
+
+# CUSTOM
 from amazon_scraper import search_results as uni_search
 from amazon_book_scraper import search_results as book_search
+
 
 app = Flask(__name__)
 
@@ -18,6 +35,7 @@ def home_page():
 @app.route("/search", methods=['GET', 'POST'])
 def search():
     import json
+    results = []
 
     data = json.loads(request.form['data'])
     querey_data = {}
@@ -36,7 +54,6 @@ def search():
     price = querey_data['price']
     price_range = querey_data['price_range']
 
-    print category
     if category == 'Books' or \
        category == 'CDs & Vinyl' or \
        category == 'Software' or \
@@ -44,8 +61,6 @@ def search():
         file_ = book_search(keywords, category, price, price_range)
     else:
         file_ = uni_search(keywords, category, price, price_range)
-
-    results = []
 
     while True:
         try:
@@ -55,44 +70,152 @@ def search():
     return render_template('search.html', results=results)
 
 
-@app.route("/login")
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    error = None
+    if request.method == 'POST':
+        try:
+            do_login(request.form['login_username'].encode('utf-8'),
+                     request.form['login_password'].encode('utf-8'))
+        except ValueError:
+            error = "Login Failed"
+        else:
+            return redirect(url_for('home_page'))
+    return render_template('login.html', error=error)
 
 
-@app.route("/logout")
+@app.route('/logout')
 def logout():
-    pass
+    session.pop('logged_in', None)
+    return redirect(url_for('home_page'))
 
 
-@app.route("/signup")
+def do_login(username='', passwd=''):
+    if username == '':
+        raise ValueError
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT password FROM accounts WHERE username = %s", (username,))
+    db_password = cur.fetchone()[0]
+    if not pbkdf2_sha256.verify(passwd, db_password):
+        raise ValueError
+    session['logged_in'] = True
+    session['username'] = username
+
+
+@app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    error = ''
+    if request.method == 'POST':
+
+        username = request.form['signup_username']
+        email = request.form['signup_email']
+        password = request.form['signup_password']
+
+        try:
+            do_signup(username, email, password)
+        except Exception:
+            error = ("Username already taken")
+        else:
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('home_page'))
+
+    return render_template('signup.html', error=error)
+
+
+def do_signup(username='', email='', password=''):
+    DB_USER_INSERT = """
+INSERT INTO accounts (username, email, password, created)
+VALUES (%s, %s, %s, %s)
+"""
+    conn = get_database_connection()
+    cur = conn.cursor()
+    now = datetime.datetime.utcnow()
+    password = pbkdf2_sha256.encrypt(password)
+    cur.execute(DB_USER_INSERT, [username, email, password, now])  #encrypt password
+    # cur.commit()
 
 
 @app.route("/submititems", methods=['GET', 'POST'])
 def submititems():
-    import json
     data = request.get_json()
-    print data
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM accounts WHERE username=%s",
+                (session['username'],))
+    user_id = cur.fetchone()[0]
+    print [(user_id, url) for url in data]
+    cur.executemany("INSERT INTO urls (user_id, url) VALUES (%s, %s)",
+                    [(user_id, url) for url in data])
     return '/myaccount'
 
 
 @app.route("/myaccount")
 def account():
-    user = {'username': "joe_public",
-            'email': 'average@joe.com'}  # TESTING ONLY
-    item_urls = [u'http://www.amazon.com/Marshall-Amplification-MF4400-NA-Fridge/dp/B008K4FTV8',
-                 u'http://www.amazon.com/Avanti-Model-RMS550PS-SIDE-BY-SIDE-Refrigerator/dp/B00GHIJNY8',
-                 u'http://www.amazon.com/Energy-Star-Refrigerator-Top-Mount-Freezer/dp/B00CSBL3AU',
-                 u'http://www.amazon.com/Mid-Size-Frost-Free-Refrigerator-Top-Mount-Freezer/dp/B00DAI2TCQ']
-    return render_template('account.html', user=user, item_urls=item_urls)
+    if session['logged_in'] is True:
+        conn = get_database_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT username, email FROM accounts WHERE username = %s",
+            (session['username'],))
+        results = cur.fetchone()
+        user = {
+            'username': results[0],
+            'email': results[1]
+        }
+        cur.execute("SELECT id FROM accounts WHERE username=%s",
+                    (session['username'],))
+        user_id = cur.fetchone()
+        cur.execute("SELECT url FROM urls WHERE user_id=%s", (user_id,))
+        item_urls = []
+        while True:
+            try:
+                url = cur.fetchone()[0]
+            except (AttributeError, TypeError):
+                break
+            item_urls.append(url)
+        return render_template('account.html', user=user, item_urls=item_urls)
+    else:
+        return redirect(url_for('home_page'))
+
+
+app.config['DATABASE'] = os.environ.get(
+    'DATABASE_URL', 'dbname=lowr'
+)
+app.config['ADMIN_USERNAME'] = os.environ.get(
+    'ADMIN_USERNAME', 'admin'
+)
+
+app.config['ADMIN_PASSWORD'] = os.environ.get(
+    'ADMIN_PASSWORD', pbkdf2_sha256.encrypt('admin')
+)
+
+app.config['SECRET_KEY'] = os.environ.get(
+    'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
+)
+
+
+@app.teardown_request
+def teardown_request(exception):
+    db = getattr(g, 'db', None)
+    if db is not None:
+        if exception and isinstance(exception, psycopg2.Error):
+            db.rollback()
+        else:
+            db.commit()
+        db.close()
+        g.db = None  # get rid of db from the g namespace
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('404.html'),  404
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    from gevent.wsgi import WSGIServer
+    app.debug = True
+    http_server = WSGIServer(('', 8080), app)
+    http_server.serve_forever()
