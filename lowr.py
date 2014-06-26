@@ -149,7 +149,7 @@ def do_login(username='', passwd=''):
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    error = None
+    error = ''
     if request.method == 'POST':
 
         username = request.form['signup_username']
@@ -159,7 +159,7 @@ def signup():
         try:
             do_signup(username, email, password)
 
-        except ValueError:
+        except Exception :
             error = ("Username already taken")
         else:
             session['logged_in'] = True
