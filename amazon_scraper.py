@@ -155,7 +155,7 @@ def search_results(keywords, category, price, price_range):
     page = 1
     category = set_globals(category, price, price_range)
     p_queue = P_Queue()
-    while True:
+    while p_queue._size < 5:
         temp = p_queue._size
         gevent.joinall([
             gevent.spawn(page_scrape(keywords, category, page+2, p_queue)),

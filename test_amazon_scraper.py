@@ -28,5 +28,3 @@ def test_search_results():
     price_range = 50.0
     a = search_results(keywords, category, price, price_range)
     assert a._size > 10
-
-
