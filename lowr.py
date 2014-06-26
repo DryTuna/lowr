@@ -158,8 +158,20 @@ def submititems():
     cur.execute("SELECT id FROM accounts WHERE username=%s",
                 (session['username'],))
     user_id = cur.fetchone()[0]
-    print [(user_id, url) for url in data]
-    cur.executemany("INSERT INTO urls (user_id, url) VALUES (%s, %s)",
+    cur.executemany("INSERT INTO items (user_id, url, desired_price, last_price) VALUES (%s, %s, %s, %s)",
+                    [(user_id, item['url'], item['desired_price'], item['last_price']) for item in data])
+    return '/myaccount'
+
+
+@app.route("/deleteitems", methods=['GET', 'POST'])
+def deleteitems():
+    data = request.get_json()
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM accounts WHERE username=%s",
+                (session['username'],))
+    user_id = cur.fetchone()[0]
+    cur.executemany("DELETE FROM items WHERE user_id=%s AND url=%s",
                     [(user_id, url) for url in data])
     return '/myaccount'
 
@@ -185,15 +197,9 @@ def account():
         cur.execute("SELECT id FROM accounts WHERE username=%s",
                     (session['username'],))
         user_id = cur.fetchone()
-        cur.execute("SELECT url FROM urls WHERE user_id=%s", (user_id,))
-        item_urls = []
-        while True:
-            try:
-                url = cur.fetchone()[0]
-            except (AttributeError, TypeError):
-                break
-            item_urls.append(url)
-        return render_template('account.html', user=user, item_urls=item_urls)
+        cur.execute("SELECT url, desired_price, last_price FROM items WHERE user_id=%s", (user_id,))
+        items = cur.fetchall()
+        return render_template('account.html', user=user, items=items)
     else:
         return redirect(url_for('home_page'))
 

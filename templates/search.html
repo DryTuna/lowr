@@ -39,10 +39,10 @@
                 <a class="black-link" href="{{result.link}}">{{ result['title'] }}</a>
               </td>
               <td>
-                <a class="black-link" href="{{result.link}}">{{ result['prime_price'] }}</a>
+                {{ result['prime_price'] }}
               </td>
               <td>
-                <a class="black-link" href="{{result.link}}">{{ result['new_price'] }}</a>
+                {{ result['new_price'] }}
               </td>
             </tr>
             {% endfor %}
