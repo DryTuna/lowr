@@ -30,7 +30,7 @@ def search():
                          'Beauty': 'n:3760911',
                          'Books': 'n:283155',
                          'Cell Phones & Accessories': 'n:2335752011',
-                         # 'Clothing & Accessories': 'n:1036592',
+                         'Clothing & Accessories': 'n:1036592',
                          'Collectibles & Fine Art': 'n:4991425011',
                          'Computers': 'n:541966',
                          'CDs & Vinyl': 'n:5174',
@@ -43,18 +43,18 @@ def search():
                          'Industrial & Scientific': 'n:16310091',
                          'Jewelry': 'n:3367581',
                          'Kindle Store': 'n:133140011',
-                         'Magazine Subscriptions': 'n:599858',
+                         # 'Magazine Subscriptions': 'n:599858',
                          'Movies & TV': 'n:2625373011',
                          'Musical Instruments': 'n:11091801',
                          'Office Products': 'n:1064954',
                          'Patio, Lawn & Garden': 'n:2972638011',
                          'Pet Supplies': 'n:2619533011',
                          'Shoes': 'n:672123011',
-                         'Software': 'n:229534',
+                         # 'Software': 'n:229534',
                          'Sports & Outdoors': 'n:3375251',
                          'Tools & Home Improvement': 'n:228013',
                          'Toys & Games': 'n:165793011',
-                         'Video Games': 'n:468642',
+                         # 'Video Games': 'n:468642',
                          'Watches': 'n:377110011',
                          'Wine': 'n:2983386011'}
 
@@ -78,9 +78,6 @@ def search():
     if category == amazon_categories['Books'] or \
        category == amazon_categories['CDs & Vinyl']:
         file_ = book_search(keywords, category, price, price_range)
-    elif category == amazon_categories['All Departments'] or \
-         category == amazon_categories['Industrial & Scientific']:
-        file_ = dept_search(keywords, category, price, price_range)
     else:
         file_ = uni_search(keywords, category, price, price_range)
 
