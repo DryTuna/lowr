@@ -164,18 +164,12 @@ def submititems():
     return '/myaccount'
 
 
-@app.route("/myaccount")
-def account(user):
-    if session['logged_in'] == True:
-        return render_template('account.html', user=user)
-    else:
-        return redirect(url_for('home_page'))
-
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
+@app.route("/myaccount")
 def account():
     if session['logged_in'] is True:
         conn = get_database_connection()
