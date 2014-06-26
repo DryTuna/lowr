@@ -5,11 +5,39 @@ from P_Queue import P_Queue
 
 MIN_P = 0.0
 MAX_P = 5000.0
-FST_CLASS = u'fstGrid prod celwidget'
+FST_CLASS = u'fstRowGrid prod celwidget'
 RSLT_CLASS = u'rsltGrid prod celwidget'
 PP_CLASS = u'bld lrg red'
 NP_CLASS = u'price bld'
-DEPT_2 = [u'i:aps', u'n:133140011', u'n:2625373011', u'n:16310091']
+DEPT_1 = {'All Departments': u'i:aps',
+          'Kindle Store': u'n:133140011',
+          'Movies & TV': u'n:2625373011',
+          'Industrial & Scientific': u'n:16310091'}
+DEPT_2 = {'Appliances': u'n:2619525011',
+          'Arts, Crafts & Sewing': u'n:2617941011',
+          'Automotive': u'n:15684181',
+          'Baby': u'n:165796011',
+          'Beauty': u'n:3760911',
+          'Cell Phones & Accessories': u'n:2335752011',
+          'Clothing & Accessories': u'n:1036592',
+          'Collectibles & Fine Art': u'n:4991425011',
+          'Computers': u'n:541966',
+          'Electronics': u'n:172282',
+          'Gift Cards Store': u'n:2238192011',
+          'Grocery & Gourmet Food': u'n:16310101',
+          'Health & Personal Care': u'n:3760901',
+          'Home & Kitchen': u'n:1055398',
+          'Jewelry': u'n:3367581',
+          'Musical Instruments': u'n:11091801',
+          'Office Products': u'n:1064954',
+          'Patio, Lawn & Garden': u'n:2972638011',
+          'Pet Supplies': u'n:2619533011',
+          'Shoes': u'n:672123011',
+          'Sports & Outdoors': u'n:3375251',
+          'Tools & Home Improvement': u'n:228013',
+          'Toys & Games': u'n:165793011',
+          'Watches': u'n:377110011',
+          'Wine': u'n:2983386011'}
 
 
 def parse_source(html, encoding='utf-8'):
@@ -98,15 +126,17 @@ def set_globals(category, price, price_range):
         price_range = float(price_range)
         MIN_P = price - (price * price_range / 100)
         MAX_P = price + (price * price_range / 100)
-    if str(category) in DEPT_2:
-        FST_CLASS = u'fst prod celwidget'
+    if str(category) in DEPT_1:
+        FST_CLASS = u'fstRow prod celwidget'
         RSLT_CLASS = u'rslt prod celwidget'
+        return DEPT_1[category]
+    return DEPT_2[category]
 
 
 def search_results(keywords, category, price, price_range):
     count = 1
     page = 1
-    set_globals(category, price, price_range)
+    category = set_globals(category, price, price_range)
     p_queue = P_Queue()
     while count < 15:
         content = fetch_search_results(keywords,
