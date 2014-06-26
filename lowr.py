@@ -122,8 +122,18 @@ def submititems():
 
 @app.route("/myaccount")
 def account():
-    user = {'email': 'average@joe.com'}  # TESTING ONLY
-    return render_template('account.html', user=user)
+    user = {'username': "joe_public",
+            'email': 'average@joe.com'}  # TESTING ONLY
+    item_urls = [u'http://www.amazon.com/Marshall-Amplification-MF4400-NA-Fridge/dp/B008K4FTV8',
+                 u'http://www.amazon.com/Avanti-Model-RMS550PS-SIDE-BY-SIDE-Refrigerator/dp/B00GHIJNY8',
+                 u'http://www.amazon.com/Energy-Star-Refrigerator-Top-Mount-Freezer/dp/B00CSBL3AU',
+                 u'http://www.amazon.com/Mid-Size-Frost-Free-Refrigerator-Top-Mount-Freezer/dp/B00DAI2TCQ']
+    return render_template('account.html', user=user, item_urls=item_urls)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':
