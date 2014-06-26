@@ -39,7 +39,7 @@
           <div class="form-group">
             <label for="signup_password_confirm" class="col-sm-3 control-label">Confirm Password</label>
             <div class="col-sm-9">
-              <input type="password" id="signup_password_confirm" placeholder="*******" required>
+              <input type="password" name='signup_password_confirm' id="signup_password_confirm" placeholder="*******" required>
             </div>
           </div>
           <div class="form-group">
@@ -50,7 +50,7 @@
               </button>
                 <br>
 
-               <div style="color: #ff3a1a ">{{ error }}</div>
+               <div style="color: #ff3a1a ">{{ error['error'] }}</div>
                 
             </div>
           </div>
