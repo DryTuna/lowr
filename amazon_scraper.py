@@ -3,8 +3,13 @@ from bs4 import BeautifulSoup
 from P_Queue import P_Queue
 
 
-MIN_P = 0
-MAX_P = 5000
+MIN_P = 0.0
+MAX_P = 5000.0
+FST_CLASS = u'fstGrid prod celwidget'
+RSLT_CLASS = u'rsltGrid prod celwidget'
+PP_CLASS = u'bld lrg red'
+NP_CLASS = u'price bld'
+DEPT_2 = [u'i:aps', u'n:133140011', u'n:2625373011', u'n:16310091']
 
 
 def parse_source(html, encoding='utf-8'):
@@ -13,7 +18,7 @@ def parse_source(html, encoding='utf-8'):
 
 
 def fetch_search_results(keywords="",
-                         rh='i:aps',
+                         rh='n:172282',
                          page=None):
     base = 'http://www.amazon.com/s/'
     if len(keywords) == 0:
@@ -33,24 +38,36 @@ def fetch_search_results(keywords="",
 
 
 def extract_items(parsed):
-    fst = parsed.find_all('div', class_='fstGrid prod celwidget')
-    rslt = parsed.find_all('div', class_='rsltGrid prod celwidget')
+    fst = parsed.find_all('div', class_=FST_CLASS)
+    rslt = parsed.find_all('div', class_=RSLT_CLASS)
     for block in fst:
         img = block.find('div', class_='imageBox').find('img')
         link = block.find('h3', class_='newaps').find('a')
-        prime_price = block.find('span', class_='bld lrg red')
-        new_price = block.find('span', class_='price bld')
+        prime_price = block.find('span', class_=PP_CLASS)
+        new_price = block.find('span', class_=NP_CLASS)
         item = item_dictionary(img, link, prime_price, new_price)
         if item is not None:
             yield item
     for block in rslt:
         img = block.find('div', class_='imageBox').find('img')
         link = block.find('h3', class_='newaps').find('a')
-        prime_price = block.find('span', class_='bld lrg red')
-        new_price = block.find('span', class_='price bld')
+        prime_price = block.find('span', class_=PP_CLASS)
+        new_price = block.find('span', class_=NP_CLASS)
         item = item_dictionary(img, link, prime_price, new_price)
         if item is not None:
             yield item
+
+
+def get_price(price_string):
+    if price_string is not None:
+        x = price_string.string.strip()
+        if '-' in x:
+            x = x.split(' - ')[0]
+        if '$' in x:
+            temp = str(x)[1:-3].replace(',', '')
+            if int(temp) >= MIN_P and int(temp) <= MAX_P:
+                return x
+    return None
 
 
 def item_dictionary(img, link, prime_price, new_price):
@@ -69,47 +86,45 @@ def item_dictionary(img, link, prime_price, new_price):
         else None
 
 
-def get_price(price_string):
-    if price_string is not None:
-        x = price_string.string.strip()
-        if '$' in x:
-            temp = str(x)[1:-3].replace(',', '')
-            if int(temp) >= MIN_P and int(temp) <= MAX_P:
-                return x
-    return None
+def set_globals(category, price, price_range):
+    global MIN_P
+    global MAX_P
+    global FST_CLASS
+    global RSLT_CLASS
+    global PP_CLASS
+    global NP_CLASS
+    if len(str(price)) > 0:
+        price = float(price)
+        price_range = float(price_range)
+        MIN_P = price - (price * price_range / 100)
+        MAX_P = price + (price * price_range / 100)
+    if str(category) in DEPT_2:
+        FST_CLASS = u'fst prod celwidget'
+        RSLT_CLASS = u'rslt prod celwidget'
 
 
 def search_results(keywords, category, price, price_range):
     count = 1
     page = 1
-    if price is not None:
-        price = float(price)
-        price_range = float(price_range)
-        global MIN_P
-        MIN_P = price - (price * price_range / 100)
-        global MAX_P
-        MAX_P = price + (price * price_range / 100)
+    set_globals(category, price, price_range)
     p_queue = P_Queue()
-    while count < 10:
+    while count < 15:
         content = fetch_search_results(keywords,
                                        category,
                                        page)
         parsed = parse_source(content[0], content[1])
-        print "\nSEARCH RESULTS:\t"+str(len(parsed))+"\n"
-        if len(parsed.find_all('div', class_='rsltGrid prod celwidget')) == 0:
+        if len(parsed.find_all('div', class_=RSLT_CLASS)) == 0:
             break
         items = extract_items(parsed)
         for i in items:
             pri = 0
             if i['prime_price'] == u'n/a':
-                pri = int(i['new_price'][1:-3])
+                pri = int(i['new_price'][1:-3].replace(',', ''))
             else:
-                pri = int(i['prime_price'][1:-3])
+                pri = int(i['prime_price'][1:-3].replace(',', ''))
             p_queue.insert(i, pri)
             count += 1
         page += 1
-    MIN_P = 0
-    MAX_P = 5000
     return p_queue
 
 
