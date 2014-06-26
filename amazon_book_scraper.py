@@ -75,6 +75,7 @@ def item_dictionary(img, link, prime_price, new_price):
         else None
 
 
+
 def search_results(keywords, category, price, price_range):
     count = 1
     page = 1

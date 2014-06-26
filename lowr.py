@@ -2,25 +2,29 @@
 
 
 #  GENERAL PURPOSE
-# import os
+import os
 import datetime
 
 # FLASK RELATED
 from flask import Flask
 from flask import g
+from flask import redirect
+from flask import url_for
+from flask import g
+from flask import session
 from flask import render_template
 from flask import request
 
 #  DATABASE RELATED
 import psycopg2
 from passlib.hash import pbkdf2_sha256
-from lowr_database import *
+from lowr_database import get_database_connection
 
 # CUSTOM
 
 from amazon_scraper import search_results as uni_search
-from amazon_dept_scraper import search_results as dept_search
 from amazon_book_scraper import search_results as book_search
+
 
 app = Flask(__name__)
 
@@ -33,7 +37,7 @@ def home_page():
 @app.route("/search", methods=['GET', 'POST'])
 def search():
     import json
-
+    results = []
     amazon_categories = {'All Departments': 'i:aps',
                          # 'Amazon Instant Video': 'n:2858778011',
                          'Appliances': 'n:2619525011',
@@ -44,7 +48,7 @@ def search():
                          'Beauty': 'n:3760911',
                          'Books': 'n:283155',
                          'Cell Phones & Accessories': 'n:2335752011',
-                         # 'Clothing & Accessories': 'n:1036592',
+                         'Clothing & Accessories': 'n:1036592',
                          'Collectibles & Fine Art': 'n:4991425011',
                          'Computers': 'n:541966',
                          'CDs & Vinyl': 'n:5174',
@@ -57,18 +61,18 @@ def search():
                          'Industrial & Scientific': 'n:16310091',
                          'Jewelry': 'n:3367581',
                          'Kindle Store': 'n:133140011',
-                         'Magazine Subscriptions': 'n:599858',
+                         # 'Magazine Subscriptions': 'n:599858',
                          'Movies & TV': 'n:2625373011',
                          'Musical Instruments': 'n:11091801',
                          'Office Products': 'n:1064954',
                          'Patio, Lawn & Garden': 'n:2972638011',
                          'Pet Supplies': 'n:2619533011',
                          'Shoes': 'n:672123011',
-                         'Software': 'n:229534',
+                         # 'Software': 'n:229534',
                          'Sports & Outdoors': 'n:3375251',
                          'Tools & Home Improvement': 'n:228013',
                          'Toys & Games': 'n:165793011',
-                         'Video Games': 'n:468642',
+                         # 'Video Games': 'n:468642',
                          'Watches': 'n:377110011',
                          'Wine': 'n:2983386011'}
 
@@ -92,13 +96,8 @@ def search():
     if category == amazon_categories['Books'] or \
        category == amazon_categories['CDs & Vinyl']:
         file_ = book_search(keywords, category, price, price_range)
-    elif category == amazon_categories['All Departments'] or \
-         category == amazon_categories['Industrial & Scientific']:
-        file_ = dept_search(keywords, category, price, price_range)
     else:
         file_ = uni_search(keywords, category, price, price_range)
-
-    results = []
 
     while True:
         try:
@@ -114,8 +113,8 @@ def login():
     error = None
     if request.method == 'POST':
         try:
-            do_login(request.form['username'].encode('utf-8'),
-                     request.form['password'].encode('utf-8'))
+            do_login(request.form['login_username'].encode('utf-8'),
+                     request.form['login_password'].encode('utf-8'))
         except ValueError:
             error = "Login Failed"
         else:
@@ -131,52 +130,106 @@ def logout():
 
 
 def do_login(username='', passwd=''):
-    if username != app.config['ADMIN_USERNAME']:
+    if username == '':
         raise ValueError
-    if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT password FROM accounts WHERE username = %s", (username,))
+    db_password = cur.fetchone()[0]
+    if not pbkdf2_sha256.verify(passwd, db_password):
         raise ValueError
     session['logged_in'] = True
+    session['username'] = username
 
 
 
 
 
-@app.route("/signup")
+@app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    error = None
+    if request.method == 'POST':
+
+        username = request.form['signup_username']
+        email = request.form['signup_email']
+        password = request.form['signup_password']
+
+        try:
+            do_signup(username, email, password)
+
+        except ValueError:
+            error = ("Username already taken")
+        else:
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('home_page'))
+
+    return render_template('signup.html', error=error)
+
+
+def do_signup(username='', email='', password=''):
+    DB_USER_INSERT = """
+INSERT INTO accounts (username, email, password, created) VALUES (%s, %s, %s, %s)
+"""
+    conn = get_database_connection()
+    cur = conn.cursor()
+    now = datetime.datetime.utcnow()
+    password = pbkdf2_sha256.encrypt(password)
+    cur.execute(DB_USER_INSERT, [username, email, password, now])
+    # cur.commit()
+
 
 
 @app.route("/submititems", methods=['GET', 'POST'])
 def submititems():
-    import json
     data = request.get_json()
-    print data
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM accounts WHERE username=%s",
+                (session['username'],))
+    user_id = cur.fetchone()[0]
+    print [(user_id, url) for url in data]
+    cur.executemany("INSERT INTO urls (user_id, url) VALUES (%s, %s)",
+                    [(user_id, url) for url in data])
     return '/myaccount'
 
 
 @app.route("/myaccount")
 def account():
-    user = {'username': "joe_public",
-            'email': 'average@joe.com'}  # TESTING ONLY
-    item_urls = [u'http://www.amazon.com/Marshall-Amplification-MF4400-NA-Fridge/dp/B008K4FTV8',
-                 u'http://www.amazon.com/Avanti-Model-RMS550PS-SIDE-BY-SIDE-Refrigerator/dp/B00GHIJNY8',
-                 u'http://www.amazon.com/Energy-Star-Refrigerator-Top-Mount-Freezer/dp/B00CSBL3AU',
-                 u'http://www.amazon.com/Mid-Size-Frost-Free-Refrigerator-Top-Mount-Freezer/dp/B00DAI2TCQ']
-    return render_template('account.html', user=user, item_urls=item_urls)
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
-
+    if session['logged_in'] is True:
+        conn = get_database_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT username, email FROM accounts WHERE username = %s",
+            (session['username'],))
+        results = cur.fetchone()
+        user = {
+            'username': results[0],
+            'email': results[1]
+        }
+        cur.execute("SELECT id FROM accounts WHERE username=%s",
+                    (session['username'],))
+        user_id = cur.fetchone()
+        cur.execute("SELECT url FROM urls WHERE user_id=%s", (user_id,))
+        item_urls = []
+        while True:
+            try:
+                url = cur.fetchone()[0]
+            except (AttributeError, TypeError):
+                break
+            item_urls.append(url)
+        return render_template('account.html', user=user, item_urls=item_urls)
+    else:
+        return redirect(url_for('home_page'))
 
 
 
 app.config['DATABASE'] = os.environ.get(
-    'DATABASE_URL', 'dbname=accounts'
+    'DATABASE_URL', 'dbname=lowr'
 )
 app.config['ADMIN_USERNAME'] = os.environ.get(
-    'ADMIN_USERNAME', 'admin@admin.com'
+    'ADMIN_USERNAME', 'admin'
 )
 
 app.config['ADMIN_PASSWORD'] = os.environ.get(
@@ -186,6 +239,7 @@ app.config['ADMIN_PASSWORD'] = os.environ.get(
 app.config['SECRET_KEY'] = os.environ.get(
     'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
 )
+
 
 @app.teardown_request
 def teardown_request(exception):
@@ -199,11 +253,14 @@ def teardown_request(exception):
         g.db = None # get rid of db from the g namespace
 
 
-
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'),  404
 
 
 if __name__ == '__main__':
     from gevent.wsgi import WSGIServer
+    app.debug = True
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
 
