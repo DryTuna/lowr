@@ -6,7 +6,16 @@ from contextlib import closing
 from flask import g
 
 DB_SCHEMA = ["""
-DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS urls CASCADE;
+CREATE TABLE urls (
+    user_id int REFERENCES accounts(id),
+    url VARCHAR (512) NOT NULL,
+    desired_price numeric NOT NULL,
+    last_price numeric NOT NULL
+)
+""",
+"""
+DROP TABLE IF EXISTS accounts CASCADE;
 CREATE TABLE accounts (
     id serial PRIMARY KEY,
     username VARCHAR (127) NOT NULL UNIQUE,
@@ -14,14 +23,8 @@ CREATE TABLE accounts (
     password VARCHAR (127) NOT NULL,
     created TIMESTAMP NOT NULL
 )
-""",
 """
-DROP TABLE IF EXISTS urls;
-CREATE TABLE urls (
-    user_id int REFERENCES accounts(id),
-    url VARCHAR (512) NOT NULL
-)
-"""]
+]
 
 DB_ENTRY_INSERT = """
 INSERT INTO accounts (title, text, created) VALUES (%s, %s, %s)
