@@ -78,11 +78,6 @@ def search():
     if category == amazon_categories['Books'] or \
        category == amazon_categories['CDs & Vinyl']:
         file_ = book_search(keywords, category, price, price_range)
-    elif category == amazon_categories['All Departments'] or \
-         category == amazon_categories['Kindle Store'] or \
-         category == amazon_categories['Movies & TV'] or \
-         category == amazon_categories['Industrial & Scientific']:
-        file_ = dept_search(keywords, category, price, price_range)
     else:
         file_ = uni_search(keywords, category, price, price_range)
 
