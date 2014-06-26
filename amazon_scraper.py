@@ -131,11 +131,12 @@ def set_globals(category, price, price_range):
         FST_CLASS = u'fstRow prod celwidget'
         RSLT_CLASS = u'rslt prod celwidget'
         return DEPT_1[category]
+    FST_CLASS = u'fstRowGrid prod celwidget'
+    RSLT_CLASS = u'rsltGrid prod celwidget'
     return DEPT_2[category]
 
 
 def page_scrape(keywords, category, page, p_queue):
-    count = 0
     content = fetch_search_results(keywords,
                                    category,
                                    page)
@@ -148,19 +149,18 @@ def page_scrape(keywords, category, page, p_queue):
         else:
             pri = int(i['prime_price'][1:-3].replace(',', ''))
         p_queue.insert(i, pri)
-        count += 1
 
 
 def search_results(keywords, category, price, price_range):
     page = 1
     category = set_globals(category, price, price_range)
     p_queue = P_Queue()
-    while p_queue._size < 5:
+    while True:
         temp = p_queue._size
         gevent.joinall([
-            gevent.spawn(page_scrape(keywords, category, page, p_queue)),
+            gevent.spawn(page_scrape(keywords, category, page+2, p_queue)),
             gevent.spawn(page_scrape(keywords, category, page+1, p_queue)),
-            gevent.spawn(page_scrape(keywords, category, page+2, p_queue))
+            gevent.spawn(page_scrape(keywords, category, page, p_queue))
             ])
         page += 3
         if p_queue._size == temp and p_queue._size > 0:
