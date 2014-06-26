@@ -7,11 +7,11 @@ from flask import g
 
 DB_SCHEMA = ["""
 DROP TABLE IF EXISTS urls CASCADE;
-CREATE TABLE urls (
+CREATE TABLE items (
     user_id int REFERENCES accounts(id),
     url VARCHAR (512) NOT NULL,
-    desired_price numeric NOT NULL,
-    last_price numeric NOT NULL
+    desired_price real NOT NULL,
+    last_price real NOT NULL
 )
 """,
 """
@@ -63,5 +63,3 @@ def get_database_connection():
     if db is None:
         g.db = db = connect_db()
     return db
-
-

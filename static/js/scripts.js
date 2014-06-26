@@ -28,7 +28,7 @@ function toggleRowSelect(product_url) {
         }
         selectedProducts.push({"url": product_url,
                                "desired_price": parseFloat(document.getElementById("search_min_price").value),
-                               "price": price});
+                               "last_price": price});
     }
 }
 
