@@ -8,6 +8,10 @@ import datetime
 # FLASK RELATED
 from flask import Flask
 from flask import g
+from flask import redirect
+from flask import url_for
+from flask import g
+from flask import session
 from flask import render_template
 from flask import request
 from flask import session
@@ -18,12 +22,12 @@ from flask import abort
 #  DATABASE RELATED
 import psycopg2
 from passlib.hash import pbkdf2_sha256
-from lowr_database import *
+from lowr_database import get_database_connection
 
 # CUSTOM_SCRAPER
 from amazon_scraper import search_results as uni_search
-from amazon_dept_scraper import search_results as dept_search
 from amazon_book_scraper import search_results as book_search
+
 
 app = Flask(__name__)
 
@@ -47,7 +51,7 @@ def search():
                          'Beauty': 'n:3760911',
                          'Books': 'n:283155',
                          'Cell Phones & Accessories': 'n:2335752011',
-                         # 'Clothing & Accessories': 'n:1036592',
+                         'Clothing & Accessories': 'n:1036592',
                          'Collectibles & Fine Art': 'n:4991425011',
                          'Computers': 'n:541966',
                          'CDs & Vinyl': 'n:5174',
@@ -60,57 +64,52 @@ def search():
                          'Industrial & Scientific': 'n:16310091',
                          'Jewelry': 'n:3367581',
                          'Kindle Store': 'n:133140011',
-                         'Magazine Subscriptions': 'n:599858',
+                         # 'Magazine Subscriptions': 'n:599858',
                          'Movies & TV': 'n:2625373011',
                          'Musical Instruments': 'n:11091801',
                          'Office Products': 'n:1064954',
                          'Patio, Lawn & Garden': 'n:2972638011',
                          'Pet Supplies': 'n:2619533011',
                          'Shoes': 'n:672123011',
-                         'Software': 'n:229534',
+                         # 'Software': 'n:229534',
                          'Sports & Outdoors': 'n:3375251',
                          'Tools & Home Improvement': 'n:228013',
                          'Toys & Games': 'n:165793011',
-                         'Video Games': 'n:468642',
+                         # 'Video Games': 'n:468642',
                          'Watches': 'n:377110011',
                          'Wine': 'n:2983386011'}
 
-    if request.method == 'POST':
 
-        data = json.loads(request.form['data'])
-        querey_data = {}
-        for item in data:
-            if item['name'] == 'search_category':
-                querey_data['category'] = amazon_categories[item['value']]
-            if item['name'] == 'search_text':
-                querey_data['keywords'] = item['value']
-            if item['name'] == 'search_min_price':
-                querey_data['price'] = item['value']
-            if item['name'] == 'search_price_range':
-                querey_data['price_range'] = item['value']
+    data = json.loads(request.form['data'])
+    querey_data = {}
+    for item in data:
+        if item['name'] == 'search_category':
+            querey_data['category'] = amazon_categories[item['value']]
+        if item['name'] == 'search_text':
+            querey_data['keywords'] = item['value']
+        if item['name'] == 'search_min_price':
+            querey_data['price'] = item['value']
+        if item['name'] == 'search_price_range':
+            querey_data['price_range'] = item['value']
 
-        keywords = querey_data['keywords']
-        category = querey_data['category']
-        price = querey_data['price']
-        price_range = querey_data['price_range']
+    keywords = querey_data['keywords']
+    category = querey_data['category']
+    price = querey_data['price']
+    price_range = querey_data['price_range']
 
-        if category == amazon_categories['Books'] or \
-           category == amazon_categories['CDs & Vinyl']:
-            file_ = book_search(keywords, category, price, price_range)
-        elif category == amazon_categories['All Departments'] or \
-             category == amazon_categories['Industrial & Scientific']:
-            file_ = dept_search(keywords, category, price, price_range)
-        else:
-            file_ = uni_search(keywords, category, price, price_range)
+    if category == amazon_categories['Books'] or \
+       category == amazon_categories['CDs & Vinyl']:
+        file_ = book_search(keywords, category, price, price_range)
+    else:
+        file_ = uni_search(keywords, category, price, price_range)
 
-        results = []
+    while True:
+        try:
+            results.append(file_.pop()._data)
+        except IndexError:
+            break
 
-        while True:
-            try:
-                results.append(file_.pop()._data)
-            except IndexError:
-                break
-    return render_template('search.html', results = results)
+    return render_template('search.html', results=results)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -133,18 +132,23 @@ def logout():
 
 
 
-def do_login(username='', password=''):
-    if username != app.config['ADMIN_USERNAME']:
+def do_login(username='', passwd=''):
+    if username == '':
         raise ValueError
-    if not pbkdf2_sha256.verify(password, app.config['ADMIN_PASSWORD']):
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT password FROM accounts WHERE username = %s", (username,))
+    db_password = cur.fetchone()[0]
+    if not pbkdf2_sha256.verify(passwd, db_password):
         raise ValueError
     session['logged_in'] = True
+    session['username'] = username
 
 
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    import pdb; pdb.set_trace()
     error = None
     if request.method == 'POST':
 
@@ -159,9 +163,8 @@ def signup():
             error = ("Username already taken")
         else:
             session['logged_in'] = True
-            user = {'email': email, 'username': username}
-            url_for('account', user=user)
-            return redirect(url_for('home_page'), user=user)
+            session['username'] = username
+            return redirect(url_for('home_page'))
 
     return render_template('signup.html', error=error)
 
@@ -173,14 +176,21 @@ INSERT INTO accounts (username, email, password, created) VALUES (%s, %s, %s, %s
     conn = get_database_connection()
     cur = conn.cursor()
     now = datetime.datetime.utcnow()
-    cur.execute(DB_USER_INSERT, [username, email, password, now]) #encrypt password
+    password = pbkdf2_sha256.encrypt(password)
+    cur.execute(DB_USER_INSERT, [username, email, password, now])
 
 
 @app.route("/submititems", methods=['GET', 'POST'])
 def submititems():
-    import json
     data = request.get_json()
-    print data
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM accounts WHERE username=%s",
+                (session['username'],))
+    user_id = cur.fetchone()[0]
+    print [(user_id, url) for url in data]
+    cur.executemany("INSERT INTO urls (user_id, url) VALUES (%s, %s)",
+                    [(user_id, url) for url in data])
     return '/myaccount'
 
 
@@ -190,20 +200,38 @@ def account(user):
         return render_template('account.html', user=user)
     else:
         return redirect(url_for('home_page'))
-# =======
-# def account():
-#     user = {'username': "joe_public",
-#             'email': 'average@joe.com'}  # TESTING ONLY
-#     item_urls = [u'http://www.amazon.com/Marshall-Amplification-MF4400-NA-Fridge/dp/B008K4FTV8',
-#                  u'http://www.amazon.com/Avanti-Model-RMS550PS-SIDE-BY-SIDE-Refrigerator/dp/B00GHIJNY8',
-#                  u'http://www.amazon.com/Energy-Star-Refrigerator-Top-Mount-Freezer/dp/B00CSBL3AU',
-#                  u'http://www.amazon.com/Mid-Size-Frost-Free-Refrigerator-Top-Mount-Freezer/dp/B00DAI2TCQ']
-#     return render_template('account.html', user=user, item_urls=item_urls)
 
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+def account():
+    if session['logged_in'] is True:
+        conn = get_database_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT username, email FROM accounts WHERE username = %s",
+            (session['username'],))
+        results = cur.fetchone()
+        user = {
+            'username': results[0],
+            'email': results[1]
+        }
+        cur.execute("SELECT id FROM accounts WHERE username=%s",
+                    (session['username'],))
+        user_id = cur.fetchone()
+        cur.execute("SELECT url FROM urls WHERE user_id=%s", (user_id,))
+        item_urls = []
+        while True:
+            try:
+                url = cur.fetchone()[0]
+            except (AttributeError, TypeError):
+                break
+            item_urls.append(url)
+        return render_template('account.html', user=user, item_urls=item_urls)
+    else:
+        return redirect(url_for('home_page'))
 
 
 
@@ -221,7 +249,6 @@ app.config['ADMIN_PASSWORD'] = os.environ.get(
 app.config['SECRET_KEY'] = os.environ.get(
     'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
 )
-
 
 
 
@@ -285,12 +312,12 @@ def teardown_request(exception):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html',  404)
-
+    return render_template('404.html'),  404
 
 
 if __name__ == '__main__':
     from gevent.wsgi import WSGIServer
+    app.debug = True
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
 
