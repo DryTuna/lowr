@@ -2,20 +2,22 @@
 
 
 #  GENERAL PURPOSE
-# import os
+import os
 import datetime
 
 # FLASK RELATED
 from flask import Flask
-
+from flask import redirect
+from flask import url_for
 from flask import g
-
+from flask import session
 from flask import render_template
 from flask import request
 
 #  DATABASE RELATED
 import psycopg2
 from passlib.hash import pbkdf2_sha256
+from lowr_database import get_database_connection
 
 # CUSTOM
 from amazon_scraper import search_results as uni_search
@@ -95,19 +97,11 @@ def search():
     else:
         file_ = uni_search(keywords, category, price, price_range)
 
-        keywords = querey_data['keywords']
-        category = querey_data['category']
-        price = querey_data['price']
-        price_range = querey_data['price_range']
-
-        file_ = search_results(keywords, category, price, price_range)
-
-
-        while True:
-            try:
-                results.append(file_.pop()._data)
-            except IndexError:
-                break
+    while True:
+        try:
+            results.append(file_.pop()._data)
+        except IndexError:
+            break
 
     return render_template('search.html', results = results)
 
@@ -243,49 +237,6 @@ app.config['ADMIN_PASSWORD'] = os.environ.get(
 app.config['SECRET_KEY'] = os.environ.get(
     'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
 )
-
-
-
-
-
-
-
-DB_ENTRIES_LIST = """
-SELECT id, username , email, password FROM accounts ORDER BY created DESC
-"""
-
-DB_ENTRY_LIST = """
-SELECT id, username, email, password created FROM accounts WHERE accounts.id = %s
-"""
-
-DB_DELETE_ENTRY_LIST = """
-DELETE FROM accounts WHERE accounts.id = %s
-"""
-
-def connect_db():
-    """Return a connection to the configured database"""
-    return psycopg2.connect(app.config['DATABASE'])
-
-def init_db():
-    """Initialize the database using DB_SCHEMA
-
-    WARNING: executing this function will drop existing tables.
-    """
-    with closing(connect_db()) as db:
-        db.cursor().execute(DB_SCHEMA)
-        db.commit()
-
-
-def get_database_connection():
-    db = getattr(g, 'db', None)
-    if db is None:
-        g.db = db = connect_db()
-    return db
-
-
-
-
-
 
 
 @app.teardown_request
