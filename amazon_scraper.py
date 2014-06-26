@@ -60,6 +60,8 @@ def extract_items(parsed):
 def get_price(price_string):
     if price_string is not None:
         x = price_string.string.strip()
+        if '-' in x:
+            x = x.split(' - ')[0]
         if '$' in x:
             temp = str(x)[1:-3].replace(',', '')
             if int(temp) >= MIN_P and int(temp) <= MAX_P:
