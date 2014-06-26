@@ -3,13 +3,12 @@ from bs4 import BeautifulSoup
 from P_Queue import P_Queue
 
 
-'''
-Books, CDs & Vinyl
-'''
-
-
 MIN_P = 1.0
 MAX_P = 5000.0
+DEPT_1 = {'Books': u'n:283155',
+          'CDs & Vinyl': u'n:5174',
+          'Software': u'n:229534',
+          'Video Games': u'n:468642'}
 
 
 def parse_source(html, encoding='utf-8'):
@@ -38,11 +37,20 @@ def fetch_search_results(keywords="",
 
 
 def extract_items(parsed):
-    books = parsed.find_all('div', class_='result')
+    books = parsed.find_all('div', class_='result firstRow product celwidget')
     for book in books:
         img = book.find('div', class_='imageBox').find('img')
         link = book.find('div', class_='data').find('a')
-        prime_price = book.find('td', class_= 'toeOurPrice')
+        prime_price = book.find('td', class_='toeOurPrice')
+        new_price = book.find('td', class_='toeNewPrice')
+        item = item_dictionary(img, link, prime_price, new_price)
+        if item is not None:
+            yield item
+    books = parsed.find_all('div', class_='result product celwidget')
+    for book in books:
+        img = book.find('div', class_='imageBox').find('img')
+        link = book.find('div', class_='data').find('a')
+        prime_price = book.find('td', class_='toeOurPrice')
         new_price = book.find('td', class_='toeNewPrice')
         item = item_dictionary(img, link, prime_price, new_price)
         if item is not None:
@@ -85,13 +93,15 @@ def search_results(keywords, category, price, price_range):
         MIN_P = price - (price * price_range / 100)
         global MAX_P
         MAX_P = price + (price * price_range / 100)
+    category = DEPT_1[category]
     p_queue = P_Queue()
     while count < 15:
         content = fetch_search_results(keywords,
                                        category,
                                        page)
         parsed = parse_source(content[0], content[1])
-        if len(parsed.find_all('div', class_='result')) == 0:
+        if len(parsed.find_all('div',
+               class_='result firstRow product celwidget')) == 0:
             break
         items = extract_items(parsed)
         for i in items:
