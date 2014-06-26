@@ -1,4 +1,5 @@
 import requests
+import gevent
 from bs4 import BeautifulSoup
 from P_Queue import P_Queue
 
@@ -133,35 +134,44 @@ def set_globals(category, price, price_range):
     return DEPT_2[category]
 
 
+def page_scrape(keywords, category, page, p_queue):
+    count = 0
+    content = fetch_search_results(keywords,
+                                   category,
+                                   page)
+    parsed = parse_source(content[0], content[1])
+    items = extract_items(parsed)
+    for i in items:
+        pri = 0
+        if i['prime_price'] == u'n/a':
+            pri = int(i['new_price'][1:-3].replace(',', ''))
+        else:
+            pri = int(i['prime_price'][1:-3].replace(',', ''))
+        p_queue.insert(i, pri)
+        count += 1
+
+
 def search_results(keywords, category, price, price_range):
-    count = 1
     page = 1
     category = set_globals(category, price, price_range)
     p_queue = P_Queue()
-    while count < 15:
-        content = fetch_search_results(keywords,
-                                       category,
-                                       page)
-        parsed = parse_source(content[0], content[1])
-        if len(parsed.find_all('div', class_=RSLT_CLASS)) == 0:
+    while p_queue._size < 5:
+        temp = p_queue._size
+        gevent.joinall([
+            gevent.spawn(page_scrape(keywords, category, page, p_queue)),
+            gevent.spawn(page_scrape(keywords, category, page+1, p_queue)),
+            gevent.spawn(page_scrape(keywords, category, page+2, p_queue))
+            ])
+        page += 3
+        if p_queue._size == temp and p_queue._size > 0:
             break
-        items = extract_items(parsed)
-        for i in items:
-            pri = 0
-            if i['prime_price'] == u'n/a':
-                pri = int(i['new_price'][1:-3].replace(',', ''))
-            else:
-                pri = int(i['prime_price'][1:-3].replace(',', ''))
-            p_queue.insert(i, pri)
-            count += 1
-        page += 1
     return p_queue
 
 
 if __name__ == '__main__':
     keywords = "Apple"
-    category = "n:541966"
-    price = 300.0
+    category = "Electronics"
+    price = 500.0
     price_range = 20.0
     a = search_results(keywords, category, price, price_range)
     f = open('extract.txt', 'w')
