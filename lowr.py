@@ -182,7 +182,11 @@ def submititems():
     data = request.get_json()
     conn = get_database_connection()
     cur = conn.cursor()
-    #  cur.executemany("")
+    cur.execute("SELECT id FROM accounts WHERE username=%s",
+                (session['username'],))
+    user_id = cur.fetchone()
+    cur.executemany("INSERT INTO urls (user_id, url) VALUES (%s, %s)",
+                    [(user_id, url) for url in data])
     return '/myaccount'
 
 
@@ -199,7 +203,12 @@ def account():
             'username': results[0],
             'email': results[1]
         }
-        return render_template('account.html', user=user)
+        cur.execute("SELECT id FROM accounts WHERE username=%s",
+                    (session['username'],))
+        user_id = cur.fetchone()
+        cur.execute("SELECT url FROM urls WHERE user_id=%s", (user_id,))
+        urls = cur.fetchall()
+        return render_template('account.html', user=user, item_urls=urls)
     else:
         return redirect(url_for('home_page'))
 
