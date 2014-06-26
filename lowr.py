@@ -199,8 +199,8 @@ def account():
 
 
 app.config['DATABASE'] = os.environ.get(
-    'DATABASE_URL', 'dbname=lowr'
-)
+    'DATABASE_URL',
+)#dbname=lowr user=lowr_user password=lowr
 app.config['ADMIN_USERNAME'] = os.environ.get(
     'ADMIN_USERNAME', 'admin'
 )

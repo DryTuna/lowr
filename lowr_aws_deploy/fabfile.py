@@ -127,6 +127,7 @@ def run_deploy():
     local('ssh-add ~/.ssh/mykeypair.pem')
     install_nginx()
     sudo('apt-get update')
+    sudo('apt-get install postgresql-client libpq-dev')
     sudo('apt-get install supervisor')
     sudo('apt-get install python-pip')
     sudo('apt-get install python-dev')
