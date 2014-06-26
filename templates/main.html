@@ -78,7 +78,7 @@
           <div class="form-group">
 
             <div class="input-group input-group-sm" style="width: 90px;">
-              <input name="search_price_range" type="number" class="form-control" id="search_price_range" value="50">
+              <input name="search_price_range" type="number" class="form-control" id="search_price_range" value="30">
               <span class="input-group-addon">%</span>
             </div>
           </div>
@@ -92,15 +92,9 @@
         </button>
         {% else %}
         <button class="btn btn-primary"
-                onclick="location.href='{{ url_for('login') }}'">
-          Login
+                onclick="location.href='{{ url_for('login') }}'" id="submit_items">
+          Submit Items for Tracking
         </button>
-        or
-        <button class="btn btn-primary"
-                onclick="location.href='{{ url_for('signup') }}'">
-          sign up
-        </button>
-        to submit items for tracking
         {% endif %}
       </div>
     </div>
@@ -122,7 +116,7 @@
       <p>
         That's why we created <em>lowr</em>, our price monitoring tool:
         to ensure that you wont miss out on a deal. Go ahead, make a
-        search, and let us work for you.
+        search, and let us work for you
       </p>
       <script type="text/javascript">
         function swap_messages() {

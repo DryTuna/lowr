@@ -2,8 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 from P_Queue import P_Queue
 
+
 '''
-Electronics and Similar Scrapers
+All Departments
+Industrial & Scientific
 '''
 
 
@@ -17,7 +19,7 @@ def parse_source(html, encoding='utf-8'):
 
 
 def fetch_search_results(keywords="",
-                         rh='n:172282',
+                         rh='i:aps',
                          page=None):
     base = 'http://www.amazon.com/s/'
     if len(keywords) == 0:
@@ -37,8 +39,8 @@ def fetch_search_results(keywords="",
 
 
 def extract_items(parsed):
-    fst = parsed.find_all('div', class_='fstGrid prod celwidget')
-    rslt = parsed.find_all('div', class_='rsltGrid prod celwidget')
+    fst = parsed.find_all('div', class_='fst prod celwidget')
+    rslt = parsed.find_all('div', class_='rslt prod celwidget')
     for block in fst:
         img = block.find('div', class_='imageBox').find('img')
         link = block.find('h3', class_='newaps').find('a')
@@ -60,6 +62,8 @@ def extract_items(parsed):
 def get_price(price_string):
     if price_string is not None:
         x = price_string.string.strip()
+        if '-' in x:
+            x = x.split(' - ')[0]
         if '$' in x:
             temp = str(x)[1:-3].replace(',', '')
             if int(temp) >= MIN_P and int(temp) <= MAX_P:
@@ -99,7 +103,7 @@ def search_results(keywords, category, price, price_range):
                                        category,
                                        page)
         parsed = parse_source(content[0], content[1])
-        if len(parsed.find_all('div', class_='rsltGrid prod celwidget')) == 0:
+        if len(parsed.find_all('div', class_='rslt prod celwidget')) == 0:
             break
         items = extract_items(parsed)
         for i in items:
@@ -117,12 +121,20 @@ def search_results(keywords, category, price, price_range):
 
 
 if __name__ == '__main__':
-    keywords = "Apple"
-    category = "n:541966"
-    price = 300.0
-    price_range = 20.0
+    keywords = "physics"
+    category = "n:16310091"
+    price = 200.0
+    price_range = 100.0
     a = search_results(keywords, category, price, price_range)
+    # b = parse_source(a[0], a[1])
+    # fst = b.find_all('div', class_='fst prod celwidget')
+    # rslt = b.find_all('div', class_='rslt prod celwidget')
     f = open('extract.txt', 'w')
+    # f.write(str(fst))
+    # f.write("\n\n")
+    # f.write(str(rslt))
+    # f.close()
+
     while True:
         try:
             i = a.pop()._data
@@ -139,4 +151,3 @@ if __name__ == '__main__':
             f.write("\n")
         except IndexError:
             break
-    f.close()
