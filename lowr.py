@@ -160,7 +160,7 @@ def submititems():
     user_id = cur.fetchone()[0]
     cur.executemany("INSERT INTO items (user_id, url, desired_price, last_price) VALUES (%s, %s, %s, %s)",
                     [(user_id, item['url'], item['desired_price'], item['last_price']) for item in data])
-    return '/myaccount'
+    return url_for('account')
 
 
 @app.route("/deleteitems", methods=['GET', 'POST'])
@@ -173,7 +173,7 @@ def deleteitems():
     user_id = cur.fetchone()[0]
     cur.executemany("DELETE FROM items WHERE user_id=%s AND url=%s",
                     [(user_id, url) for url in data])
-    return '/myaccount'
+    return url_for('account')
 
 
 
@@ -191,8 +191,8 @@ def account():
             (session['username'],))
         results = cur.fetchone()
         user = {
-            'username': results[0],
-            'email': results[1]
+            'username': results[1],
+            'email': results[2]
         }
         cur.execute("SELECT id FROM accounts WHERE username=%s",
                     (session['username'],))
