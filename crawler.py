@@ -71,8 +71,8 @@ def crawl_per_user(id):
         new_prices = update_prices(items)
 
         for i in range(len(items)):
-                cur.execute("UPDATE items SET last_price=%s WHERE url=%s",
-                            [new_prices[i][1], new_prices[i][0]])
+                cur.execute("UPDATE items SET last_price=%s WHERE url=%s AND user_id=%s",
+                            [new_prices[i][1], new_prices[i][0], id])
                 check_price(items[i], new_prices[i][1])
         conn.commit()
 
