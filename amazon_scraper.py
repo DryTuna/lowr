@@ -169,7 +169,7 @@ def search_results(keywords, category, price, price_range):
 
 
 if __name__ == '__main__':
-    keywords = "Apple"
+    keywords = "Dell Inspiron"
     category = "Electronics"
     price = 500.0
     price_range = 20.0
