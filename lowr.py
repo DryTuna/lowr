@@ -10,7 +10,6 @@ from flask import Flask
 from flask import g
 from flask import redirect
 from flask import url_for
-from flask import g
 from flask import session
 from flask import render_template
 from flask import request
@@ -18,6 +17,9 @@ from flask import session
 from flask import redirect
 from flask import url_for
 from flask import abort
+
+import gevent
+import crawler
 
 #  DATABASE RELATED
 import psycopg2
@@ -237,9 +239,18 @@ def page_not_found(e):
     return render_template('404.html'),  404
 
 
+# def crawl_periodically():
+#     import time
+#     time.sleep(5)
+#     while True:
+#         crawler.crawl()
+#         time.sleep(60)
+
+
 if __name__ == '__main__':
+    # gevent.spawn(crawl_periodically())
+    # print "hi"
     from gevent.wsgi import WSGIServer
     app.debug = True
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
-
