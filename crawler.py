@@ -97,7 +97,7 @@ if __name__ == "__main__":
                             (new_prices[i], items[i][0]))
                 check_price(items[i], new_prices[i])
 
-            onn.commit()
+            conn.commit()
             if len(items) < 5:
                 break
     except Exception as e:

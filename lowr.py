@@ -119,7 +119,6 @@ def crawl_on_demand():
             'username': user,
             'email': email
         }
-    # import pdb; pdb.set_trace()
     crawler.crawl_per_user(id)
     cur = conn.cursor()
     cur.execute("SELECT url, desired_price, last_price FROM items WHERE user_id=%s", [id])
