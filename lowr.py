@@ -197,8 +197,8 @@ def account():
             (session['username'],))
         results = cur.fetchone()
         user = {
-            'username': results[1],
-            'email': results[2]
+            'username': results[0],
+            'email': results[1]
         }
         cur.execute("SELECT id FROM accounts WHERE username=%s",
                     (session['username'],))
