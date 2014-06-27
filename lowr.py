@@ -10,7 +10,6 @@ from flask import Flask
 from flask import g
 from flask import redirect
 from flask import url_for
-from flask import g
 from flask import session
 from flask import render_template
 from flask import request
@@ -18,6 +17,9 @@ from flask import session
 from flask import redirect
 from flask import url_for
 from flask import abort
+
+import gevent
+import crawler
 
 #  DATABASE RELATED
 import psycopg2
@@ -86,6 +88,10 @@ def login():
                      request.form['login_password'].encode('utf-8'))
         except ValueError:
             error = "Login Failed"
+        except TypeError:
+            error = "Invalid username/password"
+        except Exception:
+            return redirect(url_for('home_page'))
         else:
             return redirect(url_for('home_page'))
     return render_template('login.html', error=error)
@@ -95,6 +101,32 @@ def login():
 def logout():
     session.pop('logged_in', None)
     return redirect(url_for('home_page'))
+
+
+
+@app.route('/crawl', methods=['GET', 'POST'])
+def crawl_on_demand():
+    user = session['username']
+
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, email FROM accounts WHERE username = %s", [user])
+    try:
+        id, email = cur.fetchone()
+    except Exception as e:
+        print e
+    user = {
+            'username': user,
+            'email': email
+        }
+    # import pdb; pdb.set_trace()
+    crawler.crawl_per_user(id)
+    cur = conn.cursor()
+    cur.execute("SELECT url, desired_price, last_price FROM items WHERE user_id=%s", [id])
+    items = cur.fetchall()
+
+    return render_template('account.html', user=user, items=items)
+
 
 
 
@@ -160,7 +192,7 @@ def submititems():
     user_id = cur.fetchone()[0]
     cur.executemany("INSERT INTO items (user_id, url, desired_price, last_price) VALUES (%s, %s, %s, %s)",
                     [(user_id, item['url'], item['desired_price'], item['last_price']) for item in data])
-    return '/myaccount'
+    return url_for('account')
 
 
 @app.route("/deleteitems", methods=['GET', 'POST'])
@@ -173,7 +205,7 @@ def deleteitems():
     user_id = cur.fetchone()[0]
     cur.executemany("DELETE FROM items WHERE user_id=%s AND url=%s",
                     [(user_id, url) for url in data])
-    return '/myaccount'
+    return url_for('account')
 
 
 
@@ -216,7 +248,7 @@ app.config['ADMIN_PASSWORD'] = os.environ.get(
 )
 
 app.config['SECRET_KEY'] = os.environ.get(
-    'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
+    'FLASK_SECRET_KEY',
 )
 
 
@@ -242,4 +274,3 @@ if __name__ == '__main__':
     app.debug = True
     http_server = WSGIServer(('', 8080), app)
     http_server.serve_forever()
-

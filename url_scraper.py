@@ -9,7 +9,7 @@ def parse_source(html, encoding='utf-8'):
 
 
 def get_price(item, sizzle):
-    resp = requests.get(item['url'], timeout=3)
+    resp = requests.get(item[1], timeout=3)
     resp.raise_for_status()
     parsed = parse_source(resp.content, resp.encoding)
     a = parsed.find('table', class_='a-lineitem')
@@ -23,26 +23,21 @@ def get_price(item, sizzle):
     if '-' in a:
         a = a.split(' - ')[0]
     price = a[1:].replace(',', '')
-    sizzle.put(price)
-    #print float(price)
-    # item['last_price'] = float(price)
+    sizzle.put((item[1], price))
 
 
 def update_prices(tracking_list):
     from multiprocessing import Process, Queue
-    a = Queue()
-    p = [Process(target=get_price, args=(i, a,)) for i in tracking_list]
+    price_queue = Queue()
+    p = [Process(target=get_price, args=(i, price_queue,)) for i in tracking_list]
     for i in p:
         i.start()
     for i in p:
         i.join()
-    # threads = [gevent.spawn(get_price, i) for i in tracking_list]
-    # gevent.joinall(threads)
-    c = []
-    print a.empty()
-    while not a.empty():
-        c.append(float(a.get()))
-    return c
+    result = []
+    while not price_queue.empty():
+        result.append(price_queue.get())
+    return result
 
 if __name__ == '__main__':
     urls = [{'url': 'http://www.amazon.com/gp/product/B0096VCUG6/ref=s9_simh_gw_p147_d0_i1?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=center-3&pf_rd_r=1XR66059C6TSD0P2V1M6&pf_rd_t=101&pf_rd_p=1688200422&pf_rd_i=507846'},
@@ -53,6 +48,7 @@ if __name__ == '__main__':
     start = time.time()
     tic = lambda: 'at %1.1f seconds' % (time.time() - start)
     a = update_prices(urls)
-    print str(a)
+    for i in a:
+        print i[0], i[1]
     print tic()
 

@@ -16,7 +16,10 @@ body {
 }
 
 footer {
-  margin: 50px 0;
+  position:fixed;
+  height:50px;
+  bottom:0px;
+  margin-bottom:0px;
 }
 
 .navbar-nav > li > a {
