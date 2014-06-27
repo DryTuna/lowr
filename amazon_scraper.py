@@ -158,9 +158,9 @@ def search_results(keywords, category, price, price_range):
     while p_queue._size < 5:
         temp = p_queue._size
         gevent.joinall([
-            gevent.spawn(page_scrape(keywords, category, page+2, p_queue)),
-            gevent.spawn(page_scrape(keywords, category, page+1, p_queue)),
-            gevent.spawn(page_scrape(keywords, category, page, p_queue))
+            gevent.spawn(page_scrape, keywords, category, page+2, p_queue),
+            gevent.spawn(page_scrape, keywords, category, page+1, p_queue),
+            gevent.spawn(page_scrape, keywords, category, page, p_queue)
             ])
         page += 3
         if p_queue._size == temp and p_queue._size > 0:
@@ -169,7 +169,7 @@ def search_results(keywords, category, price, price_range):
 
 
 if __name__ == '__main__':
-    keywords = "Apple"
+    keywords = "Dell Inspiron"
     category = "Electronics"
     price = 500.0
     price_range = 20.0
