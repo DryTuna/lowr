@@ -5,6 +5,7 @@ from passlib.hash import pbkdf2_sha256
 from contextlib import closing
 from flask import g
 
+
 DB_SCHEMA = [
 """
 DROP TABLE IF EXISTS accounts CASCADE;
@@ -17,14 +18,15 @@ CREATE TABLE accounts (
 )
 """,
 """
-DROP TABLE IF EXISTS urls CASCADE;
+DROP TABLE IF EXISTS items CASCADE;
 CREATE TABLE items (
     user_id int REFERENCES accounts(id),
     url VARCHAR (512) NOT NULL,
     desired_price real NOT NULL,
     last_price real NOT NULL
 )
-"""]
+"""
+]
 
 DB_ENTRY_INSERT = """
 INSERT INTO accounts (title, text, created) VALUES (%s, %s, %s)

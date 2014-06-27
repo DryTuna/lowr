@@ -104,6 +104,32 @@ def logout():
 
 
 
+@app.route('/crawl', methods=['GET', 'POST'])
+def crawl_on_demand():
+    user = session['username']
+
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, email FROM accounts WHERE username = %s", [user])
+    try:
+        id, email = cur.fetchone()
+    except Exception as e:
+        print e
+    user = {
+            'username': user,
+            'email': email
+        }
+    # import pdb; pdb.set_trace()
+    crawler.crawl_per_user(id)
+    cur = conn.cursor()
+    cur.execute("SELECT url, desired_price, last_price FROM items WHERE user_id=%s", [id])
+    items = cur.fetchall()
+
+    return render_template('account.html', user=user, items=items)
+
+
+
+
 def do_login(username='', passwd=''):
     if username == '':
         raise ValueError
@@ -222,7 +248,7 @@ app.config['ADMIN_PASSWORD'] = os.environ.get(
 )
 
 app.config['SECRET_KEY'] = os.environ.get(
-    'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
+    'FLASK_SECRET_KEY',
 )
 
 
@@ -243,17 +269,7 @@ def page_not_found(e):
     return render_template('404.html'),  404
 
 
-# def crawl_periodically():
-#     import time
-#     time.sleep(5)
-#     while True:
-#         crawler.crawl()
-#         time.sleep(60)
-
-
 if __name__ == '__main__':
-    # gevent.spawn(crawl_periodically())
-    # print "hi"
     from gevent.wsgi import WSGIServer
     app.debug = True
     http_server = WSGIServer(('', 8080), app)

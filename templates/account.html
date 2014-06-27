@@ -35,7 +35,7 @@
           {% for item in items %}
           <tr id="{{ item[0] }}" onclick="toggleRowSelectAccounts('{{ item[0] }}');">
             <td>
-              <a class="black-link" href="{{ item[0] }}">{{ item[0] }}</a>
+              <a class="black-link" href="{{ item[0] }}" onClick="window.open($(this).attr('href'));">{{ item[0] }}</a>
             </td>
             <td>
               {{ item[1] }}
@@ -47,6 +47,12 @@
           {% endfor %}
         </tbody>
       </table>
+      <form action="{{ url_for('crawl_on_demand') }}" method="POST">
+          <button type="submit" id="crawl_now"
+                  class="btn btn-primary pull-left">
+            Check Now
+          </button>
+      </form>
       <button type="submit" id="delete_button" onclick="deleteItems()"
               class="btn btn-primary pull-right">
         Stop Tracking Selected Items
@@ -57,7 +63,7 @@
       <h3>Profile</h3>
       <div class="thumbnail" style="padding: 10px;">
         <p><b>Username:</b></p>
-        <p>{{ user['username'] }}</p>
+        <p>{% filter upper %} {{ user['username'] }} {% endfilter %}</p>
         <br>
         <p><b>email:</b></p>
         <p>{{ user['email'] }}</p>
