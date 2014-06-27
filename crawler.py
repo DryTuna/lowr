@@ -72,8 +72,8 @@ def crawl_per_user(id):
 
         for i in range(len(items)):
                 cur.execute("UPDATE items SET last_price=%s WHERE url=%s",
-                            [new_prices[i], items[i][1]])
-                check_price(items[i], new_prices[i])
+                            [new_prices[i][1], new_prices[i][0]])
+                check_price(items[i], new_prices[i][1])
         conn.commit()
 
     except Exception as e:
