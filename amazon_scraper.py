@@ -1,5 +1,4 @@
 import requests
-import gevent
 from bs4 import BeautifulSoup
 from P_Queue import P_Queue
 
@@ -136,7 +135,7 @@ def set_globals(category, price, price_range):
     return DEPT_2[category]
 
 
-def page_scrape(keywords, category, page, p_queue):
+def page_scrape(keywords, category, page, tQ):
     content = fetch_search_results(keywords,
                                    category,
                                    page)
@@ -148,20 +147,29 @@ def page_scrape(keywords, category, page, p_queue):
             pri = int(i['new_price'][1:-3].replace(',', ''))
         else:
             pri = int(i['prime_price'][1:-3].replace(',', ''))
-        p_queue.insert(i, pri)
+        tQ.put((i, pri))
 
 
 def search_results(keywords, category, price, price_range):
+    from multiprocessing import Process, Queue
     page = 1
     category = set_globals(category, price, price_range)
     p_queue = P_Queue()
     while p_queue._size < 5:
         temp = p_queue._size
-        gevent.joinall([
-            gevent.spawn(page_scrape, keywords, category, page, p_queue),
-            gevent.spawn(page_scrape, keywords, category, page+1, p_queue),
-            gevent.spawn(page_scrape, keywords, category, page+2, p_queue)
-            ])
+        tQ = Queue()
+        proc_1 = Process(target=page_scrape, args=(keywords, category, page, tQ))
+        proc_2 = Process(target=page_scrape, args=(keywords, category, page+1, tQ))
+        proc_3 = Process(target=page_scrape, args=(keywords, category, page+2, tQ))
+        proc_1.start()
+        proc_2.start()
+        proc_3.start()
+        proc_1.join()
+        proc_2.join()
+        proc_3.join()
+        while not tQ.empty():
+            x = tQ.get()
+            p_queue.insert(x[0], x[1])
         page += 3
         if p_queue._size == temp and p_queue._size > 0:
             break

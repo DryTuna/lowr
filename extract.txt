@@ -4,19 +4,9 @@ http://www.amazon.com/Dell-Inspiron-i3542-6000BK-15-6-Inch-Windows/dp/B00K4PAV14
 $429.99
 n/a
 
-http://ecx.images-amazon.com/images/I/41p0X4WoT4L._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-io3045-555BLK-20-Inch-Desktop/dp/B00K7Y3RFO
-$449.99
-n/a
-
-http://ecx.images-amazon.com/images/I/415tKqlKNBL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i5748-1143sLV-17-3-Inch-Laptop/dp/B00K4PATU2
-$449.99
-n/a
-
 http://ecx.images-amazon.com/images/I/413Y2H3a%2B5L._AA160_.jpg
 http://www.amazon.com/Dell-14-1-Inch-Touchscreen-Ultrabook-i14RMT-7222sLV/dp/B00KH7NNAU
-$449.99
+$447.00
 n/a
 
 http://ecx.images-amazon.com/images/I/41q1WDE8HcL._AA160_.jpg
@@ -28,6 +18,16 @@ http://ecx.images-amazon.com/images/I/41Jknm0eSJL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i15RV-6193BLK-15-6-Inch-Touchscreen/dp/B00CL2IKH0
 $449.99
 $449.99
+
+http://ecx.images-amazon.com/images/I/41p0X4WoT4L._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-io3045-555BLK-20-Inch-Desktop/dp/B00K7Y3RFO
+$449.99
+n/a
+
+http://ecx.images-amazon.com/images/I/415tKqlKNBL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i5748-1143sLV-17-3-Inch-Laptop/dp/B00K4PATU2
+$449.99
+n/a
 
 http://ecx.images-amazon.com/images/I/41df30XR2WL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i15RV-1333BLK-15-6-Laptop/dp/B00CRD73LM
@@ -44,15 +44,20 @@ http://www.amazon.com/Dell-Inspiron-i3542-5000BK-15-6-Inch-Touchscreen/dp/B00K4P
 $479.99
 n/a
 
-http://ecx.images-amazon.com/images/I/51RUS5pedZL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i15RMT-3878sLV-15-6-Inch-Touchscreen/dp/B00CRGJIBW
-$489.99
-$489.99
-
 http://ecx.images-amazon.com/images/I/41uXqsNE7mL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i14z-2203sLV-14-0-Inch-Ultrabook/dp/B00ANKN1C6
 n/a
 $489.00
+
+http://ecx.images-amazon.com/images/I/51RUS5pedZL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i15RMT-3878sLV-15-6-Inch-Touchscreen/dp/B00CRGJIBW
+$491.54
+$489.99
+
+http://ecx.images-amazon.com/images/I/312Bk2DBz1L._AA160_.jpg
+http://www.amazon.com/Dell-i3847-3850BK-Inspiron-Desktop/dp/B00K0HMSUI
+$499.99
+n/a
 
 http://ecx.images-amazon.com/images/I/31L4cGseM7L._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i3647-3848BK-Desktop-Monitor/dp/B00IB021NU
@@ -69,33 +74,33 @@ http://www.amazon.com/Dell-Inspiron-i5748-2143sLV-17-3-Inch-Laptop/dp/B00K4PATO8
 $499.99
 n/a
 
-http://ecx.images-amazon.com/images/I/312Bk2DBz1L._AA160_.jpg
-http://www.amazon.com/Dell-i3847-3850BK-Inspiron-Desktop/dp/B00K0HMSUI
-$499.99
+http://ecx.images-amazon.com/images/I/31-iRBsGiZL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-14z-Photoshop-Bluetooth/dp/B008YWGTVU
 n/a
+$500.00
 
 http://ecx.images-amazon.com/images/I/41qOKs1HsGL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i3048-5143BLK-20-Inch-Touchscreen/dp/B00K7Y3WGS
 $500.00
 $499.99
 
-http://ecx.images-amazon.com/images/I/31-iRBsGiZL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-14z-Photoshop-Bluetooth/dp/B008YWGTVU
-n/a
-$500.00
-
 http://ecx.images-amazon.com/images/I/41p0X4WoT4L._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-io3045-1444BLK-20-Inch-Desktop/dp/B00K7Y3RD6
 $524.51
 n/a
 
-http://ecx.images-amazon.com/images/I/410EwgGKiRL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i3043-5000BLK-19-5-Inch-Touchscreen/dp/B00KE80STG
+http://ecx.images-amazon.com/images/I/31lw4aHHKML._AA160_.jpg
+http://www.amazon.com/Dell-Inspirion-I660-6038BK-Desktop-IntelCore/dp/B00G3ZNVMU
 $529.99
-n/a
+$529.99
 
 http://ecx.images-amazon.com/images/I/31QKpg2hCrL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i3847-4461BK-Desktop-Windows/dp/B00K0HMSQM
+$529.99
+n/a
+
+http://ecx.images-amazon.com/images/I/410EwgGKiRL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i3043-5000BLK-19-5-Inch-Touchscreen/dp/B00KE80STG
 $529.99
 n/a
 
@@ -109,25 +114,20 @@ http://www.amazon.com/Dell-Inspiron-15-6-Inch-Laptop-i15RM-2687sLV/dp/B00HRLSQY2
 $538.48
 n/a
 
+http://ecx.images-amazon.com/images/I/41JNnKdA7NL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-io2020T-5000BK-20-Inch-Touchscreen/dp/B00F4MEF6O
+$539.99
+$524.99
+
 http://ecx.images-amazon.com/images/I/31QKpg2hCrL._AA160_.jpg
 http://www.amazon.com/Dell-i3847-4617BK-Inspiron-Desktop/dp/B00K0HMT2K
 $543.69
 n/a
 
-http://ecx.images-amazon.com/images/I/41mj87vOOnL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-15-6-Inch-Touchscreen-i15RMT-5124sLV/dp/B00HRO32N4
-$547.85
-$539.99
-
 http://ecx.images-amazon.com/images/I/411-%2BfwHJ4L._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i15RV-10000BLK-15-6-Inch-Processor/dp/B00AM7MM84
 n/a
 $547.99
-
-http://ecx.images-amazon.com/images/I/41WzzKGmL4L._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i3542-6666BK-15-6-Inch-Laptop/dp/B00K4PAV0A
-$549.99
-n/a
 
 http://ecx.images-amazon.com/images/I/31tgIXc1B5L._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-Desktop-I660-1053BK-Professional/dp/B00GP26JMU
@@ -154,29 +154,24 @@ http://www.amazon.com/Dell-i3647-4616BLK-Inspiron-Desktop/dp/B00KE80XBE
 $549.00
 n/a
 
-http://ecx.images-amazon.com/images/I/41JNnKdA7NL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-io2020T-5000BK-20-Inch-Touchscreen/dp/B00F4MEF6O
+http://ecx.images-amazon.com/images/I/41WzzKGmL4L._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i3542-6666BK-15-6-Inch-Laptop/dp/B00K4PAV0A
 $549.99
-$524.99
+n/a
 
 http://ecx.images-amazon.com/images/I/31q1f749wnL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-15-6-Inch-Operating-Definition/dp/B003LS3JYM
 n/a
 $550.99
 
-http://ecx.images-amazon.com/images/I/31QKpg2hCrL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-Desktop-i3847-4616BK-Version/dp/B00HSEW23O
-$556.95
-$556.95
+http://ecx.images-amazon.com/images/I/41mj87vOOnL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-15-6-Inch-Touchscreen-i15RMT-5124sLV/dp/B00HRO32N4
+$551.10
+$539.99
 
 http://ecx.images-amazon.com/images/I/41Hi9DIctiL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i15RV-8526BLK-15-6-Inch-Laptop/dp/B00F3ZO422
 $559.00
-n/a
-
-http://ecx.images-amazon.com/images/I/4155Fi7vfSL._AA160_.jpg
-http://www.amazon.com/Dell-Inspirion-I660-6038BK-Desktop-IntelCore/dp/B00G3ZNVMU
-$561.99
 n/a
 
 http://ecx.images-amazon.com/images/I/41q1lqqV2EL._AA160_.jpg
@@ -184,13 +179,18 @@ http://www.amazon.com/Dell-Inspiron-i15RVT-13287BLK-15-6-Inch-Touchscreen/dp/B00
 $565.00
 n/a
 
+http://ecx.images-amazon.com/images/I/31QKpg2hCrL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-Desktop-i3847-4616BK-Version/dp/B00HSEW23O
+$569.99
+$556.95
+
 http://ecx.images-amazon.com/images/I/21iRyFQKMtL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-desktop-i5-4440-processor/dp/B00I1A77CU
-$569.99
+$578.86
 $542.95
 
-http://ecx.images-amazon.com/images/I/41WzzKGmL4L._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i3542-8334BK-15-6-Inch-Windows/dp/B00K4PAV78
+http://ecx.images-amazon.com/images/I/41bFZ8Zil8L._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i15RM-5098sLV-15-6-Inch-Laptop/dp/B00J9SC5ZC
 $579.99
 n/a
 
@@ -199,15 +199,15 @@ http://www.amazon.com/Dell-Inspiron-i3847-5078BK-Desktop-Windows/dp/B00K0HMT1G
 $579.99
 n/a
 
-http://ecx.images-amazon.com/images/I/41bFZ8Zil8L._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i15RM-5098sLV-15-6-Inch-Laptop/dp/B00J9SC5ZC
-$579.99
-n/a
-
 http://ecx.images-amazon.com/images/I/41wCXsi8evL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-i15RM-5125sLV-15-6-Inch-Laptop/dp/B00F4MEI4S
-$582.11
-$450.00
+$579.00
+$579.00
+
+http://ecx.images-amazon.com/images/I/41WzzKGmL4L._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i3542-8334BK-15-6-Inch-Windows/dp/B00K4PAV78
+$579.99
+n/a
 
 http://ecx.images-amazon.com/images/I/41prpOaTZEL._AA160_.jpg
 http://www.amazon.com/Dell-Inspiron-15-6-Inch-Touchscreen-i15RVT-13333BLK/dp/B00HRO38KQ
@@ -229,20 +229,10 @@ http://www.amazon.com/Dell-Inspiron-17-3-Inch-Laptop-i17RV-5457BLK/dp/B00HRLSUXY
 $589.13
 n/a
 
-http://ecx.images-amazon.com/images/I/41%2BgRhiaDyL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i17RM-2419sLV-17-3-Inch-Laptop/dp/B00AM7MNII
-$599.99
-$599.99
-
-http://ecx.images-amazon.com/images/I/312Bk2DBz1L._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i3847-3847BK-Desktop-Windows/dp/B00HSEW2AM
-$599.00
-n/a
-
-http://ecx.images-amazon.com/images/I/41auRvomYXL._AA160_.jpg
-http://www.amazon.com/Dell-Inspiron-i7-2630QM-Quad-Core-Processor/dp/B006EPQA0E
-n/a
-$599.99
+http://ecx.images-amazon.com/images/I/31YREf6sneL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-Notebook-Quad-Core-processor/dp/B00I9HO818
+$589.99
+$589.99
 
 http://ecx.images-amazon.com/images/I/21RDkHo3uBL._AA160_.jpg
 http://www.amazon.com/Inspiron-Notebook-Quad-Core-A8-5545M-Windows/dp/B00H7O4O6I
@@ -268,3 +258,18 @@ http://ecx.images-amazon.com/images/I/31QKpg2hCrL._AA160_.jpg
 http://www.amazon.com/Dell-i3847-5386BK-Inspiron-Desktop/dp/B00K0HMSTY
 $599.99
 n/a
+
+http://ecx.images-amazon.com/images/I/41%2BgRhiaDyL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i17RM-2419sLV-17-3-Inch-Laptop/dp/B00AM7MNII
+$599.99
+$599.99
+
+http://ecx.images-amazon.com/images/I/312Bk2DBz1L._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i3847-3847BK-Desktop-Windows/dp/B00HSEW2AM
+$599.00
+n/a
+
+http://ecx.images-amazon.com/images/I/41auRvomYXL._AA160_.jpg
+http://www.amazon.com/Dell-Inspiron-i7-2630QM-Quad-Core-Processor/dp/B006EPQA0E
+n/a
+$599.99
