@@ -88,6 +88,10 @@ def login():
                      request.form['login_password'].encode('utf-8'))
         except ValueError:
             error = "Login Failed"
+        except TypeError:
+            error = "Invalid username/password"
+        except Exception:
+            return redirect(url_for('home_page'))
         else:
             return redirect(url_for('home_page'))
     return render_template('login.html', error=error)
