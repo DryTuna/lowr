@@ -27,8 +27,8 @@ def get_price(item):
     item[3] = float(price)
 
 
-def update_prices(tracking_list):
-    tracking_list = list(tracking_list)
+def update_prices(tracking_tuple):
+    tracking_list = list(tracking_tuple)
     threads = [gevent.spawn(get_price(i)) for i in tracking_list]
     gevent.joinall(threads)
     return tracking_list

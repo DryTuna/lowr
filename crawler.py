@@ -1,10 +1,27 @@
-from lowr_database import get_database_connection
 from url_scraper import update_prices
 
+import psycopg2
+import os
 
 # Thanks for justforfun and jlargent on stackoverflow for email technique
 import smtplib
 from email.mime.text import MIMEText
+
+config = {}
+g = {'db': None}
+
+database = os.environ.get('DATABASE_URL')
+
+def connect_db():
+    """Return a connection to the configured database"""
+    return psycopg2.connect(database)
+
+
+def get_database_connection():
+    db = getattr(g, 'db', None)
+    if db is None:
+        g[db] = db = connect_db()
+    return db
 
 
 def check_price(item):
@@ -35,6 +52,7 @@ if __name__ == "__main__":
     cur.execute("SELECT * FROM items")
     while True:
         items = cur.fetchmany(5)
+        print items
         update_prices(items)
 
         for item in items:
