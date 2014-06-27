@@ -5,7 +5,9 @@ from passlib.hash import pbkdf2_sha256
 from contextlib import closing
 from flask import g
 
-DB_SCHEMA = ["""
+
+DB_SCHEMA = [
+"""
 DROP TABLE IF EXISTS accounts CASCADE;
 CREATE TABLE accounts (
     id serial PRIMARY KEY,
