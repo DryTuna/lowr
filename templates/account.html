@@ -35,7 +35,7 @@
           {% for item in items %}
           <tr id="{{ item[0] }}" onclick="toggleRowSelectAccounts('{{ item[0] }}');">
             <td>
-              <a class="black-link" href="{{ item[0] }}" onClick="window.open($(this).attr('href'));">{{ item[0] }}</a>
+              <a class="black-link" href="{{ item[0] }}" onClick="openNewTab($(this).attr, event)">{{ item[0] }}</a>
             </td>
             <td>
               {{ item[1] }}
