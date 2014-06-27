@@ -47,18 +47,31 @@ def check_price(item, new_price):
 
 
 if __name__ == "__main__":
-    conn = get_database_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM items")
-    while True:
-        items = cur.fetchmany(5)
-        print items
-        new_prices = update_prices(items)
+    try:
+        conn = get_database_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM items")
+        while True:
+            items = cur.fetchmany(5)
+            new_prices = update_prices(items)
 
-        for i in range(len(items)):
-            cur.execute("UPDATE items SET last_price=%s WHERE user_id=%s",
-                        (new_prices[i], items[i][0]))
-            check_price(items[i], new_prices[i])
+            for i in range(len(items)):
+                cur.execute("UPDATE items SET last_price=%s WHERE user_id=%s",
+                            (new_prices[i], items[i][0]))
+                check_price(items[i], new_prices[i])
 
-        if len(items) < 5:
-            break
+            if len(items) < 5:
+                break
+    except Exception as e:
+        username = 'lowr.codefellow'
+        fromaddr = 'lowr.codefellow@gmail.com'
+        toaddr = 'lowr.codefellow@gmail.com'
+        msg = 'DATABASE ERROR! \n' + str(e)
+        msg += '\n\nCHECK LOG FILES'
+        username = 'lowr.codefellow'
+        password = 'codefellows'
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.starttls()
+        server.login(username, password)
+        server.sendmail(fromaddr, toaddr, msg)
+        server.quit()

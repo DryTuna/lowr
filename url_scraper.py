@@ -20,10 +20,14 @@ def get_price(item):
         a = parsed.find('span', class_='a-size-medium a-color-price')
     if a is None:
         a = parsed.find('b', class_='priceLarge')
-    a = a.string.strip()
-    if '-' in a:
-        a = a.split(' - ')[0]
-    price = a[1:].replace(',', '')
+    
+    if a is None:
+        return float(9999999999)
+    else:
+        a = a.string.strip()
+        if '-' in a:
+            a = a.split(' - ')[0]
+        price = a[1:].replace(',', '')
     return float(price)
 
 
