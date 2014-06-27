@@ -88,6 +88,10 @@ def login():
                      request.form['login_password'].encode('utf-8'))
         except ValueError:
             error = "Login Failed"
+        except TypeError:
+            error = "Invalid username/password"
+        except Exception:
+            return redirect(url_for('home_page'))
         else:
             return redirect(url_for('home_page'))
     return render_template('login.html', error=error)
@@ -162,7 +166,7 @@ def submititems():
     user_id = cur.fetchone()[0]
     cur.executemany("INSERT INTO items (user_id, url, desired_price, last_price) VALUES (%s, %s, %s, %s)",
                     [(user_id, item['url'], item['desired_price'], item['last_price']) for item in data])
-    return '/myaccount'
+    return url_for('account')
 
 
 @app.route("/deleteitems", methods=['GET', 'POST'])
@@ -175,7 +179,7 @@ def deleteitems():
     user_id = cur.fetchone()[0]
     cur.executemany("DELETE FROM items WHERE user_id=%s AND url=%s",
                     [(user_id, url) for url in data])
-    return '/myaccount'
+    return url_for('account')
 
 
 
