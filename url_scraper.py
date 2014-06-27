@@ -33,9 +33,11 @@ def get_price(item):
 
 def update_prices(tracking_tuple):
     tracking_list = list(tracking_tuple)
-    prices = []
-    threads = [gevent.spawn(prices.append(get_price(i))) for i in tracking_list]
+    prices = [] #[(get_price(i)) for i in tracking_list]
+
+    threads = [gevent.spawn(prices.append, get_price(i)) for i in tracking_list]
     gevent.joinall(threads)
+
     return prices
 
 if __name__ == '__main__':

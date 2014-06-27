@@ -1,6 +1,10 @@
 // maintain a list of the products selected, so we can submit them
 
 
+function openNewTab(url){
+    window.open(url);
+}
+
 
 selectedProducts = []
 function toggleRowSelect(product_url) {

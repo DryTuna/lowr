@@ -132,7 +132,7 @@ def run_deploy():
     sudo('apt-get install python-pip')
     sudo('apt-get install python-dev')
     rsync_project(local_dir='/Users/eyuelabebe/Desktop/projects/lowr/lowr', remote_dir='~/')
-    sudo('pip install -r /lowr/lowr_aws_deploy/requirements.txt')
+    # sudo('pip install -r /lowr/lowr_aws_deploy/requirements.txt')
     upload_template('simple_nginx_config', '~/',  context={'host_dns': env.active_instance.public_dns_name})
     sudo('mv lowr/lowr_aws_deploy/supervisord.conf /etc/supervisor/conf.d/lowr.conf')
     sudo('mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.orig')

@@ -46,6 +46,43 @@ def check_price(item, new_price):
         server.quit()
 
 
+
+
+def error_email(error):
+    username = 'lowr.codefellow'
+    fromaddr = 'lowr.codefellow@gmail.com'
+    toaddr = 'lowr.codefellow@gmail.com'
+    msg = 'DATABASE ERROR! \n' + str(error)
+    msg += '\n\nCHECK LOG FILES'
+    username = 'lowr.codefellow'
+    password = 'codefellows'
+    server = smtplib.SMTP('smtp.gmail.com:587')
+    server.starttls()
+    server.login(username, password)
+    server.sendmail(fromaddr, toaddr, msg)
+    server.quit()
+
+def crawl_per_user(id):
+    try:
+        conn = get_database_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM items WHERE user_id = %s", [id])
+        items = cur.fetchall()
+        new_prices = update_prices(items)
+
+        for i in range(len(items)):
+                cur.execute("UPDATE items SET last_price=%s WHERE url=%s",
+                            [new_prices[i], items[i][1]])
+                check_price(items[i], new_prices[i])
+        conn.commit()
+
+    except Exception as e:
+        error_email(e)
+
+
+
+
+
 if __name__ == "__main__":
     try:
         conn = get_database_connection()
@@ -60,18 +97,8 @@ if __name__ == "__main__":
                             (new_prices[i], items[i][0]))
                 check_price(items[i], new_prices[i])
 
+            onn.commit()
             if len(items) < 5:
                 break
     except Exception as e:
-        username = 'lowr.codefellow'
-        fromaddr = 'lowr.codefellow@gmail.com'
-        toaddr = 'lowr.codefellow@gmail.com'
-        msg = 'DATABASE ERROR! \n' + str(e)
-        msg += '\n\nCHECK LOG FILES'
-        username = 'lowr.codefellow'
-        password = 'codefellows'
-        server = smtplib.SMTP('smtp.gmail.com:587')
-        server.starttls()
-        server.login(username, password)
-        server.sendmail(fromaddr, toaddr, msg)
-        server.quit()
+        error_email(e)
