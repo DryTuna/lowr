@@ -5,12 +5,12 @@ import os
 
 # Thanks for justforfun and jlargent on stackoverflow for email technique
 import smtplib
-from email.mime.text import MIMEText
 
 config = {}
 g = {'db': None}
 
 database = os.environ.get('DATABASE_URL')
+
 
 def connect_db():
     """Return a connection to the configured database"""
@@ -46,8 +46,6 @@ def check_price(item, new_price):
         server.quit()
 
 
-
-
 def error_email(error):
     username = 'lowr.codefellow'
     fromaddr = 'lowr.codefellow@gmail.com'
@@ -62,6 +60,7 @@ def error_email(error):
     server.sendmail(fromaddr, toaddr, msg)
     server.quit()
 
+
 def crawl_per_user(id):
     try:
         conn = get_database_connection()
@@ -72,15 +71,12 @@ def crawl_per_user(id):
 
         for i in range(len(items)):
                 cur.execute("UPDATE items SET last_price=%s WHERE url=%s AND user_id=%s",
-                            [new_prices[i][1], new_prices[i][0], id])
-                check_price(items[i], new_prices[i][1])
+                            [new_prices[i], items[i][1], id])
+                check_price(items[i], new_prices[i])
         conn.commit()
 
     except Exception as e:
         error_email(e)
-
-
-
 
 
 if __name__ == "__main__":

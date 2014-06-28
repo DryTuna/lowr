@@ -43,7 +43,6 @@ coverage.xml
 .pydevproject
 .DS_Store
 test.py
-lowr_aws_deploy/supervisord.conf
 
 # Rope
 .ropeproject

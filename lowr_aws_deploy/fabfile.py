@@ -2,6 +2,7 @@ from fabric.api import run
 from fabric.api import env, local
 import boto.ec2
 import time
+import os
 from fabric.api import prompt, execute
 from fabric.api import sudo
 from fabric.contrib.project import rsync_project
@@ -9,7 +10,8 @@ from fabric.contrib.files import upload_template
 
 env.hosts = ['localhost', ]
 env.aws_region = 'us-west-2'
-env.key_filename = '/Users/eyuelabebe/.ssh/mykeypair.pem'
+env.key_filename = os.getenv('AWS_KEYPAIR',
+                             '/Users/eyuelabebe/.ssh/mykeypair.pem')
 
 
 def host_type():
@@ -19,13 +21,14 @@ def host_type():
 def get_ec2_connection():
     if 'ec2' not in env:
         conn = boto.ec2.connect_to_region(env.aws_region)
-	if conn is not None:
-	    env.ec2 = conn
-	    print "Connected to EC2 region %s" % env.aws_region
-	else:
-	    msg = "Unable to connect to EC2 region %s"
-	    raise IOError(msg % env.aws_region)
+    if conn is not None:
+        env.ec2 = conn
+        print "Connected to EC2 region %s" % env.aws_region
+    else:
+        msg = "Unable to connect to EC2 region %s"
+        raise IOError(msg % env.aws_region)
     return env.ec2
+
 
 def provision_instance(wait_for_running=False, timeout=60, interval=2):
     wait_val = int(interval)
@@ -42,14 +45,15 @@ def provision_instance(wait_for_running=False, timeout=60, interval=2):
     if wait_for_running:
         waited = 0
     while new_instances and (waited < timeout_val):
-	    time.sleep(wait_val)
-	    waited += int(wait_val)
-	    for instance in new_instances:
-	        state = instance.state
-		print "Instance %s is %s" % (instance.id, state)
-		if state == "running":
-		    running_instance.append(new_instances.pop(new_instances.index(i)))
-		instance.update()
+        time.sleep(wait_val)
+        waited += int(wait_val)
+        for instance in new_instances:
+            state = instance.state
+        print "Instance %s is %s" % (instance.id, state)
+        if state == "running":
+            running_instance.append(new_instances.pop(new_instances.index(i)))
+        instance.update()
+
 
 def list_aws_instances(verbose=False, state='all'):
     conn = get_ec2_connection()
@@ -72,7 +76,6 @@ def list_aws_instances(verbose=False, state='all'):
         pprint.pprint(env.instances)
 
 
-
 def select_instance(state='running'):
     if env.get('active_instance', False):
         return
@@ -90,7 +93,7 @@ def select_instance(state='running'):
 
     def validation(input):
         choice = int(input)
-        if not choice in range(1, len(env.instances) + 1):
+        if choice not in range(1, len(env.instances) + 1):
             raise ValueError("%d is not a valid instance" % choice)
         return choice
 
@@ -101,7 +104,7 @@ def select_instance(state='running'):
 def run_command_on_selected_server(command):
 
     select_instance()
-    selected_hosts = [ 'ubuntu@' + env.active_instance.public_dns_name]
+    selected_hosts = ['ubuntu@' + env.active_instance.public_dns_name]
     execute(command, hosts=selected_hosts)
 
 
@@ -118,22 +121,25 @@ def stop_instance():
     select_instance()
     env.ec2.stop_instances(instance_ids=[env.active_instance.id])
 
+
 def terminate_instance():
     select_instance(state='stopped')
     env.ec2.terminate_instances(instance_ids=[env.active_instance.id])
 
 
 def run_deploy():
-    local('ssh-add ~/.ssh/mykeypair.pem')
+    local('ssh-add {}'.format(env.key_filename))
     install_nginx()
     sudo('apt-get update')
     sudo('apt-get install postgresql-client libpq-dev')
     sudo('apt-get install supervisor')
     sudo('apt-get install python-pip')
     sudo('apt-get install python-dev')
-    rsync_project(local_dir='/Users/eyuelabebe/Desktop/projects/lowr/lowr', remote_dir='~/')
-    # sudo('pip install -r /lowr/lowr_aws_deploy/requirements.txt')
+    rsync_project(local_dir='{}/lowr/lowr'.format(os.getenv('PROJECT_HOME',
+                  '/Users/eyuelabebe/Desktop/projects')), remote_dir='~/')
+    sudo('pip install -r /lowr/lowr_aws_deploy/requirements.txt')
     upload_template('simple_nginx_config', '~/',  context={'host_dns': env.active_instance.public_dns_name})
+    sudo('echo {} >> lowr/lowr_aws_deploy/supervisord.conf'.format(os.genenv("LOWR_ENV")))
     sudo('mv lowr/lowr_aws_deploy/supervisord.conf /etc/supervisor/conf.d/lowr.conf')
     sudo('mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.orig')
     sudo('mv lowr/lowr_aws_deploy/simple_nginx_config /etc/nginx/sites-available/default')
@@ -144,12 +150,12 @@ def run_deploy():
 
 def run_ssh():
     select_instance()
-    local('ssh -i /Users/eyuelabebe/.ssh/mykeypair.pem ubuntu@{}'.format(env.active_instance.public_dns_name))
+    local('ssh -i {0} ubuntu@{1}'.format(env.key_filename, env.active_instance.public_dns_name))
+
 
 def ssh():
     run_command_on_selected_server(run_ssh)
 
+
 def deploy():
     run_command_on_selected_server(run_deploy)
-
-
