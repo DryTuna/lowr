@@ -10,7 +10,7 @@ from fabric.contrib.files import upload_template
 
 env.hosts = ['localhost', ]
 env.aws_region = 'us-west-2'
-env.key_filename = os.getenv('AWS_KEYPAIR',
+env.key_filename = os.getenv('AWS_KEYPAIR_FILE',
                              '/Users/eyuelabebe/.ssh/mykeypair.pem')
 
 
@@ -35,7 +35,7 @@ def provision_instance(wait_for_running=False, timeout=60, interval=2):
     timeout_val = int(timeout)
     conn = get_ec2_connection()
     instance_type = 't1.micro'
-    key_name = 'mykeypair'
+    key_name = os.getenv('AWS_KEYPAIR', 'mykeypair')
     security_group = 'ssh-access'
     image_id = 'ami-ddaed3ed'
 
