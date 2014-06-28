@@ -9,6 +9,10 @@ import smtplib
 config = {}
 g = {'db': None}
 
+fromaddr = os.getenv('LOWR_EMAIL', 'lowr.codefellow@gmail.com')
+username = os.getenv('LOWR_EMAIL_USERNAME', 'lowr.codefellow')
+password = os.getenv('LOWR_EMAIL_PWD', 'codefellows')
+
 database = os.environ.get('DATABASE_URL')
 
 
@@ -32,13 +36,10 @@ def check_price(item, new_price):
                     (item[0],))
         user = cur.fetchone()
         username = user[0]
-        fromaddr = 'lowr.codefellow@gmail.com'
         toaddr = user[1]
         msg = 'Your item has reached the price you wanted it to!\n'
         msg += str(item[1])
         msg += '\n\nThank you,\nThe lowr team'
-        username = 'lowr.codefellow'
-        password = 'codefellows'
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.starttls()
         server.login(username, password)
@@ -47,13 +48,9 @@ def check_price(item, new_price):
 
 
 def error_email(error):
-    username = 'lowr.codefellow'
-    fromaddr = 'lowr.codefellow@gmail.com'
-    toaddr = 'lowr.codefellow@gmail.com'
+    toaddr = fromaddr
     msg = 'DATABASE ERROR! \n' + str(error)
     msg += '\n\nCHECK LOG FILES'
-    username = 'lowr.codefellow'
-    password = 'codefellows'
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.starttls()
     server.login(username, password)
