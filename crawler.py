@@ -29,7 +29,7 @@ def get_database_connection():
 
 
 def check_price(item, new_price):
-    if item[2] < new_price:
+    if new_price < item[2]:
         conn = get_database_connection()
         cur = conn.cursor()
         cur.execute("SELECT email FROM accounts WHERE id=%s",
