@@ -112,16 +112,16 @@ def crawl_on_demand():
     cur = conn.cursor()
     cur.execute("SELECT id, email FROM accounts WHERE username = %s", [user])
     try:
-        id, email = cur.fetchone()
+        id_, email = cur.fetchone()
     except Exception as e:
         print e
     user = {
             'username': user,
             'email': email
         }
-    crawler.crawl_per_user(id)
+    crawler.crawl_per_user(id_)
     cur = conn.cursor()
-    cur.execute("SELECT url, desired_price, last_price FROM items WHERE user_id=%s", [id])
+    cur.execute("SELECT url, desired_price, last_price FROM items WHERE user_id=%s", [id_])
     items = cur.fetchall()
 
     return render_template('account.html', user=user, items=items)
@@ -157,8 +157,8 @@ def signup():
             try:
                 do_signup(username, email, password)
 
-            except Exception :
-                error = {'error': "Username already taken."}
+            except Exception as e:
+                error = {'error': "Username already taken.\n" + str(e)}
             else:
                 session['logged_in'] = True
                 session['username'] = username

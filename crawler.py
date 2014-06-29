@@ -32,14 +32,17 @@ def check_price(item, new_price):
     if item[2] < new_price:
         conn = get_database_connection()
         cur = conn.cursor()
-        cur.execute("SELECT username, email FROM accounts WHERE id=%s",
+        cur.execute("SELECT email FROM accounts WHERE id=%s",
                     (item[0],))
-        user = cur.fetchone()
-        username = user[0]
-        toaddr = user[1]
+        toaddr = cur.fetchone()[0]
         msg = 'Your item has reached the price you wanted it to!\n'
         msg += str(item[1])
         msg += '\n\nThank you,\nThe lowr team'
+        print username
+        print password
+        print fromaddr
+        print toaddr
+        print msg
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.starttls()
         server.login(username, password)
