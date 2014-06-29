@@ -62,6 +62,6 @@ def init_db():
 
 def get_database_connection():
     db = getattr(g, 'db', None)
-    if db is None:
+    if db is None or db.closed != 0:
         g.db = db = connect_db()
     return db

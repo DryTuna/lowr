@@ -33,6 +33,16 @@ footer {
     background-color: #fafafa;
 }
 
+footer {
+    background-color: #fafafa !important;
+    height: 61px;
+    background-color: black;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align:center;
+}
+
 .icon-bar {
     background-color: rgb(247, 147, 30) !important;
 }
