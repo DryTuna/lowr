@@ -42,6 +42,7 @@ def provision_instance(wait_for_running=False, timeout=60, interval=2):
     reservations = conn.run_instances(image_id, key_name=key_name, instance_type=instance_type, security_groups=[security_group, ],)
     new_instances = [i for i in reservations.instances if i.state == u'pending']
     running_instance = []
+    waited = 3600
     if wait_for_running:
         waited = 0
     while new_instances and (waited < timeout_val):
@@ -131,18 +132,18 @@ def run_deploy():
     local('ssh-add {}'.format(env.key_filename))
     install_nginx()
     sudo('apt-get update')
-    sudo('apt-get install postgresql-client libpq-dev')
+    sudo('apt-get install postgresql libpq-dev')
     sudo('apt-get install supervisor')
     sudo('apt-get install python-pip')
     sudo('apt-get install python-dev')
     rsync_project(local_dir='{}/lowr/lowr'.format(os.getenv('PROJECT_HOME',
                   '/Users/eyuelabebe/Desktop/projects')), remote_dir='~/')
-    sudo('pip install -r /lowr/lowr_aws_deploy/requirements.txt')
+    #sudo('pip install -r /lowr/lowr_aws_deploy/requirements.txt')
     upload_template('simple_nginx_config', '~/',  context={'host_dns': env.active_instance.public_dns_name})
-    sudo('echo {} >> lowr/lowr_aws_deploy/supervisord.conf'.format(os.genenv("LOWR_ENV")))
-    sudo('echo LOWR_EMAIL={} >> lowr/lowr_aws_deploy/supervisord.conf'.format(os.genenv("LOWR_EMAIL")))
-    sudo('echo LOWR_EMAIL_USERNAME={} >> lowr/lowr_aws_deploy/supervisord.conf'.format(os.genenv("LOWR_EMAIL_USERNAME")))
-    sudo('echo LOWR_EMAIL_PWD={} >> lowr/lowr_aws_deploy/supervisord.conf'.format(os.genenv("LOWR_EMAIL_PWD")))
+    sudo("echo '{}' >> lowr/lowr_aws_deploy/supervisord.conf".format(os.getenv("LOWR_ENV")))
+    sudo('echo LOWR_EMAIL={} >> lowr/lowr_aws_deploy/supervisord.conf'.format(os.getenv("LOWR_EMAIL")))
+    sudo('echo LOWR_EMAIL_USERNAME={} >> lowr/lowr_aws_deploy/supervisord.conf'.format(os.getenv("LOWR_EMAIL_USERNAME")))
+    sudo('echo LOWR_EMAIL_PWD={} >> lowr/lowr_aws_deploy/supervisord.conf'.format(os.getenv("LOWR_EMAIL_PWD")))
     sudo('mv lowr/lowr_aws_deploy/supervisord.conf /etc/supervisor/conf.d/lowr.conf')
     sudo('mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.orig')
     sudo('mv lowr/lowr_aws_deploy/simple_nginx_config /etc/nginx/sites-available/default')
