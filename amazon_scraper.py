@@ -171,7 +171,7 @@ def search_results(keywords, category, price, price_range):
             x = tQ.get()
             p_queue.insert(x[0], x[1])
         page += 3
-        if p_queue._size == temp and p_queue._size > 0:
+        if p_queue._size == temp:
             break
     return p_queue
 
